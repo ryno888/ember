@@ -1,0 +1,16 @@
+{
+    "name": "kwerqy/ember",
+    "description": "A small plugin for use on Codeigniter 4 projects",
+    "autoload": {
+        "psr-4": {
+            "Kwerqy\\Ember\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kwerqy Web Development",
+            "email": "kwerqy.development@gmail.com"
+        }
+    ],
+    "require": {}
+}
