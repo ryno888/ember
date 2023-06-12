@@ -72,9 +72,6 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
             //https://github.com/fengyuanchen/jquery-cropper
 		    "{$path_vendor}/fengyuanchen/cropper/dist/cropper.min.js",
 
-            //fancybox
-		    "{$path_vendor}/lagman/fancybox/source/jquery.fancybox.pack.js",
-
             //ember
 		    "{$path_js}/ember.mod.ui.incl.app.js",
 		    "{$path_js}/ember.mod.ui.incl.panel.js",
@@ -108,9 +105,6 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
             //https://github.com/fengyuanchen/jquery-cropper
 		    "{$path_vendor}/fengyuanchen/cropper/dist/cropper.min.css",
 
-            //fancybox
-            "{$path_vendor}/lagman/fancybox/source/jquery.fancybox.css",
-
             //ember
 		    "{$path_css}/ember.mod.ui.incl.app.css",
 
@@ -126,6 +120,9 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 	    return [
 	        //https://michalsnik.github.io/aos/
 		    "https://unpkg.com/aos@2.3.1/dist/aos.js",
+
+            //https://fancyapps.com/fancybox/getting-started/
+            "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js",
         ];
     }
 
@@ -134,6 +131,9 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 	    return [
 	        //https://michalsnik.github.io/aos/
 		    "https://unpkg.com/aos@2.3.1/dist/aos.css",
+
+            //https://fancyapps.com/fancybox/getting-started/
+		    "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css",
         ];
     }
 	//--------------------------------------------------------------------------------
