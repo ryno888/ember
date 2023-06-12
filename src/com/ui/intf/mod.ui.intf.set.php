@@ -21,8 +21,12 @@ abstract class set extends \Kwerqy\Ember\com\intf\standard{
 	 */
 	abstract public function get($name, $options = []);
 	//--------------------------------------------------------------------------------
-	abstract public function get_js_includes();
+	abstract public function get_js_includes():array;
 	//--------------------------------------------------------------------------------
-	abstract public function get_css_includes();
+	abstract public function get_css_includes():array;
+	//--------------------------------------------------------------------------------
+	abstract public function get_js_cdn_includes():array;
+	//--------------------------------------------------------------------------------
+	abstract public function get_css_cdn_includes():array;
 	//--------------------------------------------------------------------------------
 }
