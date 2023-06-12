@@ -14,6 +14,11 @@ abstract class section extends \Kwerqy\Ember\com\intf\standard{
 	 */
 	public abstract function get_set();
 	//--------------------------------------------------------------------------------
+	/**
+	 * @return string
+	 */
+	public abstract function get_layout();
+	//--------------------------------------------------------------------------------
 
     /**
      * @param array $options

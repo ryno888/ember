@@ -77,9 +77,9 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
         $options["prepend"] = \Kwerqy\Ember\com\ui\ui::make()->icon("calendar", [".mr-2" => false]);
         $options[".$id"] = true;
 
-        $JS_start_id = \mod\js::parse_id("{$id}[startdate]");
-        $JS_end_id = \mod\js::parse_id("{$id}[enddate]");
-        $JS_id = \mod\js::parse_id($id);
+        $JS_start_id = \Kwerqy\Ember\com\js\js::parse_id("{$id}[startdate]");
+        $JS_end_id = \Kwerqy\Ember\com\js\js::parse_id("{$id}[enddate]");
+        $JS_id = \Kwerqy\Ember\com\js\js::parse_id($id);
 
         $options["target"] = "#$JS_id";
 
@@ -88,7 +88,7 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
 
         $js = [];
         $js[] = "
-            $('{$options["target"]}').daterangepicker(".\mod\js::create_options([
+            $('{$options["target"]}').daterangepicker(".\Kwerqy\Ember\com\js\js::create_options([
                 "*autoUpdateInput" => false,
                 "*singleDatePicker" => $options["singlepicker"],
                 "*autoApply" => $options["autoapply"],
@@ -102,11 +102,11 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
 
         if($startdate) {
             $js[] = "$('{$options["target"]}').data('daterangepicker').setStartDate('$startdate');";
-            \mod\js::add_script("$(function(){ setTimeout(function(){ $('#$JS_start_id').val('$startdate'); }, 50) });");
+            \Kwerqy\Ember\com\js\js::add_script("$(function(){ setTimeout(function(){ $('#$JS_start_id').val('$startdate'); }, 50) });");
         }
         if($enddate){
             $js[] = "$('{$options["target"]}').data('daterangepicker').setEndDate('$enddate');";
-            \mod\js::add_script("$(function(){ setTimeout(function(){ $('#$JS_end_id').val('$enddate'); }, 50) });");
+            \Kwerqy\Ember\com\js\js::add_script("$(function(){ setTimeout(function(){ $('#$JS_end_id').val('$enddate'); }, 50) });");
         }
 
         if($options["multifield"]){
@@ -136,7 +136,7 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
             ";
         }
 
-        \mod\js::add_script("
+        \Kwerqy\Ember\com\js\js::add_script("
             $(function(){".implode(" ", $js)."});
         ");
 

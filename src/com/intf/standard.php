@@ -55,7 +55,7 @@ abstract class standard {
 	 */
 	public function get_class() {
 		return get_called_class();
-//		return \App\ember\mod\ui\coder::get_class_basename(get_called_class());
+//		return \App\ember\Kwerqy\Ember\com\ui\ui\coder::get_class_basename(get_called_class());
 	}
 	//--------------------------------------------------------------------------------
 	/**

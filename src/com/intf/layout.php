@@ -24,7 +24,7 @@ abstract class layout extends standard {
 
 		$this->get_layout();
 
-		$buffer = \mod\ui::make()->buffer();
+		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 		$buffer->add("<!DOCTYPE html>");
 		$buffer->html_(["@lang" => "en"]);

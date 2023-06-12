@@ -52,7 +52,7 @@ class form extends \Kwerqy\Ember\com\ui\intf\component {
 
 		// serialize
 		if (!$options["@noserialize"]) {
-			\mod\js::add_domready_script("$('#{$id}').data('serialize', $('#{$id}').find('input:not([noserialize], [type=hidden]), select:not([noserialize], [type=hidden]), textarea:not([noserialize], [type=hidden])').serialize());");
+			\Kwerqy\Ember\com\js\js::add_domready_script("$('#{$id}').data('serialize', $('#{$id}').find('input:not([noserialize], [type=hidden]), select:not([noserialize], [type=hidden]), textarea:not([noserialize], [type=hidden])').serialize());");
 		}
 
   		// done

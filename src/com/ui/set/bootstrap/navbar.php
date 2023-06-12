@@ -21,7 +21,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 	public function __construct($options = []) {
 
 		$options = array_merge([
-		    "id" => \mod\str::generate_id(["prefix" => "navbar"]),
+		    "id" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "navbar"]),
 		    "type" => "standard",
 		], $options);
 

@@ -352,7 +352,7 @@ class http {
         ], $options);
 
         if(!$options["id"]){
-            $options["id"] = \mod\str::encrypt_url_r($mixed);
+            $options["id"] = \Kwerqy\Ember\com\str\str::encrypt_url_r($mixed);
         }
 
         $url = [];

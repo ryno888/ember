@@ -91,7 +91,7 @@ class idate extends \Kwerqy\Ember\com\ui\intf\component {
 
 		    $js = [];
             $js[] = "
-                $('#$JS_id').daterangepicker(".\mod\js::create_options(array_merge([
+                $('#$JS_id').daterangepicker(".\Kwerqy\Ember\com\js\js::create_options(array_merge([
                     "*autoUpdateInput" => false,
                     "*singleDatePicker" => true,
                     "*showDropdowns" => true,
@@ -112,7 +112,7 @@ class idate extends \Kwerqy\Ember\com\ui\intf\component {
                 });
             ";
 
-		    \mod\js::add_script("
+		    \Kwerqy\Ember\com\js\js::add_script("
                 $(function(){
                 
                 	$('body').on('focus', '#$id', function(){

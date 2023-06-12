@@ -1,6 +1,6 @@
 <?php
 
-namespace mod;
+namespace Kwerqy\Ember\com\data;
 
 /**
  * Class data
@@ -35,29 +35,29 @@ class data{
             case TYPE_TINYINT:
             case TYPE_BOOL:
             case TYPE_KEY:
-                return \mod\data\type\type_int::make();
+                return \Kwerqy\Ember\com\data\type\type_int::make();
 
             case TYPE_TELNR:
             case TYPE_EMAIL:
             case TYPE_VARCHAR:
             case TYPE_STRING:
-                return \mod\data\type\type_string::make();
+                return \Kwerqy\Ember\com\data\type\type_string::make();
 
             case TYPE_DATE:
-                return \mod\data\type\type_date::make();
+                return \Kwerqy\Ember\com\data\type\type_date::make();
 
             case TYPE_DATETIME:
-                return \mod\data\type\type_datetime::make();
+                return \Kwerqy\Ember\com\data\type\type_datetime::make();
 
             case TYPE_TEXT:
             case TYPE_LONGBLOB:
             case TYPE_FILE:
-                return \mod\data\type\type_text::make();
+                return \Kwerqy\Ember\com\data\type\type_text::make();
 
             case TYPE_DOUBLE:
             case TYPE_DECIMAL:
             case TYPE_FLOAT:
-                return \mod\data\type\type_float::make();
+                return \Kwerqy\Ember\com\data\type\type_float::make();
         }
     }
     //--------------------------------------------------------------------------------

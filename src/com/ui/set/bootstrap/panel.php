@@ -19,7 +19,7 @@ class panel extends \Kwerqy\Ember\com\ui\intf\component {
 	protected function __construct($options = []) {
 
 	    $options = array_merge([
-	        "id" => \core::$request->get_get("p", TYPE_STRING, ["default" => \mod\str::generate_id(["prefix" => "panel"])]),
+	        "id" => \Kwerqy\Ember\Ember::$request->get_get("p", TYPE_STRING, ["default" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "panel"])]),
 	        "url" => false,
 	        "html" => false,
             ".ui-panel" => true,
@@ -56,7 +56,7 @@ class panel extends \Kwerqy\Ember\com\ui\intf\component {
 
 	    $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
-	    if(\mod\http::is_panel_request()){
+	    if(\Kwerqy\Ember\com\http\http::is_panel_request()){
 	        $buffer->add($this->html);
         }else{
             $buffer->div_($options);
@@ -64,12 +64,12 @@ class panel extends \Kwerqy\Ember\com\ui\intf\component {
             $buffer->_div();
 
 
-            $js_options = \mod\js::create_options([
+            $js_options = \Kwerqy\Ember\com\js\js::create_options([
                 "*id" => $this->id,
                 "*url" => $this->url,
             ]);
 
-            \mod\js::add_script("
+            \Kwerqy\Ember\com\js\js::add_script("
                 if(typeof {$this->id} === 'undefined'){
                     var {$this->id};
                     $(function(){

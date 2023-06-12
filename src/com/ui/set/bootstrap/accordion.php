@@ -37,7 +37,7 @@ class accordion extends \Kwerqy\Ember\com\ui\intf\component {
 	public function build($options = []) {
 		// options
 		$options = array_merge([
-		    "@id" => \mod\str::generate_id(["prepend" => "accordion"]),
+		    "@id" => \Kwerqy\Ember\com\str\str::generate_id(["prepend" => "accordion"]),
 		    ".accordion" => true,
 		], $options);
 

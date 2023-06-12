@@ -16,7 +16,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 		    "section" => "bootstrap"
 		], $options);
 
-		$this->section = call_user_func(["\\Kwerqy\\Ember\\com\\factory\\section\\{$options["section"]}", "make"]);
+		$this->section = \Kwerqy\Ember\Ember::get_section($options["section"]);
 
 	}
 
@@ -37,12 +37,8 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	}
 	//--------------------------------------------------------------------------------
 
-    public function ci_controller($layout, $page, $options = []) {
-	    $options = array_merge([
-	    ], $options);
-
-//	    return \mod\ci\controller\controller::make()->build($layout, $page, $options);
-
+    public function ci_controller($section, $page, $options = []) {
+	    return \Kwerqy\Ember\com\ci\controller\controller::make()->build($section, $page, $options);
     }
 	//--------------------------------------------------------------------------------
 
@@ -55,7 +51,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
      */
 
     public function ci_view($controller, $fn, $options = []) {
-//	    \mod\ci\view\view::make($controller, $options)->run($fn);
+        return \Kwerqy\Ember\com\ci\view\view::make($controller, $options)->run($fn);
     }
     //--------------------------------------------------------------------------------
 	/**
@@ -117,7 +113,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	        "url" => $url,
 	    ], $options);
 
-	    return $this->section->get_ui()->get("panel");
+	    return $this->section->get_ui()->get("panel", $options);
 
     }
 	//--------------------------------------------------------------------------------

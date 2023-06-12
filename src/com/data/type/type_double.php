@@ -8,48 +8,48 @@ namespace Kwerqy\Ember\com\data\type;
  * @author Ryno Van Zyl
  */
 
-class type_email extends \Kwerqy\Ember\com\data\type\intf\standard {
+class type_double extends \Kwerqy\Ember\com\data\type\intf\standard {
 
     //--------------------------------------------------------------------------------
 	// properties
 	//--------------------------------------------------------------------------------
-	protected $name = "Email";
-	protected $datatype = "string";
-	protected $default = "";
-	protected $type = TYPE_EMAIL;
+	protected $name = "Double";
+	protected $datatype = "double";
+	protected $default = 0;
+	protected $type = TYPE_DOUBLE;
 	//--------------------------------------------------------------------------------
 	// static
 	//--------------------------------------------------------------------------------
 	/**
 	 * @param $value
 	 * @param array $options
-	 * @return mixed
+	 * @return double
 	 */
     public function parse($value, $options = []) {
 
-    	$parts_arr = explode("@", $value);
+    	//break apart
+    	$parts_arr = explode(".", $value);
 
-    	$end = array_pop($parts_arr);
-		$reset = $parts_arr ? implode("", $parts_arr) : "";
-
-		$end_parts = explode(".", $end);
-		foreach ($end_parts as $key => $end_part){
-			$end_parts[$key] = \mod\str::strip_special_chars($end_part);
+    	//clean parts from characters
+    	foreach ($parts_arr as $key => $part){
+    		$parts_arr[$key] = \Kwerqy\Ember\com\str\str::replace($part, [
+				"/[^0-9]/" => "",
+			]);
 		}
 
-    	$reset = \mod\str::strip_special_chars($reset);
-    	$end = implode(".", $end_parts);
+    	//rebuild
+    	$reset = $parts_arr ? implode("", $parts_arr) : "";
+    	$end = array_pop($parts_arr);
 
-    	$value = "{$reset}@{$end}";
+    	if($reset) $result = doubleval("$reset.$end");
+    	else $result = doubleval($end);
 
-    	$result = filter_var($value, FILTER_SANITIZE_EMAIL);
-
-    	return $result === false ? $this->default : $result;
+    	return (double)$result;
 
     }
     //--------------------------------------------------------------------------------
     function get_dbvalue(): string {
-        return "VARCHAR";
+        return "DECIMAL";
     }
     //--------------------------------------------------------------------------------
 

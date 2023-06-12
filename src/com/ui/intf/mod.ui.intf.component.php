@@ -12,7 +12,7 @@ abstract class component extends \Kwerqy\Ember\com\intf\standard{
 	//--------------------------------------------------------------------------------
 	protected function __construct($options = []) {
 		// init
-		$this->id = \mod\str::generate_id(["prefix" => "component"]);
+		$this->id = \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "component"]);
 	}
 	//--------------------------------------------------------------------------------
 

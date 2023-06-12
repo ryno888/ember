@@ -45,7 +45,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	protected function __construct($options = []) {
 		// init
 		$this->name = "Button";
-		$this->id = \mod\str::generate_id(["prefix" => "table"]);
+		$this->id = \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "table"]);
 		$this->parse_requests();
 
 		$this->toolbar_left = \Kwerqy\Ember\com\ui\ui::make()->toolbar();
@@ -329,7 +329,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	    $buffer->thead_();
             $buffer->tr_();
                 foreach ($columns_name_arr as $columns_name)
-                    $buffer->th(["*" => \mod\str::propercase($columns_name)]);
+                    $buffer->th(["*" => \Kwerqy\Ember\com\str\str::propercase($columns_name)]);
 
                 if($this->action_arr){
                     $buffer->th(["@colspan" => sizeof($this->action_arr)]);
@@ -422,7 +422,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	    $buffer->tfoot_();
             $buffer->tr_();
                 foreach ($columns_name_arr as $columns_name)
-                    $buffer->th(["*" => \mod\str::propercase($columns_name)]);
+                    $buffer->th(["*" => \Kwerqy\Ember\com\str\str::propercase($columns_name)]);
             $buffer->_tr();
         $buffer->_tfoot();
     }
@@ -449,7 +449,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		$js_options["*id"] = $this->id;
 		$js_options["*url"] = current_url()."?ui_table={$this->id}";
 		$js_options["*panel"] = \core::$panel;
-		$js_options = \mod\js::create_options($js_options);
+		$js_options = \Kwerqy\Ember\com\js\js::create_options($js_options);
 
 		$buffer->script(["*" => "
 		    if(typeof {$this->id} === 'undefined'){
@@ -459,7 +459,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
                 });
             }
 		"]);
-//		\mod\js::add_script("
+//		\Kwerqy\Ember\com\js\js::add_script("
 //		    if(typeof {$this->id} === 'undefined'){
 //                var {$this->id};
 //                $(function(){

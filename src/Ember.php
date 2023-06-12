@@ -141,7 +141,7 @@ class Ember {
 	    //autoload helpers
 		helper(['text', 'form', 'number', 'security', 'filesystem']);
 
-//		self::$app = config('App');
+		self::$app = config('App');
 
 		// shutdown handler
 		register_shutdown_function(["Kwerqy\Ember\Ember", "close"]);
@@ -210,6 +210,31 @@ class Ember {
 //			// trigger fatal error
 //			\Kwerqy\Ember\com\error\error::create($message, ["fatal" => true]);
 //		}
+	}
+    //--------------------------------------------------------------------------------
+
+    /**
+     * @return com\intf\standard|com\ui\ui
+     */
+    public static function ui() {
+
+        return com\ui\ui::make();
+    }
+    //--------------------------------------------------------------------------------
+
+    /**
+     * @param $name
+     * @return false|mixed|\Kwerqy\Ember\com\intf\section
+     */
+    public static function get_section($name) {
+        return call_user_func(["\\Kwerqy\\Ember\\com\\factory\\section\\{$name}", "make"]);
+    }
+    //--------------------------------------------------------------------------------
+	public static function auth_check($token) {
+        return true;
+//		$auth = call_user_func(["\\app\\acc\\auth\\{$token}", "make"]);
+//
+//	    return $auth->check(\core::$user->active_role);
 	}
     //--------------------------------------------------------------------------------
 }

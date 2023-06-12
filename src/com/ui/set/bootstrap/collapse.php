@@ -55,7 +55,7 @@ class collapse extends \Kwerqy\Ember\com\ui\intf\component {
 	public function build($options = []) {
 
 		$options = array_merge([
-		    "id" => \mod\str::generate_id(["prefix" => "dropdown"]),
+		    "id" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "dropdown"]),
 		    "title" => $this->title,
 		    "icon" => false,
 		    "/link" => [],

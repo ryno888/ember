@@ -20,7 +20,7 @@ class loader extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------
     public function build($options = []) {
 
-        $options["@id"] = \mod\str::generate_id();
+        $options["@id"] = \Kwerqy\Ember\com\str\str::generate_id();
         $options[".page-loader-inner"] = true;
 
         $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
@@ -77,7 +77,7 @@ class loader extends \Kwerqy\Ember\com\ui\intf\component {
 			$buffer->_div();
         $buffer->_div();
 
-        \mod\js::add_script("app.overlay.hide();");
+        \Kwerqy\Ember\com\js\js::add_script("app.overlay.hide();");
 
         return $buffer->get_clean();
     }

@@ -75,7 +75,7 @@ class page_loader extends \Kwerqy\Ember\com\ui\intf\component {
             $buffer->_div();
         $buffer->_div();
 
-        \mod\js::add_script("
+        \Kwerqy\Ember\com\js\js::add_script("
             $(function(){
                 app.overlay.hide();
             });

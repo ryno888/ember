@@ -8,22 +8,22 @@ namespace Kwerqy\Ember\com\data\type;
  * @author Ryno Van Zyl
  */
 
-class type_int extends \Kwerqy\Ember\com\data\type\intf\standard {
+class type_float extends \Kwerqy\Ember\com\data\type\intf\standard {
 
     //--------------------------------------------------------------------------------
 	// properties
 	//--------------------------------------------------------------------------------
-	protected $name = "Integer";
-	protected $datatype = "integer";
+	protected $name = "Float";
+	protected $datatype = "float";
 	protected $default = 0;
-	protected $type = TYPE_INT;
+	protected $type = TYPE_FLOAT;
 	//--------------------------------------------------------------------------------
 	// static
 	//--------------------------------------------------------------------------------
 	/**
 	 * @param $value
 	 * @param array $options
-	 * @return int
+	 * @return float
 	 */
     public function parse($value, $options = []) {
 
@@ -32,24 +32,25 @@ class type_int extends \Kwerqy\Ember\com\data\type\intf\standard {
 
     	//clean parts from characters
     	foreach ($parts_arr as $key => $part){
-    		$parts_arr[$key] = \mod\str::replace($part, [
+    		$parts_arr[$key] = \Kwerqy\Ember\com\str\str::replace($part, [
 				"/[^0-9]/" => "",
 			]);
 		}
 
     	//rebuild
-    	$reset = $parts_arr ? implode("", $parts_arr) : "";
     	$end = array_pop($parts_arr);
+    	$reset = $parts_arr ? implode("", $parts_arr) : "";
 
-    	if($reset) $result = intval("$reset.$end");
-    	else $result = intval($end);
+    	if($reset) $result = floatval("$reset.$end");
+    	else $result = floatval($end);
 
-    	return (int)$result;
+    	return (float) $result;
 
     }
     //--------------------------------------------------------------------------------
     function get_dbvalue(): string {
-        return "INT";
+        return "DECIMAL";
     }
     //--------------------------------------------------------------------------------
+
 }

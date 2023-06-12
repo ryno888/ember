@@ -181,7 +181,7 @@ class tag extends \Kwerqy\Ember\com\ui\intf\component {
 //			}
 //
 //			// script
-//			\mod\js::add_script("$('#{$options["@id"]}').keypress(function(event) { if (event.which == 13) { event.preventDefault(); {$options["!enter"]}; }});");
+//			\Kwerqy\Ember\com\js\js::add_script("$('#{$options["@id"]}').keypress(function(event) { if (event.which == 13) { event.preventDefault(); {$options["!enter"]}; }});");
 //			unset($options["!enter"]);
 //		}
 

@@ -109,7 +109,7 @@ class request extends \Kwerqy\Ember\com\intf\standard {
         }
 
 		//parse
-		return data::parse($value, $data_type);
+		return \Kwerqy\Ember\com\data\data::parse($value, $data_type);
 
 	}
 	//--------------------------------------------------------------------------------

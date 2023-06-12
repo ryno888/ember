@@ -40,7 +40,7 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 	public function form($action, $validate = false, $options = []) {
 		$options = array_merge([
 		    ".needs-validation" => true,
-		    "id" => \mod\str::generate_id(["prefix" => "form"]),
+		    "id" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "form"]),
 		    "@novalidate" => true,
 		    "@class" => "",
 		], $options);
@@ -92,7 +92,7 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 
 	    $options = array_merge([
 	        "label" => "Save Changes",
-	        "@id" => \mod\str::generate_id(["prefix" => "btn_submit"]),
+	        "@id" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "btn_submit"]),
 	        ".ui-form-submit" => true,
 	    ], $options);
 
@@ -117,13 +117,13 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 			"*action" => $this->form_action,
 		], $options);
 
-		$data = \mod\js::create_options($options);
+		$data = \Kwerqy\Ember\com\js\js::create_options($options);
 
 		$js_arr = [];
 		$js_arr[] = "let data = {$data};";
 		$js_arr[] = "event.preventDefault();";
 		$js_arr[] = "event.stopPropagation();";
-		$js_arr[] = \mod\js::ajax($options["*action"], [
+		$js_arr[] = \Kwerqy\Ember\com\js\js::ajax($options["*action"], [
 			"*form" => "#{$this->form_id}",
 			"*beforeSend" => "function(){ 
                 app.html.set_btn_loading(btn);
@@ -236,7 +236,7 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------
 	public function build($options = []) {
 
-	    \mod\js::add_script(implode("", $this->form_js_arr));
+	    \Kwerqy\Ember\com\js\js::add_script(implode("", $this->form_js_arr));
 
 		return $this->buffer->build();
 

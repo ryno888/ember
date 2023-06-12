@@ -14,7 +14,7 @@ class pagination extends \Kwerqy\Ember\com\ui\intf\component {
         parent::__construct($options);
 
         $options = array_merge([
-            "id" => \mod\str::generate_id(["prefix" => "component"])
+            "id" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "component"])
         ], $options);
 
         $this->name = "Pagination";
@@ -57,10 +57,10 @@ class pagination extends \Kwerqy\Ember\com\ui\intf\component {
 		$buffer->div(["@id" => $options["id"]]);
 
 		//init json options
-		$json_options = \mod\js::create_options($options);
+		$json_options = \Kwerqy\Ember\com\js\js::create_options($options);
 
 		//apply script
-		\mod\js::add_script("
+		\Kwerqy\Ember\com\js\js::add_script("
 		    $('#{$options["id"]}').bootpag($json_options).on('page', function(event, num){
 		        var fn = {$options["!click"]};
                 if (fn) fn.apply(this, [num]);

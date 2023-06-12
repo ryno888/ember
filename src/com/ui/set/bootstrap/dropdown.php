@@ -18,7 +18,7 @@ class dropdown extends \Kwerqy\Ember\com\ui\intf\component {
 	protected function __construct($options = []) {
 		// init
 		$this->name = "Dropdown";
-		$this->id = \mod\str::generate_id(["prefix" => "dropdown"]);
+		$this->id = \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "dropdown"]);
 	}
 	//--------------------------------------------------------------------------------
 	public function add_link($href, $label, $options = []) {

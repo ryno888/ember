@@ -45,7 +45,7 @@ class carousel extends \Kwerqy\Ember\com\intf\standard {
 	public function build($options = []) {
 		// options
 		$options = array_merge([
-			"@id" => strtolower(\mod\str::get_random_alpha()),
+			"@id" => strtolower(\Kwerqy\Ember\com\str\str::get_random_alpha()),
 			".carousel" => true,
 			".slide" => true,
 			".carousel-fade" => false,
