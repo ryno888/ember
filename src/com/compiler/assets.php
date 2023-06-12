@@ -77,25 +77,34 @@ class assets extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 	public function get_stream_css($options = []) {
 
-		return \Kwerqy\Ember\com\ui\ui::make()->tag()->link([
-			"@rel" => "stylesheet",
-			"@href" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.css"])
-		]);
+	    $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+
+	    $buffer->link(["@rel" => "stylesheet", "@href" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.css"])]);
+
+	    foreach ($this->section->get_ui()->get_css_cdn_includes() as $include){
+	        $buffer->link(["@rel" => "stylesheet", "@href" => $include]);
+        }
+
+		return $buffer->build();
 
 	}
 	//--------------------------------------------------------------------------------
 	public function get_stream_js($options = []) {
 
-		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-		$buffer->script([
-			"@src" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.js"])
-		]);
+	    $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
-		//init
+	    $buffer->script(["@src" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.js"])]);
+
+	    foreach ($this->section->get_ui()->get_js_cdn_includes() as $include){
+	        $buffer->script(["@src" => $include]);
+        }
+
+	    //init
 		$buffer->add(\Kwerqy\Ember\com\js\js::get_script());
 		$buffer->add(\Kwerqy\Ember\com\js\js::get_domready());
 
 		return $buffer->build();
+
 	}
 	//--------------------------------------------------------------------------------
 }

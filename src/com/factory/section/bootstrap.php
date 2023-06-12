@@ -13,7 +13,7 @@ class bootstrap extends \Kwerqy\Ember\com\intf\section {
 	//--------------------------------------------------------------------------------
     /**
      * @param array $options
-     * @return \Kwerqy\Ember\com\intf\standard|\Kwerqy\Ember\com\ui\set\bootstrap|mixed
+     * @return \Kwerqy\Ember\com\ui\intf\set
      */
 	public function get_ui($options = []) {
 		return \Kwerqy\Ember\com\ui\set\bootstrap::make($options);

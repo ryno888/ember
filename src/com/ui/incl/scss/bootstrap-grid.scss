@@ -16,14 +16,14 @@ html {
   box-sizing: inherit;
 }
 
-@import "../../../../../../vendor/twbs/bootstrap/scss/functions";
+@import "../../../../../../../twbs/bootstrap/scss/functions";
 @import "bootstrap/variables";
 
-@import "../../../../../../vendor/twbs/bootstrap/scss/mixins/breakpoints";
-@import "../../../../../../vendor/twbs/bootstrap/scss/mixins/grid-framework";
-@import "../../../../../../vendor/twbs/bootstrap/scss/mixins/grid";
+@import "../../../../../../../twbs/bootstrap/scss/mixins/breakpoints";
+@import "../../../../../../../twbs/bootstrap/scss/mixins/grid-framework";
+@import "../../../../../../../twbs/bootstrap/scss/mixins/grid";
 
-@import "../../../../../../vendor/twbs/bootstrap/scss/grid";
-@import "../../../../../../vendor/twbs/bootstrap/scss/utilities/display";
-@import "../../../../../../vendor/twbs/bootstrap/scss/utilities/flex";
-@import "../../../../../../vendor/twbs/bootstrap/scss/utilities/spacing";
+@import "../../../../../../../twbs/bootstrap/scss/grid";
+@import "../../../../../../../twbs/bootstrap/scss/utilities/display";
+@import "../../../../../../../twbs/bootstrap/scss/utilities/flex";
+@import "../../../../../../../twbs/bootstrap/scss/utilities/spacing";

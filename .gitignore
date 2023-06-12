@@ -17,3 +17,5 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+/src/com/ui/incl/.sass-cache/
+/src/com/ui/incl/css/

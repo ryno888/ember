@@ -10,7 +10,7 @@ abstract class section extends \Kwerqy\Ember\com\intf\standard{
 
 	//--------------------------------------------------------------------------------
 	/**
-	 * @return string
+	 * @return string|\Kwerqy\Ember\com\ui\intf\set
 	 */
 	public abstract function get_set();
 	//--------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ abstract class section extends \Kwerqy\Ember\com\intf\standard{
 
     /**
      * @param array $options
-     * @return mixed
+     * @return \Kwerqy\Ember\com\ui\intf\set
      */
 	public abstract function get_ui($options = []);
 	//--------------------------------------------------------------------------------

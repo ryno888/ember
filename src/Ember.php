@@ -77,6 +77,7 @@ class Ember {
             "chimpstatic.com",
             "downloads.mailchimp.com",
             "mc.us9.list-manage.com",
+            "unpkg.com",
             "blob:",
             "self:",
         ],
@@ -88,6 +89,7 @@ class Ember {
             "https://fonts.googleapis.com/",
             "https://cdn.jsdelivr.net",
             "downloads.mailchimp.com",
+            "unpkg.com",
         ],
         "img-src" => [
             "*.zopim.com/",
