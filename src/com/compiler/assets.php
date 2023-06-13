@@ -28,7 +28,7 @@ class assets extends \Kwerqy\Ember\com\intf\standard {
 		$this->css_arr = $this->section->get_ui()->get_css_includes();
 		$this->js_arr = $this->section->get_ui()->get_js_includes();
 
-		$this->dest = DIR_ASSETS."/ui";
+		$this->dest = DIR_ASSETS."/cache/ui";
 
 	}
 	//--------------------------------------------------------------------------------

@@ -305,7 +305,7 @@ var app = {
 
 			options = $.extend({
 				width: 'modal-md',
-				closable: false,
+				closable: true,
 				ok_callback: function(){},
 			}, (options === undefined ? {} : options));
 

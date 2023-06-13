@@ -10,10 +10,11 @@ defined('DIR_APP') || define('DIR_APP', DIR_EMBER.'/app');
 //defined('DIR_UI') || define('DIR_UI', DIR_COM.'/ui');
 //defined('DIR_UI_INCL') || define('DIR_UI_INCL', DIR_UI.'/incl');
 //
-defined('DIR_ASSETS') || define('DIR_ASSETS', WRITEPATH."assets");
+defined('DIR_WRITABLE') || define('DIR_WRITABLE', WRITEPATH);
+defined('DIR_ASSETS') || define('DIR_ASSETS', DIR_WRITABLE."assets");
 defined('DIR_ASSETS_FILES') || define('DIR_ASSETS_FILES', DIR_ASSETS."/files");
 defined('DIR_ASSETS_IMG') || define('DIR_ASSETS_IMG', DIR_ASSETS_FILES."/img");
-defined('DIR_TEMP') || define('DIR_TEMP', WRITEPATH."temp");
+defined('DIR_TEMP') || define('DIR_TEMP', DIR_WRITABLE."temp");
 
 defined('DIR_VENDOR') || define('DIR_VENDOR', ROOTPATH.'vendor');
 
