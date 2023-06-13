@@ -183,7 +183,7 @@ class Ember {
 
 	}
 	//--------------------------------------------------------------------------------
-    public static function console($mixed){ \Kwerqy\Ember\com\debug\debug::console($mixed); }
+    public static function console($mixed, $options = []){ \Kwerqy\Ember\com\debug\debug::console($mixed, $options); }
     public static function display($mixed, $show_detail = false){ \Kwerqy\Ember\com\debug\debug::view($mixed, ["show_detail" => $show_detail]); }
     public static function dbvalue($value, $options = []) { return \Kwerqy\Ember\com\db\db::dbvalue($value, $options); }
 	//--------------------------------------------------------------------------------

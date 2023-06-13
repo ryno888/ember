@@ -43,12 +43,13 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 		    "id" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "form"]),
 		    "@novalidate" => true,
 		    "@class" => "",
+		    "action" => \Kwerqy\Ember\com\http\http::build_action_url($action),
 		], $options);
 
-		$this->form_action = $action;
+		$this->form_action = $options["action"];
 		$this->form_validate = $validate;
 
-		$class_arr = \mod\arr::extract_signature_items(".", $options);
+		$class_arr = \Kwerqy\Ember\com\arr\arr::extract_signature_items(".", $options);
 		foreach ($class_arr as $key => $value){
 			if($value === true){
 				$options["@class"] .= "$key ";
@@ -59,7 +60,7 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 		$options["@name"] = $options["id"];
 		$options["@class"] = trim($options["@class"]);
 
-		$attr_arr = \mod\arr::extract_signature_items("@", $options);
+		$attr_arr = \Kwerqy\Ember\com\arr\arr::extract_signature_items("@", $options);
 		foreach ($attr_arr as $key => $value){
 			if($value === true){
 				$attr_arr[$key] = substr($value, 1, strlen($value));
@@ -68,7 +69,7 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$this->buffer->add(form_open($this->form_action, $attr_arr));
 
-		$honeypot = \core::get_env("honeypot.name");
+		$honeypot = getenv("honeypot.name");
 		if($honeypot){
             $this->buffer->div_([".d-none" => true]);
                 $this->buffer->label(["*" => "Security Field"]);
