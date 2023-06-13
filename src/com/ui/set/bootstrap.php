@@ -91,19 +91,11 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 
 		$asset_arr = [];
 
-		//bootstrap
-		$asset_arr[] = "{$path_css}/bootstrap.css";
-		$asset_arr[] = "{$path_css}/bootstrap-grid.css";
-		$asset_arr[] = "{$path_css}/bootstrap-reboot.css";
-
 		//https://docs.dropzone.dev/getting-started/setup/imperative
 		$asset_arr[] = "{$path_vendor}/enyo/dropzone/dist/min/dropzone.min.css";
 
 		//https://github.com/fengyuanchen/jquery-cropper
 		$asset_arr[] = "{$path_vendor}/fengyuanchen/cropper/dist/cropper.min.css";
-
-		//ember
-		$asset_arr[] = "{$path_css}/ember.mod.ui.incl.app.css";
 
 		//custom
         $file_arr = glob(DIR_ASSETS."/ui/app/css/*");
@@ -111,6 +103,9 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 
         $file_arr = glob(DIR_ASSETS."/ui/".strtolower($this->get_name())."/css/*");
         foreach ($file_arr as $file) $asset_arr[] = $file;
+        
+        //bootstrap
+		$asset_arr[] = "{$path_css}/app.css";
 
 		// done
 		return $asset_arr;
