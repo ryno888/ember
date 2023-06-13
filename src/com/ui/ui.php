@@ -311,11 +311,11 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 
     /**
      * @param array $options
-     * @return intf\standard|ui\set\system\carousel
+     * @return mixed|\Kwerqy\Ember\com\ui\set\bootstrap\carousel
      */
 	public function carousel($options = []) {
 
-		return $this->section->get_ui()->get("carousel")->build($options);
+		return $this->section->get_ui()->get("carousel", $options);
 	}
 	//--------------------------------------------------------------------------------
 

@@ -62,7 +62,7 @@ class carousel extends \Kwerqy\Ember\com\intf\standard {
 
 		if(!$this->item_arr) return "";
 
-		$first_index = \mod\arr::get_first_index($this->item_arr);
+		$first_index = \Kwerqy\Ember\com\arr\arr::get_first_index($this->item_arr);
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 

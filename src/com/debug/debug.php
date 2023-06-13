@@ -51,7 +51,7 @@ class debug {
 		], $options);
 
 		// buffer results to write to file later
-		\mod\os::mkdir(DIR_TEMP);
+		\Kwerqy\Ember\com\os\os::mkdir(DIR_TEMP);
 		ob_start();
 		self::view($var, $options);
 		file_put_contents(DIR_TEMP."/console.txt", ob_get_clean().PHP_EOL, FILE_APPEND);
