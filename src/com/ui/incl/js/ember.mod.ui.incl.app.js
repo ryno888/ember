@@ -282,7 +282,6 @@ var app = {
 
         	let p = new popup(options);
 			p.set_title(options.title);
-			p.set_loading_content();
 			p.on_show(function(e){
 
 				$('#' + options.id + ' .modal-body').html('<div id="'+options.popup_id+'"></div>')

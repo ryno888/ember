@@ -1,137 +1,160 @@
+/**
+ * Class.
+ *
+ * @author Liquid Edge Solutions
+ * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ */
 
-class popup{
-	//--------------------------------------------------------------------------------
-	constructor(options){
+class popup {
 
-		// options
-		this.options = $.extend({
-			class: '',
-			width: 'auto',
-			id: app.data.generate_unique_id('modal'),
-			title: 'Alert',
-			closable: true,
-			hide_header: false,
-			hide_footer: true,
-			body_content: '',
-			height_class: '',
-			footer_content: '',
-			backdrop: 'static',
-			on_show: function(){},
-			on_hide: function(){},
-			on_hidden: function(){},
-		}, (options == undefined ? {} : options));
+    //--------------------------------------------------------------------------------
+    /**
+     * constructor
+     * @param options
+     */
+    constructor(options) {
+        // options
+        this.options = $.extend({
+            class: '',
+            class_modal_content: '',
+            width: 'auto',
+            id: app.util.id_generator({prepend: "modal"}),
+            title: 'Alert',
+            closable: true,
+            hide_header: false,
+            hide_footer: false,
+            backdrop: true, // true | false | 'static'
+            body_content: '',
+            footer_content: '',
+            on_show: function () {
+            },
+            on_shown: function () {
+            },
+            on_hide: function () {
+            },
+            on_hidden: function () {
+            },
+        }, (options === undefined ? {} : options));
 
-		this.aria_labelledby = this.options.id + 'Label';
+        this.aria_labelledby = this.options.id + 'Label';
+    }
 
-	}
-	//--------------------------------------------------------------------------------
-	set_title(title){
-		this.options.title = title;
-	}
-	//--------------------------------------------------------------------------------
-	set_body_content(content){
-		this.options.body_content = content;
-	}
-	//--------------------------------------------------------------------------------
-	set_footer_content(content){
-		this.options.footer_content = content;
-	}
-	//--------------------------------------------------------------------------------
-	on_show(f){
-		this.options.on_show = f;
-	}
-	//--------------------------------------------------------------------------------
-	on_hide(f){
-		this.options.on_hide = f;
-	}
-	//--------------------------------------------------------------------------------
-	on_hidden(f){
-		this.options.on_hidden = f;
-	}
-	//--------------------------------------------------------------------------------
-	set_loading_content(){
-		this.set_body_content(
-			'<div class="panel-loader d-flex align-items-center justify-content-center mh-40">' +
-				'<div class="spinner-grow spinner-grow-sm text-muted"></div>' +
-				'<div class="spinner-grow spinner-grow-sm text-primary"></div>' +
-				'<div class="spinner-grow spinner-grow-sm text-success"></div>' +
-				'<div class="spinner-grow spinner-grow-sm text-info"></div>' +
-				'<div class="spinner-grow spinner-grow-sm text-warning"></div>' +
-				'<div class="spinner-grow spinner-grow-sm text-danger"></div>' +
-				'<div class="spinner-grow spinner-grow-sm text-secondary"></div>' +
-				'<div class="spinner-grow spinner-grow-sm text-muted"></div>' +
-			'</div>'
-		);
-	}
-	//--------------------------------------------------------------------------------
-	build(){
+    //--------------------------------------------------------------------------------
+    set_title(title) {
+        this.options.title = title;
+    }
 
-		let builder = this;
+    //--------------------------------------------------------------------------------
+    set_body_content(content) {
+        this.options.body_content = content;
+    }
 
-		var $popup = $(
-			'<div class="modal fade animated '+this.options.class+'" id="'+this.options.id+'" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="'+this.aria_labelledby+'" aria-hidden="true">'+
-				'<div class="modal-dialog '+this.options.width+'">'+
-					'<div class="modal-content">'+
-						'<div class="modal-header '+(this.options.hide_header ? "d-none" : "")+' ">'+
+    //--------------------------------------------------------------------------------
+    set_footer_content(content) {
+        this.options.footer_content = content;
+    }
+
+    //--------------------------------------------------------------------------------
+    on_show(f) {
+        this.options.on_show = f;
+    }
+
+    //--------------------------------------------------------------------------------
+    on_shown(f) {
+        this.options.on_shown = f;
+    }
+
+    //--------------------------------------------------------------------------------
+    on_hide(f) {
+        this.options.on_hide = f;
+    }
+
+    //--------------------------------------------------------------------------------
+    on_hidden(f) {
+        this.options.on_hidden = f;
+    }
+
+    //--------------------------------------------------------------------------------
+    build_html() {
+        return '' +
+			'<div class="modal ui-modal-inject fade" id="'+this.options.id+'" aria-hidden="true" aria-labelledby="'+this.aria_labelledby+'" tabindex="-1" data-z-index="1050">' +
+				'<div class="modal-dialog modal-dialog-centered '+this.options.width+' '+this.options.class+'">' +
+					'<div class="modal-content '+this.options.class_modal_content+'">' +
+						'<div class="modal-header '+(this.options.hide_header ? "d-none" : "")+'">'+
 							'<h5 class="modal-title" id="'+this.aria_labelledby+'">'+this.options.title+'</h5>'+
-							'<button type="button" class="close '+(!this.options.closable ? 'd-none' : '')+'" data-dismiss="modal" aria-label="Close">'+
-								'<span aria-hidden="true">&times;</span>'+
-							'</button>'+
+							'<button type="button" class="btn-close '+(!this.options.closable ? 'd-none' : '')+'" data-bs-dismiss="modal" aria-label="Close"></button>'+
 						'</div>'+
-						'<div class="modal-body '+this.options.height_class+'">'+
+						'<div class="modal-body">'+
 							this.options.body_content+
 						'</div>'+
-						'<div class="modal-footer '+(this.options.hide_footer ? "d-none" : "")+'">'+
-							this.options.footer_content+
+						'<div class="modal-footer'+((this.options.hide_footer || !this.options.footer_content) ? "d-none" : "")+'">'+
+						  this.options.footer_content+
 						'</div>'+
 					'</div>'+
 				'</div>'+
-			'</div>')
-			.on('show.bs.modal', function (event) {
+			'</div>';
+    }
 
-				if($('.modal-backdrop').length) $('.modal-backdrop').css('z-index', '1029');
-				if($('.modal').length) $('.modal').css('z-index', '1039');
+    //--------------------------------------------------------------------------------
+    build(options) {
 
-				// clear focus from buttons
-				$('button:focus').blur();
-				$('body').focus().hover();
+        options = $.extend(this.options, (options === undefined ? {} : options));
 
-			})
-			.on('shown.bs.modal', function (event) {
-				var $this = $(this);
+        let html = this.build_html(options);
+        let instance = this;
+        let existing_modal = $('.modal.ui-modal-inject').last();
 
-				builder.options.on_show.apply(this, [builder.options]);
+        document.body.insertAdjacentHTML('beforeend', html);
 
-				$this.find('button[commodal-btn=ok]').focus();
+        let element = document.getElementById(this.options.id);
 
-				app.browser.popup_id_arr.push(builder.options.id);
+        element.addEventListener('show.bs.modal', function (event) {
 
-				app.overlay.hide();
-			})
-			.on('hide.bs.modal', function(e) {
-				builder.options.on_hide.apply(this, [builder.options]);
+            let $this = $(this);
+            instance.options.on_show.apply(this, [event, instance.options]);
 
-				if($('.modal-backdrop').length) $('.modal-backdrop').css('z-index', '1039');
-				if($('.modal').length) $('.modal').css('z-index', '1049');
+            if (existing_modal.length) {
+                let index = parseInt(existing_modal.attr('data-z-index'));
+                let new_index = index + 100;
 
-            })
-			.on('hidden.bs.modal', function() {
-				var $this = $(this);
+                $this.attr("data-z-index", new_index);
+                $this.css('z-index', new_index);
+                setTimeout(function (){
+                    $this.next().css('z-index', new_index - 10);
+                }, 10);
+            }
 
-				builder.options.on_hidden.apply(this, [builder.options]);
+            // clear focus from buttons
+            $('button:focus').blur();
+            $('body').focus().hover();
+        });
 
-				$this.remove();
+        element.addEventListener('shown.bs.modal', function (event) {
+            instance.options.on_shown.apply(this, [event, instance.options]);
+            $(this).find('button[commodal-btn=ok]').focus();
+            app.browser.popup_id_arr.push(instance.options.id);
+            app.overlay.hide();
+        });
 
-				app.browser.popup_id_arr.pop();
-				if (app.browser.popup_id_arr.length) {
-					$('body').addClass('modal-open');
-				}
-			})
-			.modal({
-				backdrop: this.options.backdrop,
-				attentionAnimation : ''
-			});
+        element.addEventListener('hide.bs.modal', function (event) {
+            instance.options.on_hide.apply(this, [event, instance.options]);
+        });
 
-		return $popup;
-	}
+        element.addEventListener('hidden.bs.modal', function (event) {
+            instance.options.on_hidden.apply(this, [event, instance.options]);
+            element.remove();
+            app.browser.popup_id_arr.pop();
+            if (app.browser.popup_id_arr.length) {
+                $('body').addClass('modal-open');
+            }
+        });
+
+        let popup = new bootstrap.Modal(element, options);
+        popup.show();
+
+        return popup;
+
+    }
+
+    //------------------------------------------------------------------------------
 }
