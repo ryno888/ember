@@ -179,5 +179,14 @@ class arr {
 
 		return $options["default"];
 	}
+	//--------------------------------------------------------------------------------
+    public static function get_last_element($arr) {
+		return end($arr);
+    }
+	//--------------------------------------------------------------------------------
+	public static function unset_first_index(&$arr) {
+		$index = self::get_first_index($arr);
+		unset($arr[$index]);
+	}
     //--------------------------------------------------------------------------------
 }

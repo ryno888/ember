@@ -102,11 +102,11 @@ class tag extends \Kwerqy\Ember\com\ui\intf\component {
 	}
 	//--------------------------------------------------------------------------------
 	/**
-	 * Adds the specified content directly to the buffer. Content is html-encoded by
+	 * Adds the specified content directly to the buffer. Content is htms-encoded by
 	 * default.
 	 *
 	 * @param string $content <p>The content.</p>
-	 * @param boolean $options[html] <p>If true, the content will not be html-encoded.</p>
+	 * @param boolean $options[html] <p>If true, the content will not be htms-encoded.</p>
 	 *
 	 * @return string <p>The HTML-encoded (or not) content.</p>
 	 */
@@ -149,8 +149,8 @@ class tag extends \Kwerqy\Ember\com\ui\intf\component {
 	 * @param boolean $options[.] <p>If the option index starts with '.' and the option value is 'true', the rest of the index will be added as an inline class. (class="[option-index]")</p>
 	 * @param string|boolean $options[@] <p>If the option index starts with '@', the rest of the index will be used as a tag attribute name and the option value as the value. ([option-index]="[option-value]")</p>
 	 * @param string $options[!] <p>If the option index starts with '!', the rest of the index will be used as an inline event and the option value as the javascript to execute. (on[option-index]="[option-value]")</p>
-	 * @param string $options[^] <p>The option value will be used as the html within the opening and closing tags. This value will be html-encoded. (<tag>[option-value]</tag>)</p>
-	 * @param string $options[*] <p>The option value will be used as the html within the opening and closing tags. This value will NOT be html-encoded. (<tag>[option-value]</tag>)</p>
+	 * @param string $options[^] <p>The option value will be used as the html within the opening and closing tags. This value will be htms-encoded. (<tag>[option-value]</tag>)</p>
+	 * @param string $options[*] <p>The option value will be used as the html within the opening and closing tags. This value will NOT be htms-encoded. (<tag>[option-value]</tag>)</p>
 	 * @param boolean $options[/] <p>Providing this index with value true will add a closing tag as well.</p>
 	 * @param string $options[!enter] <p>A special javascript event to execute when the enter key is pressed within the element.</p>
 	 *
@@ -278,7 +278,7 @@ class tag extends \Kwerqy\Ember\com\ui\intf\component {
 	 * <p>Providing a # followed by text, will use the text as the id attribute.</p>
 	 * <p>Providing a . followed by text, will use the text as a class.</p>
 	 * <p>Providing a / at the end of the pattern, will close the tag provided.</p>
-	 * <p>Providing a ^ followed by text, will use the text as html-encoded content within the opening and closing tags.</p>
+	 * <p>Providing a ^ followed by text, will use the text as htms-encoded content within the opening and closing tags.</p>
 	 * <p>Providing a * followed by text, will use the text as raw html content within the opening and closing tags.</p>
 	 *
 	 * @param string $pattern <p>The special syntax string that this function will recognize.</p>

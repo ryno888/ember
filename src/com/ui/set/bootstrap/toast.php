@@ -35,11 +35,11 @@ class toast extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$buffer->div_($options["/"]);
             $buffer->div_([".toast-header" => true, ]);
-                $buffer->div([".rounded mr-2 p-2" => true, ".bg-primary" => true]);
-                $buffer->strong([".mr-auto" => true, "*" => "Bootstrap"]);
+                $buffer->div([".rounded me-2 p-2" => true, ".bg-primary" => true]);
+                $buffer->strong([".me-auto" => true, "*" => "Bootstrap"]);
 
                 $buffer->small([".text-muted" => true, "*" => "2 seconds ago"]);
-                $buffer->xbutton("×", false, ["@class" => "ml-2 mb-1 close", "@data-dismiss" => "toast", "@aria-label" => "Close"]);
+                $buffer->xbutton("×", false, ["@class" => "ms-2 mb-1 close", "@data-dismiss" => "toast", "@aria-label" => "Close"]);
 
             $buffer->_div();
 

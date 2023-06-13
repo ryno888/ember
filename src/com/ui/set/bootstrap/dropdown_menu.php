@@ -73,7 +73,7 @@ class dropdown_menu extends \Kwerqy\Ember\com\ui\intf\component {
 				$fn_dropdown_item = function() use(&$buffer){
 					
 					$buffer->a_([".dropdown-item d-flex align-items-center" => true, "@href" => "#"]); 
-						$buffer->div_([".mr-3 icon-circle bg-primary" => true]);
+						$buffer->div_([".me-3 icon-circle bg-primary" => true]);
 							$buffer->xicon("fa-file-alt", [".text-white" => true]);
 						$buffer->_div();
 						$buffer->div_([".font-weight-bold" => true]);
@@ -84,7 +84,7 @@ class dropdown_menu extends \Kwerqy\Ember\com\ui\intf\component {
 					
 //					$buffer->add("
 //						<a class='dropdown-item d-flex align-items-center' href='#'>
-//							<div class='mr-3'>
+//							<div class='me-3'>
 //								<div class='icon-circle bg-primary'>
 //									<i class='fas fa-file-alt text-white'></i>
 //								</div>
@@ -127,7 +127,7 @@ class dropdown_menu extends \Kwerqy\Ember\com\ui\intf\component {
 //                                        Message Center
 //                                    </h6>
 //                                    <a class='dropdown-item d-flex align-items-center' href='#'>
-//                                        <div class='dropdown-list-image mr-3'>
+//                                        <div class='dropdown-list-image me-3'>
 //                                            <img class='rounded-circle' src='img/undraw_profile_1.svg'
 //                                                alt='...'>
 //                                            <div class='status-indicator bg-success'></div>
@@ -139,7 +139,7 @@ class dropdown_menu extends \Kwerqy\Ember\com\ui\intf\component {
 //                                        </div>
 //                                    </a>
 //                                    <a class='dropdown-item d-flex align-items-center' href='#'>
-//                                        <div class='dropdown-list-image mr-3'>
+//                                        <div class='dropdown-list-image me-3'>
 //                                            <img class='rounded-circle' src='img/undraw_profile_2.svg'
 //                                                alt='...'>
 //                                            <div class='status-indicator'></div>
@@ -151,7 +151,7 @@ class dropdown_menu extends \Kwerqy\Ember\com\ui\intf\component {
 //                                        </div>
 //                                    </a>
 //                                    <a class='dropdown-item d-flex align-items-center' href='#'>
-//                                        <div class='dropdown-list-image mr-3'>
+//                                        <div class='dropdown-list-image me-3'>
 //                                            <img class='rounded-circle' src='img/undraw_profile_3.svg'
 //                                                alt='...'>
 //                                            <div class='status-indicator bg-warning'></div>
@@ -163,7 +163,7 @@ class dropdown_menu extends \Kwerqy\Ember\com\ui\intf\component {
 //                                        </div>
 //                                    </a>
 //                                    <a class='dropdown-item d-flex align-items-center' href='#'>
-//                                        <div class='dropdown-list-image mr-3'>
+//                                        <div class='dropdown-list-image me-3'>
 //                                            <img class='rounded-circle' src='https://source.unsplash.com/Mv9hjnEUHR4/60x60'
 //                                                alt='...'>
 //                                            <div class='status-indicator bg-success'></div>

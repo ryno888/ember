@@ -107,7 +107,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 		$buffer->nav_($options);
 			$buffer->div_([".container-fluid" => true]);
 			
-				$buffer->div_([".navbar-translate ml-auto" => true]);
+				$buffer->div_([".navbar-translate ms-auto" => true]);
 				$buffer->button_([".navbar-toggler" => true, "@data-toggle" => "collapse", "@data-target" => "#$this->id", "@type" => "button"]);
 					$buffer->span([".sr-only" => true, "*" => "Toggle navigation"]);
 					$buffer->xicon("fa-bars", [".text-white" => true]);
@@ -117,7 +117,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 				$buffer->div_([".collapse navbar-collapse justify-content-end" => true, "@id" => $this->id]);
 
-					$buffer->ul_([".navbar-nav mr-auto" => true]);
+					$buffer->ul_([".navbar-nav me-auto" => true]);
 
 						$fn_add_li = function($link, $label, $options = []) use(&$buffer){
 
@@ -166,7 +166,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 //						<span class='navbar-toggler-icon'></span>
 //					</button>
 //					<div class='collapse navbar-collapse' id='navcol-1'>
-//						<ul class='navbar-nav mr-auto'>
+//						<ul class='navbar-nav me-auto'>
 //							<li class='nav-item'>
 //								<a class='nav-link active' href='#'>First Item</a>
 //							</li>
@@ -204,7 +204,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 			// divider
 			if (preg_match("/^-$/", $item_item["label"])) {
-				$html->div(".dropdown-divider");
+				$htms->div(".dropdown-divider");
 				continue;
 			}
 
@@ -214,22 +214,22 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 				$label = substr($item_item["label"], 1);
 
 				// divider, only if this is not the first item
-				if ($key_index) $html->div(".dropdown-divider");
+				if ($key_index) $htms->div(".dropdown-divider");
 
 				// item
-				$html->h6_(".dropdown-header");
-					if ($item_item["icon"]) $html->xicon($item_item["icon"], ["space" => true]);
-					$html->content($label);
-				$html->_h6();
+				$htms->h6_(".dropdown-header");
+					if ($item_item["icon"]) $htms->xicon($item_item["icon"], ["space" => true]);
+					$htms->content($label);
+				$htms->_h6();
 				continue;
 			}
 
 			// submenu
 			if ($item_item["submenu"]) {
 				if (!$level) {
-					$html->li_(".nav-item .dropdown .mr-2");
+					$htms->li_(".nav-item .dropdown .me-2");
 						$tid = \com\session::$current->session_uid;
-						$html->xlink(false, $item_item["label"], [
+						$htms->xlink(false, $item_item["label"], [
 							"@id" => $tid,
 							".nav-link" => true,
 							".dropdown-toggle" => true,
@@ -241,24 +241,24 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 							"icon" => $item_item["icon"],
 						]);
 
-						$html->ul_(".dropdown-menu", ["@aria-labelledby" => $tid]);
+						$htms->ul_(".dropdown-menu", ["@aria-labelledby" => $tid]);
 							$this->dropdown($html, $item_item["submenu"], $level + 1);
-						$html->_ul();
-					$html->_li();
+						$htms->_ul();
+					$htms->_li();
 				}
 				else {
-					$html->li_(".dropdown-submenu");
-						$html->a(".dropdown-item .dropdown-toggle ^{$item_item["label"]}", ["@href" => "#"]);
-						$html->ul_(".dropdown-menu");
+					$htms->li_(".dropdown-submenu");
+						$htms->a(".dropdown-item .dropdown-toggle ^{$item_item["label"]}", ["@href" => "#"]);
+						$htms->ul_(".dropdown-menu");
 							$this->dropdown($html, $item_item["submenu"], $level + 1);
-						$html->_ul();
-					$html->_li();
+						$htms->_ul();
+					$htms->_li();
 				}
 			}
 			else {
-				if (!$level) $html->li_(".nav-item .mr-2");
+				if (!$level) $htms->li_(".nav-item .me-2");
 				$this->link($html, $item_item, $level);
-				if (!$level) $html->_li();
+				if (!$level) $htms->_li();
 			}
 		}
 	}
@@ -282,7 +282,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 		else $options[".dropdown-item"] = true;
 
 		// html
-		$html->xlink($href, $item["label"], $options);
+		$htms->xlink($href, $item["label"], $options);
 	}
 	//--------------------------------------------------------------------------------
 }

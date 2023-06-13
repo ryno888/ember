@@ -27,7 +27,7 @@ class debug extends \Kwerqy\Ember\com\ui\intf\component {
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 		if(file_exists(DIR_TEMP."/console.txt")){
 			$buffer->div_(["#position" => "fixed", "#left" => "0", "#bottom" => "0", "#padding" => "10px", "#background" => "lightgray", ".debug-wrapper" => true]);
-				$buffer->xbutton("view", "window.open('".\Kwerqy\Ember\com\http\http::build_action_url("ember/vview_error")."', '_blank')", [".btn-sm mw-100px mr-2" => true]);
+				$buffer->xbutton("view", "window.open('".\Kwerqy\Ember\com\http\http::build_action_url("ember/vview_error")."', '_blank')", [".btn-sm mw-100px me-2" => true]);
 				$buffer->xbutton("clear", \Kwerqy\Ember\com\js\js::ajax(\Kwerqy\Ember\com\http\http::build_action_url("ember/xclear_debug"), [
 					"*data" => ["close_window" => \Kwerqy\Ember\com\http\http::get_control() == "index/vdebug"],
 					"*success" => "function(response){

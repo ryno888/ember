@@ -105,7 +105,7 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
         foreach ($file_arr as $file) $asset_arr[] = $file;
         
         //bootstrap
-		$asset_arr[] = "{$path_css}/app.css";
+		if(file_exists("{$path_css}/app.css")) $asset_arr[] = "{$path_css}/app.css";
 
 		// done
 		return $asset_arr;

@@ -66,7 +66,7 @@ class iradio extends \Kwerqy\Ember\com\ui\intf\component {
 				$buffer->_div();
 			};
 
-			$buffer->label(["@for" => $id, "*" => $label, ".mr-3" => $options["inline"]]);
+			$buffer->label(["@for" => $id, "*" => $label, ".me-3" => $options["inline"]]);
 			foreach ($input_options_arr as $id => $value) $fn_add_checkbox($id, $value);
 
 			if($options["help"]) $buffer->small(["*" => $options["help"], "@id" => "{$id}Help", ".form-text text-muted" => true]);

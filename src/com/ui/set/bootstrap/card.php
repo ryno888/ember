@@ -53,7 +53,7 @@ class card extends \Kwerqy\Ember\com\ui\intf\component {
 				    if($options["title"]){
 
 				        $buffer->div_([".row no-gutters align-items-center mb-3" => true]);
-                            $buffer->div_([".col mr-2" => true]);
+                            $buffer->div_([".col me-2" => true]);
                                 $options["/title"][".text-{$options["color"]}"] = true;
                                 $options["/title"]["*"] = $options["title"];
                                 $buffer->div($options["/title"]);
@@ -68,7 +68,7 @@ class card extends \Kwerqy\Ember\com\ui\intf\component {
 
 				}else{
 					$buffer->div_([".row no-gutters align-items-center" => true]);
-						$buffer->div_([".col mr-2" => true]);
+						$buffer->div_([".col me-2" => true]);
 
 							$options["/title"][".text-{$options["color"]}"] = true;
 							$options["/title"]["*"] = $options["title"];

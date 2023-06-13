@@ -83,7 +83,7 @@ class idate extends \Kwerqy\Ember\com\ui\intf\component {
 
 		// input
         $options[".bg-white"] = true;
-		$html->xitext($id, $value, $label, $options);
+		$htms->xitext($id, $value, $label, $options);
 
 		// javascript
 		$JS_id = strtr($id, ["[" => "\\\\[", "]" => "\\\\]", "." => "\\\\."]);
@@ -141,7 +141,7 @@ class idate extends \Kwerqy\Ember\com\ui\intf\component {
 		}
 
   		// done
-		return $html->get_clean();
+		return $htms->get_clean();
 	}
 	//--------------------------------------------------------------------------------
 }

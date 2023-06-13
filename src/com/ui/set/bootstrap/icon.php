@@ -20,7 +20,7 @@ class icon extends \Kwerqy\Ember\com\ui\intf\component {
 		// options
 		$options = array_merge([
 			"icon" => false,
-			".mr-2" => false,
+			".me-2" => false,
 		], $options);
 
 		// icon and style
@@ -146,13 +146,13 @@ class icon extends \Kwerqy\Ember\com\ui\intf\component {
 		}
 
 		// html
-		$html = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-		$html->span_($wrapper_options);
-		{
-			$html->span("{$icon_style}{$icon}", $options);
-		}
-		$html->_span();
-		return $html->get_clean();
+		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+        $buffer->span_($wrapper_options);
+        {
+            $buffer->span("{$icon_style}{$icon}", $options);
+        }
+		$buffer->_span();
+		return $buffer->get_clean();
 
 	}
 	//--------------------------------------------------------------------------------

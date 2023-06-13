@@ -74,7 +74,7 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
   		if($enddate) $enddate = \mod\date::strtodate($enddate, ($options["value_format"] ?: \mod\date::$DATE_FORMAT), ["default" => \mod\date::strtodate()]);
 
         $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-        $options["prepend"] = \Kwerqy\Ember\com\ui\ui::make()->icon("calendar", [".mr-2" => false]);
+        $options["prepend"] = \Kwerqy\Ember\com\ui\ui::make()->icon("calendar", [".me-2" => false]);
         $options[".$id"] = true;
 
         $JS_start_id = \Kwerqy\Ember\com\js\js::parse_id("{$id}[startdate]");
@@ -154,7 +154,7 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
 
         $buffer->div_([".d-flex $id" => true]);
             $buffer->xitext("{$id}[startdate]", false, false, array_merge($options, $options["/field1"]));
-            $buffer->div([".mr-2" => true]);
+            $buffer->div([".me-2" => true]);
             $buffer->xitext("{$id}[enddate]", false, false, array_merge($options, $options["/field2"]));
         $buffer->_div();
     }

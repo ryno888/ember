@@ -26,7 +26,7 @@ class button extends \Kwerqy\Ember\com\ui\intf\component {
 		], $options);
 
 		if($options["icon"] && !$options["/icon"] && $options["label"]){
-		    $options["/icon"] = [".mr-2" => true];
+		    $options["/icon"] = [".me-2" => true];
         }
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();

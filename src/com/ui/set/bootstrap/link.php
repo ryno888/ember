@@ -40,7 +40,7 @@ class link extends \Kwerqy\Ember\com\ui\intf\component {
 		if(is_null($label)) $label = $options["@href"];
 
 		if(!$options["/icon"] && $label){
-		    $options["/icon"][".mr-2"] = true;
+		    $options["/icon"][".me-2"] = true;
         }
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();

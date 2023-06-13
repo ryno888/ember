@@ -25,8 +25,8 @@ class progress extends \Kwerqy\Ember\com\ui\intf\component {
 			"enable_label" => true,
 
 			"/progress" => [],
-			"/progress_wrapper" => [".progress-sm mr-2" => true],
-			"/label" => [".h5 mb-0 mr-3 font-weight-bold text-gray-800" => true],
+			"/progress_wrapper" => [".progress-sm me-2" => true],
+			"/label" => [".h5 mb-0 me-3 font-weight-bold text-gray-800" => true],
 		], $options);
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
