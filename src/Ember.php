@@ -238,5 +238,19 @@ class Ember {
 //
 //	    return $auth->check(\core::$user->active_role);
 	}
+	//--------------------------------------------------------------------------------
+	/**
+	 * @return false|string
+	 */
+	public static function get_environment() {
+		return isset($_SERVER['CI_ENVIRONMENT']) ? $_SERVER['CI_ENVIRONMENT'] : null;
+	}
+	//--------------------------------------------------------------------------------
+    /**
+     * @return bool
+     */
+	public static function is_db_enabled() {
+		return (bool) self::get_env("database.default.hostname");
+	}
     //--------------------------------------------------------------------------------
 }

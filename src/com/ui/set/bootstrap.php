@@ -106,6 +106,9 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 		$asset_arr[] = "{$path_css}/ember.mod.ui.incl.app.css";
 
 		//custom
+        $file_arr = glob(DIR_ASSETS."/ui/app/css/*");
+        foreach ($file_arr as $file) $asset_arr[] = $file;
+
         $file_arr = glob(DIR_ASSETS."/ui/".strtolower($this->get_name())."/css/*");
         foreach ($file_arr as $file) $asset_arr[] = $file;
 
