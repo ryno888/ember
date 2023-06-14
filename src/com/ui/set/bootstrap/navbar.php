@@ -15,6 +15,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 	public $item_arr = [];
 	public $buffer = false;
 	public $type = "standard";
+	public $brand_html;
 	//--------------------------------------------------------------------------------
 	// magic
 	//--------------------------------------------------------------------------------
@@ -32,6 +33,11 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 		$this->buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 	}
+	//--------------------------------------------------------------------------------
+    public function set_brand_html($mixed) {
+        if(is_string($mixed)) $this->brand_html = $mixed;
+        else if(is_callable($mixed)) $this->brand_html = $mixed();
+    }
 	//--------------------------------------------------------------------------------
 	/**
 	 * @param $label
@@ -105,9 +111,11 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
         $buffer->nav_([".navbar navbar-expand-lg bg-light" => true, ]);
             $buffer->div_([".container-fluid" => true, ]);
 
-                $buffer->a_([".navbar-brand" => true, "@href" => "#", ]);
-                    $buffer->add("Navbar");
-                $buffer->_a();
+                if($this->brand_html){
+                    $buffer->a_([".navbar-brand" => true, "@href" => "#", ]);
+                        $buffer->add($this->brand_html);
+                    $buffer->_a();
+                }
 
                 $buffer->button_([".navbar-toggler" => true, "@type" => "button", "@data-bs-toggle" => "collapse", "@data-bs-target" => "#{$this->id}", "@aria-controls" => $this->id, "@aria-expanded" => "false", "@aria-label" => "Toggle navigation", ]);
                     $buffer->span([".navbar-toggler-icon" => true, ]);

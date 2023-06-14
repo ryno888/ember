@@ -52,14 +52,8 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 		//bootstrap
 		$js_arr[] = "{$path_vendor}/twbs/bootstrap/dist/js/bootstrap.min.js";
 
-		//fontawesome
-		$js_arr[] = "{$path_vendor}/fortawesome/font-awesome/js/all.min.js";
-
 		//https://github.com/botmonster/jquery-bootpag
 		$js_arr[] = "{$path_vendor}/intelogie/jquery-bootpag/lib/jquery.bootpag.min.js";
-
-		//https://bootstrap-extension.com/index.php
-//		$js_arr[] = "";
 
         //https://docs.dropzone.dev/getting-started/setup/imperative
 		$js_arr[] = "{$path_vendor}/enyo/dropzone/dist/min/dropzone.min.js";
@@ -130,7 +124,10 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 	//--------------------------------------------------------------------------------
     public function get_css_cdn_includes(): array {
 	    return [
-	        "pre" => [],
+	        "pre" => [
+	            //font-awesome 5
+	            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+            ],
             "post" => [
                 //https://michalsnik.github.io/aos/
                 "https://unpkg.com/aos@2.3.1/dist/aos.css",

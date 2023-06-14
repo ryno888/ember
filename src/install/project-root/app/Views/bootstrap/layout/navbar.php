@@ -14,6 +14,9 @@
 
     $buffer->section_();
         $navbar = \Kwerqy\Ember\com\ui\ui::make()->navbar();
+        $navbar->set_brand_html(function(){
+            return \Kwerqy\Ember\com\ui\ui::make()->image(\Kwerqy\Ember\com\http\http::get_stream_url(DIR_ASSETS_IMG."/__logo.png"), [".img-fluid pb-2" => true]);
+        });
         foreach ($link_arr as $label => $url) $navbar->add_item($label, $url);
         $buffer->add($navbar->build());
     $buffer->_section();
