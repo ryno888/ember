@@ -55,23 +55,23 @@ class dropdown extends \Kwerqy\Ember\com\ui\intf\component {
 		    "space" => 20,
 		    "fn_link" => false,
 		    "wrapper_element" => "div",
-		    "/wrapper" => [".dropdown no-arrow d-inline-block" => true],
+		    "/dropdown" => [".dropdown no-arrow d-inline-block" => true],
 		    "/dropdown-menu" => [".shadow dropdown-menu-right" => true],
 		    "/link" => [],
 		], $options);
 
 		$id = $options["id"];
-		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
-		$buffer->{"{$options["wrapper_element"]}_"}($options["/wrapper"]);
+		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+		$buffer->{"{$options["wrapper_element"]}_"}($options["/dropdown"]);
 
 			if(!$options["fn_link"]){
 				$link = $options["/link"];
+				$link["@href"] = "#";
 				$link[".dropdown-toggle"] = true;
 				$link["@id"] = $id;
 				$link["@role"] = "button";
-				$link["@data-toggle"] = "dropdown";
-				$link["@aria-haspopup"] = "true";
+				$link["@data-bs-toggle"] = "dropdown";
 				$link["@aria-expanded"] = "false";
 				$link["icon"] = $options["icon"];
 				if(!$options["label"]) $link["/icon"] = [];

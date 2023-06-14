@@ -113,22 +113,31 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 	//--------------------------------------------------------------------------------
     public function get_js_cdn_includes(): array {
 	    return [
-	        //https://michalsnik.github.io/aos/
-		    "https://unpkg.com/aos@2.3.1/dist/aos.js",
+	        "pre" => [
+                //https://popper.js.org/
+                "https://unpkg.com/@popperjs/core@2",
+            ],
+            "post" => [
+                //https://michalsnik.github.io/aos/
+                "https://unpkg.com/aos@2.3.1/dist/aos.js",
 
-            //https://fancyapps.com/fancybox/getting-started/
-            "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js",
+                //https://fancyapps.com/fancybox/getting-started/
+                "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js",
+            ]
         ];
     }
 
 	//--------------------------------------------------------------------------------
     public function get_css_cdn_includes(): array {
 	    return [
-	        //https://michalsnik.github.io/aos/
-		    "https://unpkg.com/aos@2.3.1/dist/aos.css",
+	        "pre" => [],
+            "post" => [
+                //https://michalsnik.github.io/aos/
+                "https://unpkg.com/aos@2.3.1/dist/aos.css",
 
-            //https://fancyapps.com/fancybox/getting-started/
-		    "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css",
+                //https://fancyapps.com/fancybox/getting-started/
+                "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css",
+            ]
         ];
     }
 	//--------------------------------------------------------------------------------

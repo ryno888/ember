@@ -79,9 +79,14 @@ class assets extends \Kwerqy\Ember\com\intf\standard {
 
 	    $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
+	    $css_includes_arr = $this->section->get_ui()->get_css_cdn_includes();
+	    foreach ($css_includes_arr["pre"] as $include){
+	        $buffer->link(["@rel" => "stylesheet", "@href" => $include]);
+        }
+
 	    $buffer->link(["@rel" => "stylesheet", "@href" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.css"])]);
 
-	    foreach ($this->section->get_ui()->get_css_cdn_includes() as $include){
+	    foreach ($css_includes_arr["post"] as $include){
 	        $buffer->link(["@rel" => "stylesheet", "@href" => $include]);
         }
 
@@ -93,9 +98,15 @@ class assets extends \Kwerqy\Ember\com\intf\standard {
 
 	    $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
+	    $css_includes_arr = $this->section->get_ui()->get_js_cdn_includes();
+
+	    foreach ($css_includes_arr["pre"] as $include){
+	        $buffer->script(["@src" => $include]);
+        }
+
 	    $buffer->script(["@src" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.js"])]);
 
-	    foreach ($this->section->get_ui()->get_js_cdn_includes() as $include){
+	    foreach ($css_includes_arr["post"] as $include){
 	        $buffer->script(["@src" => $include]);
         }
 

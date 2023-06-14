@@ -50,7 +50,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 		// sub menu item
 		$label_arr = explode("|", $label);
-		$count = count($label_arr);
+		$count = sizeof($label_arr);
 		$current_item = &$this->item_arr;
 
 		for ($i = 1; $i <= $count; $i++) {
@@ -84,9 +84,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 			"type" => $this->type
 		], $options);
 
-
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-
 		switch ($options["type"]){
 			case "standard": $this->build_standard($buffer, $options); break;
 		}
@@ -99,168 +97,58 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$options = array_merge([
 		    "bg_color" => "light",
-			".navbar navbar-expand-md" => true
+			".navbar navbar-expand-lg" => true
 		], $options);
 
-		$options[".navbar-{$options["bg_color"]}"] = true;
+		$options[".bg-{$options["bg_color"]}"] = true;
 
-		$buffer->nav_($options);
-			$buffer->div_([".container-fluid" => true]);
-			
-				$buffer->div_([".navbar-translate ms-auto" => true]);
-				$buffer->button_([".navbar-toggler" => true, "@data-toggle" => "collapse", "@data-target" => "#$this->id", "@type" => "button"]);
-					$buffer->span([".sr-only" => true, "*" => "Toggle navigation"]);
-					$buffer->xicon("fa-bars", [".text-white" => true]);
-				$buffer->_button();
-				$buffer->_div();
+        $buffer->nav_([".navbar navbar-expand-lg bg-light" => true, ]);
+            $buffer->div_([".container-fluid" => true, ]);
 
+                $buffer->a_([".navbar-brand" => true, "@href" => "#", ]);
+                    $buffer->add("Navbar");
+                $buffer->_a();
 
-				$buffer->div_([".collapse navbar-collapse justify-content-end" => true, "@id" => $this->id]);
+                $buffer->button_([".navbar-toggler" => true, "@type" => "button", "@data-bs-toggle" => "collapse", "@data-bs-target" => "#{$this->id}", "@aria-controls" => $this->id, "@aria-expanded" => "false", "@aria-label" => "Toggle navigation", ]);
+                    $buffer->span([".navbar-toggler-icon" => true, ]);
+                $buffer->_button();
 
-					$buffer->ul_([".navbar-nav me-auto" => true]);
+                $buffer->div_([".collapse navbar-collapse" => true, "@id" => $this->id, ]);
+                    $buffer->ul_([".navbar-nav me-auto mb-2 mb-lg-0" => true, ]);
 
-						$fn_add_li = function($link, $label, $options = []) use(&$buffer){
-
+                        $fn_add_li = function($link, $label, $options = []) use(&$buffer){
 							$is_dropdown = (bool) $options["submenu"];
-
-
-								if(!$is_dropdown){
-									$options[".nav-link"] = true;
-									$buffer->li_([".nav-item" => true]);
-										$buffer->xlink($link, $label, $options);
-									$buffer->_li();
-								}else{
-									switch ($options["dropdown_type"]){
-										case "dropdown":
-											$dropdown = \Kwerqy\Ember\com\ui\ui::make()->dropdown();
-											$dropdown->set_label($label);
-											foreach ($options["submenu"] as $submenu){
-												$dropdown->add_link($submenu["link"], $submenu["label"], $submenu);
-											}
-											$options["/link"][".nav-link"] = true;
-											$options["wrapper_element"] = "li";
-											$options["/wrapper"] = [".dropdown no-arrow nav-item" => true];
-											$buffer->add($dropdown->build($options));
-											break;
-									}
-								}
-
+                            if(!$is_dropdown){
+                                $options[".nav-link"] = true;
+                                $buffer->li_([".nav-item" => true]);
+                                    $buffer->xlink($link, $label, $options);
+                                $buffer->_li();
+                            }else{
+                                switch ($options["dropdown_type"]){
+                                    case "dropdown":
+                                        $dropdown = \Kwerqy\Ember\com\ui\ui::make()->dropdown();
+                                        $dropdown->set_label($label);
+                                        foreach ($options["submenu"] as $submenu){
+                                            $dropdown->add_link($submenu["link"], $submenu["label"], $submenu);
+                                        }
+                                        $options["/link"]["@href"] = "#";
+                                        $options["/link"][".nav-link"] = true;
+                                        $options["wrapper_element"] = "li";
+                                        $options["/dropdown"] = [".nav-item dropdown no-arrow nav-item" => true];
+                                        $buffer->add($dropdown->build($options));
+                                        break;
+                                }
+                            }
 						};
 
 						foreach ($this->item_arr as $item){
 							$fn_add_li($item["link"], $item["label"], $item);
 						}
+                    $buffer->_ul();
+                $buffer->_div();
+            $buffer->_div();
+        $buffer->_nav();
 
-					$buffer->_ul();
-				$buffer->_div();
-			$buffer->_div();
-		$buffer->_nav();
-
-
-//		$this->buffer->add("
-//			<nav class='navbar navbar-light navbar-expand-md navigation-clean-button'>
-//				<div class='container'>
-//					<a class='navbar-brand' href='#'>Company Name</a>
-//					<button data-toggle='collapse' data-target='#navcol-1' class='navbar-toggler'>
-//						<span class='sr-only'>Toggle navigation</span>
-//						<span class='navbar-toggler-icon'></span>
-//					</button>
-//					<div class='collapse navbar-collapse' id='navcol-1'>
-//						<ul class='navbar-nav me-auto'>
-//							<li class='nav-item'>
-//								<a class='nav-link active' href='#'>First Item</a>
-//							</li>
-//							<li class='nav-item'>
-//								<a class='nav-link' href='#'>Second Item</a>
-//							</li>
-//							<li class='nav-item dropdown'>
-//								<a aria-expanded='false' data-toggle='dropdown' class='dropdown-toggle nav-link' href='#'>Dropdown </a>
-//								<div class='dropdown-menu'>
-//									<a class='dropdown-item' href='#'>First Item</a>
-//									<a class='dropdown-item' href='#'>Second Item</a>
-//									<a class='dropdown-item' href='#'>Third Item</a>
-//								</div>
-//							</li>
-//						</ul>
-//						<span class='navbar-text actions'>
-//							<a class='login' href='#'>Log In</a>
-//							<a class='btn btn-light action-button' role='button' href='#'>Sign Up</a>
-//						</span>
-//					</div>
-//				</div>
-//			</nav>
-//
-//		");
-		
-	}
-	//--------------------------------------------------------------------------------
-	protected function dropdown(&$html, $item_arr, $level = 0) {
-		// get keys
-		$item_keys = array_keys($item_arr);
-
-		foreach ($item_arr as $item_key => $item_item) {
-			// get numeric index
-			$key_index = array_search($item_key, $item_keys);
-
-			// divider
-			if (preg_match("/^-$/", $item_item["label"])) {
-				$htms->div(".dropdown-divider");
-				continue;
-			}
-
-			// subheader
-			if (preg_match("/^-.*/", $item_item["label"])) {
-				// label
-				$label = substr($item_item["label"], 1);
-
-				// divider, only if this is not the first item
-				if ($key_index) $htms->div(".dropdown-divider");
-
-				// item
-				$htms->h6_(".dropdown-header");
-					if ($item_item["icon"]) $htms->xicon($item_item["icon"], ["space" => true]);
-					$htms->content($label);
-				$htms->_h6();
-				continue;
-			}
-
-			// submenu
-			if ($item_item["submenu"]) {
-				if (!$level) {
-					$htms->li_(".nav-item .dropdown .me-2");
-						$tid = \com\session::$current->session_uid;
-						$htms->xlink(false, $item_item["label"], [
-							"@id" => $tid,
-							".nav-link" => true,
-							".dropdown-toggle" => true,
-							"@role" => "button",
-							"@data-toggle" => "dropdown",
-							"@aria-haspopup" => "true",
-							"@aria-expanded" => "false",
-							"caret" => true,
-							"icon" => $item_item["icon"],
-						]);
-
-						$htms->ul_(".dropdown-menu", ["@aria-labelledby" => $tid]);
-							$this->dropdown($html, $item_item["submenu"], $level + 1);
-						$htms->_ul();
-					$htms->_li();
-				}
-				else {
-					$htms->li_(".dropdown-submenu");
-						$htms->a(".dropdown-item .dropdown-toggle ^{$item_item["label"]}", ["@href" => "#"]);
-						$htms->ul_(".dropdown-menu");
-							$this->dropdown($html, $item_item["submenu"], $level + 1);
-						$htms->_ul();
-					$htms->_li();
-				}
-			}
-			else {
-				if (!$level) $htms->li_(".nav-item .me-2");
-				$this->link($html, $item_item, $level);
-				if (!$level) $htms->_li();
-			}
-		}
 	}
 	//--------------------------------------------------------------------------------
 	protected function link(&$html, $item, $level) {
@@ -282,7 +170,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 		else $options[".dropdown-item"] = true;
 
 		// html
-		$htms->xlink($href, $item["label"], $options);
+		$html->xlink($href, $item["label"], $options);
 	}
 	//--------------------------------------------------------------------------------
 }

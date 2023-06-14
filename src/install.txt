@@ -1,0 +1,63 @@
+Installation Instructions
+
+composer setup
+
+1.1 add the following to the first tier content in composer.json
+"minimum-stability": "dev"
+"prefer-stable" : true
+
+1.2 add the following to the require content
+"kwerqy/ember": "1.0.*"
+
+2.1 In Events.php pre_system add the line \Kwerqy\Ember\Ember::init();
+2.2 In Filters.php comment out $globals['after'] / honeypot
+2.3 Copy contents of src/install/project-root.zip over to project root
+
+Add the following lines below in the .env file
+
+--->
+
+ember.name 				= "Kwerqy"
+ember.title 			= "Kwerqy"
+ember.description 		= "Web Development"
+
+
+ember.integrations.mailchimp.server  = ""
+ember.integrations.mailchimp.api_key = ""
+ember.integrations.mailchimp.list_id = ""
+
+ember.integrations.google.captcha.sitekey = ""
+ember.integrations.google.captcha.secret = ""
+
+ember.email.no_reply	 	= ""
+ember.email.from		 	= ""
+ember.email.accounts	 	= ""
+ember.email.contact	     	= ""
+ember.email.admin		 	= ""
+ember.email.order		 	= ""
+ember.email.support	     	= ""
+ember.email.repairs	     	= ""
+ember.email.sell		 	= ""
+ember.email.spares		 	= ""
+ember.email.logistics	 	= ""
+ember.email.appointment  	= ""
+ember.email.admin.bcc	 	= ""
+
+ember.tell.nr.office	 	= ""
+ember.tell.nr.contact	 	= ""
+ember.tell.nr.general	 	= ""
+ember.tell.nr.sales		 	= ""
+ember.tell.nr.fax		 	= ""
+
+empber.vat_no         		= ""
+empber.reg_no    			= ""
+empber.address    			= ""
+empber.address.postal  		= ""
+
+ember.social.facebook  		= ""
+ember.social.twitter 		= ""
+ember.social.instagram 		= ""
+ember.social.tiktok 		= ""
+ember.social.whatsapp.nr 	= ""
+
+<---
