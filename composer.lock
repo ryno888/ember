@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "542faf6dd29a24798b9f3a11c8635a58",
+    "content-hash": "42428060ff4bb384a63770af5c824817",
     "packages": [
         {
             "name": "components/jquery",
@@ -1208,39 +1208,34 @@
         },
         {
             "name": "twbs/bootstrap",
-            "version": "v4.3.0",
+            "version": "5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "1ded0d6a4eefb7daca62c44e4e735aec200f0b6f"
+                "reference": "edf9c40956d19e6ab3f9151bfe0dfac6be06fa21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/1ded0d6a4eefb7daca62c44e4e735aec200f0b6f",
-                "reference": "1ded0d6a4eefb7daca62c44e4e735aec200f0b6f",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/edf9c40956d19e6ab3f9151bfe0dfac6be06fa21",
+                "reference": "edf9c40956d19e6ab3f9151bfe0dfac6be06fa21",
                 "shasum": ""
             },
             "replace": {
                 "twitter/bootstrap": "self.version"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3.x-dev"
-                }
-            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                },
-                {
                     "name": "Mark Otto",
                     "email": "markdotto@gmail.com"
+                },
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
                 }
             ],
             "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
@@ -1257,9 +1252,9 @@
             ],
             "support": {
                 "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v4.3.0"
+                "source": "https://github.com/twbs/bootstrap/tree/5.2.0"
             },
-            "time": "2019-02-11T19:15:34+00:00"
+            "time": "2022-07-19T15:43:58+00:00"
         }
     ],
     "packages-dev": [],
