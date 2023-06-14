@@ -17,47 +17,51 @@ Add the following lines below in the .env file
 
 --->
 
+#--------------------------------------------------------------------
+# Kwerqy
+#--------------------------------------------------------------------
+
 ember.name 				= "Kwerqy"
 ember.title 			= "Kwerqy"
 ember.description 		= "Web Development"
+ember.copyright 		= "Kwerqy | All rights reserved"
 
+# ember.integrations.mailchimp.server  = ""
+# ember.integrations.mailchimp.api_key = ""
+# ember.integrations.mailchimp.list_id = ""
 
-ember.integrations.mailchimp.server  = ""
-ember.integrations.mailchimp.api_key = ""
-ember.integrations.mailchimp.list_id = ""
+# ember.integrations.google.captcha.sitekey = ""
+# ember.integrations.google.captcha.secret = ""
 
-ember.integrations.google.captcha.sitekey = ""
-ember.integrations.google.captcha.secret = ""
+# ember.email.no_reply	 	= ""
+# ember.email.from		 	= ""
+# ember.email.accounts	 	= ""
+# ember.email.contact	     	= ""
+# ember.email.admin		 	= ""
+# ember.email.order		 	= ""
+# ember.email.support	     	= ""
+# ember.email.repairs	     	= ""
+# ember.email.sell		 	= ""
+# ember.email.spares		 	= ""
+# ember.email.logistics	 	= ""
+# ember.email.appointment  	= ""
+# ember.email.admin.bcc	 	= ""
 
-ember.email.no_reply	 	= ""
-ember.email.from		 	= ""
-ember.email.accounts	 	= ""
-ember.email.contact	     	= ""
-ember.email.admin		 	= ""
-ember.email.order		 	= ""
-ember.email.support	     	= ""
-ember.email.repairs	     	= ""
-ember.email.sell		 	= ""
-ember.email.spares		 	= ""
-ember.email.logistics	 	= ""
-ember.email.appointment  	= ""
-ember.email.admin.bcc	 	= ""
+# ember.tell.nr.office	 	= ""
+# ember.tell.nr.contact	 	= ""
+# ember.tell.nr.general	 	= ""
+# ember.tell.nr.sales		 	= ""
+# ember.tell.nr.fax		 	= ""
 
-ember.tell.nr.office	 	= ""
-ember.tell.nr.contact	 	= ""
-ember.tell.nr.general	 	= ""
-ember.tell.nr.sales		 	= ""
-ember.tell.nr.fax		 	= ""
+# empber.vat_no         		= ""
+# empber.reg_no    			= ""
+# empber.address    			= ""
+# empber.address.postal  		= ""
 
-empber.vat_no         		= ""
-empber.reg_no    			= ""
-empber.address    			= ""
-empber.address.postal  		= ""
-
-ember.social.facebook  		= ""
-ember.social.twitter 		= ""
-ember.social.instagram 		= ""
-ember.social.tiktok 		= ""
-ember.social.whatsapp.nr 	= ""
+# ember.social.facebook  		= ""
+# ember.social.twitter 		= ""
+# ember.social.instagram 		= ""
+# ember.social.tiktok 		= ""
+# ember.social.whatsapp.nr 	= ""
 
 <---
