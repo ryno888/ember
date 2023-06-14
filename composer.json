@@ -18,11 +18,11 @@
 		"components/jquery": "3.6.0",
         "components/jqueryui": "1.12.1",
         "fortawesome/font-awesome": "5.15.4",
-        "intelogie/jquery-bootpag": "@dev",
-        "meyfa/php-svg": "@dev",
+        "intelogie/jquery-bootpag": "dev-master",
+        "meyfa/php-svg": "dev-main",
 		"tedivm/jshrink": "~1.0",
 		"enyo/dropzone": "v5.9.3",
-        "fengyuanchen/cropper": "@dev",
+        "fengyuanchen/cropper": "dev-master",
         "mailchimp/marketing": "3.0.80"
     }
 }

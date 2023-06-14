@@ -2,12 +2,8 @@ Installation Instructions
 
 composer setup
 
-1.1 add the following to the first tier content in composer.json
-"minimum-stability": "dev"
-"prefer-stable" : true
-
-1.2 add the following to the require content
-"kwerqy/ember": "1.0.12"
+1.1 add the following to the require content
+"kwerqy/ember": "1.0.*@dev"
 
 2.1 In Events.php pre_system add the line \Kwerqy\Ember\Ember::init();
 2.2 In Filters.php comment out $globals['after'] / honeypot
