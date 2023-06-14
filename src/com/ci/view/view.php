@@ -66,6 +66,7 @@ class view {
         }
 
         $buffer = \Kwerqy\Ember\com\ui\ui::make()->html();
+        $buffer->add(\Kwerqy\Ember\com\factory\page_meta\page_meta::make()->build());
         call_user_func_array($fn, [&$buffer, $this->controller, $this]);
 
         //see if this is a panel request

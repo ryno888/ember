@@ -48,6 +48,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
      * function($controller, $view){}
      * @param $fn
      * @param array $options
+     * @return string
      */
 
     public function ci_view($controller, $fn, $options = []) {

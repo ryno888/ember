@@ -1,0 +1,5 @@
+Installation Instructions
+
+1. In Events.php pre_system add the line \Kwerqy\Ember\Ember::init();
+2. In Filters.php comment out $globals['after'] / honeypot
+3. Copy contents of src/install/project-root.zip over to project root
