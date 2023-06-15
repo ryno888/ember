@@ -15,7 +15,7 @@ class Ember {
 	public static $session;
 
     /**
-     * @var user
+     * @var \Kwerqy\Ember\com\user\user
      */
 	public static $user;
 
@@ -109,10 +109,18 @@ class Ember {
         ],
     ];
     //--------------------------------------------------------------------------------
-	public static function dbt($table, $options= []) {
-		$class = "\\db\\{$table}";
 
+    /**
+     * @param $table
+     * @param array $options
+     * @return mixed|\Kwerqy\Ember\com\db\intf\table|\Kwerqy\Ember\com\db\row
+     */
+	public static function dbt($table, $options= []) {
+
+	    include_once(DIR_APP."/Libraries/db/{$table}.php");
+		$class = "\\db\\{$table}";
 		return new $class($options);
+
 	}
     //--------------------------------------------------------------------------------
 	public static function db() {

@@ -3,9 +3,10 @@
 namespace Kwerqy\Ember\com\incl;
 
 defined('DIR_ROOT') || define('DIR_ROOT', ROOTPATH);
+defined('DIR_APP') || define('DIR_APP', DIR_ROOT.'/app');
+
 defined('DIR_EMBER') || define('DIR_EMBER', __DIR__."/../..");
 defined('DIR_COM') || define('DIR_COM', DIR_EMBER."/com");
-defined('DIR_APP') || define('DIR_APP', DIR_EMBER.'/app');
 //defined('DIR_APP_APP') || define('DIR_APP_APP', DIR_ROOT.'/app/app');
 //defined('DIR_UI') || define('DIR_UI', DIR_COM.'/ui');
 //defined('DIR_UI_INCL') || define('DIR_UI_INCL', DIR_UI.'/incl');

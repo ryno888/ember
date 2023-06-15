@@ -5,6 +5,10 @@ namespace App\Controllers;
 class Xryno extends BaseController {
 
     //---------------------------------------------------------------------------------------
+    public function vbuffer_builder() {
+        return  \Kwerqy\Ember\com\ui\ui::make()->ci_controller("bootstrap", "xryno/vbuffer_builder");
+    }
+    //---------------------------------------------------------------------------------------
     public function vtest() {
         return  \Kwerqy\Ember\com\ui\ui::make()->ci_controller("bootstrap", "xryno/vtest");
     }

@@ -11,19 +11,24 @@
      * @var $view \Kwerqy\Ember\com\ci\view\view
      */
 
-    $buffer->form("xryno/xtest");
-    $buffer->section_([".banner-wrapper" => true, ]);
-        $buffer->div_([".container" => true]);
-            $buffer->div_([".row" => true]);
-                $buffer->div_([".col" => true]);
-                    $buffer->xheader(1, "Test");
-                $buffer->_div();
-                $buffer->div_([".col" => true]);
-                    $buffer->submit_button();
-                $buffer->_div();
-            $buffer->_div();
-        $buffer->_div();
-    $buffer->_section();
+    $dbt = \Kwerqy\Ember\Ember::dbt("acl_role");
+//    $dbt = \Kwerqy\Ember\Ember::dbt("person");
+//    helper('acl_role');
+//    include(DIR_APP."/Libraries/db/acl_role.php");
+//    $db = new \db\acl_role();
+//    $buffer->form("xryno/xtest");
+//    $buffer->section_([".banner-wrapper" => true, ]);
+//        $buffer->div_([".container" => true]);
+//            $buffer->div_([".row" => true]);
+//                $buffer->div_([".col" => true]);
+//                    $buffer->xheader(1, "Test");
+//                $buffer->_div();
+//                $buffer->div_([".col" => true]);
+//                    $buffer->submit_button();
+//                $buffer->_div();
+//            $buffer->_div();
+//        $buffer->_div();
+//    $buffer->_section();
 
 });
 
