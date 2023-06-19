@@ -31,8 +31,8 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
     protected function get_class_name($name){
 
 		//evaluate app - bootstrap folder
-	    if(file_exists(DIR_COM."/ui/set/website/$name.php")){
-	        return "\\Kwerqy\\Ember\\com\\ui\set\\website\\{$name}";
+	    if(file_exists(DIR_COM."/ui/set/custom/$name.php")){
+	        return "\\Kwerqy\\Ember\\com\\ui\set\\custom\\{$name}";
         }
         //default to com
 	    return "\\Kwerqy\\Ember\\com\\ui\set\\bootstrap\\{$name}";

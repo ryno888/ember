@@ -108,7 +108,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$options[".bg-{$options["bg_color"]}"] = true;
 
-        $buffer->nav_([".navbar navbar-expand-lg bg-light" => true, ]);
+        $buffer->nav_($options);
             $buffer->div_([".container-fluid" => true, ]);
 
                 if($this->brand_html){
