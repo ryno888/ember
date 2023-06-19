@@ -148,6 +148,20 @@ class Ember {
 		return getenv("CI_ENVIRONMENT") == "development";
 	}
     //--------------------------------------------------------------------------------
+    /**
+     * @return bool
+     */
+	public static function is_installed() {
+		return file_exists(DIR_ROOT.".kwerqy_install_log");
+	}
+    //--------------------------------------------------------------------------------
+    /**
+     * @return bool
+     */
+	public static function set_installed() {
+		file_put_contents(DIR_ROOT.".kwerqy_install_log", Kwerqy\Ember\com\date\date::strtodatetime());
+	}
+    //--------------------------------------------------------------------------------
 	public static function init() {
 
 	    //autoload helpers

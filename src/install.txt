@@ -11,7 +11,7 @@ composer setup
 
 2.1 In Events.php pre_system add the line \Kwerqy\Ember\Ember::init();
 2.2 In Filters.php comment out $globals['after'] / honeypot
-2.3 Copy contents of src/install/project-root.zip over to project root
+2.3 Copy contents of src/install/project-root over to project root
 
 Add the following lines below in the .env file
 
@@ -36,13 +36,13 @@ ember.copyright 		= "Kwerqy | All rights reserved"
 # ember.email.no_reply	 	= ""
 # ember.email.from		 	= ""
 # ember.email.accounts	 	= ""
-# ember.email.contact	     	= ""
+# ember.email.contact	   	= ""
 # ember.email.admin		 	= ""
 # ember.email.order		 	= ""
-# ember.email.support	     	= ""
-# ember.email.repairs	     	= ""
+# ember.email.support		= ""
+# ember.email.repairs	 	= ""
 # ember.email.sell		 	= ""
-# ember.email.spares		 	= ""
+# ember.email.spares		= ""
 # ember.email.logistics	 	= ""
 # ember.email.appointment  	= ""
 # ember.email.admin.bcc	 	= ""
@@ -50,17 +50,17 @@ ember.copyright 		= "Kwerqy | All rights reserved"
 # ember.tell.nr.office	 	= ""
 # ember.tell.nr.contact	 	= ""
 # ember.tell.nr.general	 	= ""
-# ember.tell.nr.sales		 	= ""
+# ember.tell.nr.sales		= ""
 # ember.tell.nr.fax		 	= ""
 
-# empber.vat_no         		= ""
+# empber.vat_no         	= ""
 # empber.reg_no    			= ""
-# empber.address    			= ""
-# empber.address.postal  		= ""
+# empber.address    		= ""
+# empber.address.postal  	= ""
 
-# ember.social.facebook  		= ""
+# ember.social.facebook  	= ""
 # ember.social.twitter 		= ""
-# ember.social.instagram 		= ""
+# ember.social.instagram 	= ""
 # ember.social.tiktok 		= ""
 # ember.social.whatsapp.nr 	= ""
 
