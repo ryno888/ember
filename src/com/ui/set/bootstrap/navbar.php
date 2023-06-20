@@ -103,10 +103,11 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$options = array_merge([
 		    "bg_color" => "light",
-			".navbar navbar-expand-lg" => true
+			"@id" => $this->id,
+			".navbar navbar-expand-lg" => true,
 		], $options);
 
-		$options[".bg-{$options["bg_color"]}"] = true;
+		if($options["bg_color"]) $options[".bg-{$options["bg_color"]}"] = true;
 
         $buffer->nav_($options);
             $buffer->div_([".container-fluid" => true, ]);

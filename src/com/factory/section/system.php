@@ -4,7 +4,7 @@ namespace Kwerqy\Ember\com\factory\section;
 class system extends \Kwerqy\Ember\com\intf\section {
     //--------------------------------------------------------------------------------
 	public function get_set() {
-		return "bootstrap";
+		return "system";
 	}
 	//--------------------------------------------------------------------------------
     public function get_layout() {
@@ -16,7 +16,7 @@ class system extends \Kwerqy\Ember\com\intf\section {
      * @return \Kwerqy\Ember\com\ui\intf\set
      */
 	public function get_ui($options = []) {
-		return \Kwerqy\Ember\com\ui\set\bootstrap::make($options);
+		return \Kwerqy\Ember\com\ui\set\system::make($options);
 	}
     //--------------------------------------------------------------------------------
 }

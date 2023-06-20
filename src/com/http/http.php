@@ -297,7 +297,7 @@ class http {
 
 	}
 	//--------------------------------------------------------------------------------
-	public static function get_control($current_url = false, $options = []) {
+	public static function get_control($options = []) {
 
 		$options = array_merge([
 		    "separator" => "/"

@@ -28,7 +28,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 
 		$set = $this->section->get_set();
 
-		if(!$set) $set = "system";
+		if(!$set) $set = "bootstrap";
 
 		$path = "\\mod\\ui\\set\\$set";
 
@@ -399,9 +399,11 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	 * @param array $options
 	 * @return mixed|\Kwerqy\Ember\com\ui\set\bootstrap\navbar
 	 */
-	public function navbar($type = "standard", $options = []) {
-
-		$options["type"] = $type;
+	public function navbar($options = []) {
+	    
+        $options = array_merge([
+            "type" => "standard"
+        ], $options);
 
 		return $this->section->get_ui()->get("navbar", $options);
 

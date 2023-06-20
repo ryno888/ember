@@ -23,8 +23,6 @@ class assets extends \Kwerqy\Ember\com\intf\standard {
 
 		$this->section = \Kwerqy\Ember\Ember::get_section($options["section"]);
 
-		$this->section->get_ui()->get_css_includes();
-
 		$this->css_arr = $this->section->get_ui()->get_css_includes();
 		$this->js_arr = $this->section->get_ui()->get_js_includes();
 

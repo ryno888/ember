@@ -6,13 +6,13 @@ namespace Kwerqy\Ember\com\ui\set;
  * @package mod\ui\set
  * @author Ryno Van Zyl
  */
-class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
+class website extends \Kwerqy\Ember\com\ui\intf\set {
 	//--------------------------------------------------------------------------------
 	// magic
 	//--------------------------------------------------------------------------------
 	protected function __construct($options = []) {
 		// init
-		$this->name = "Bootstrap";
+		$this->name = "website";
 	}
 	//--------------------------------------------------------------------------------
 	// functions
@@ -71,7 +71,7 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
         $js_arr[] = "{$path_js}/ember.mod.ui.incl.toast.js";
 
         //custom
-        $file_arr = glob(DIR_ASSETS."/ui/".strtolower($this->get_name())."/js/*");
+        $file_arr = glob(DIR_ASSETS."/ui/website/js/*");
         foreach ($file_arr as $file) $js_arr[] = $file;
 
 		// done
@@ -85,6 +85,9 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 
 		$asset_arr = [];
 
+		$file_arr = glob(DIR_ASSETS."/ui/bootstrap/css/*");
+        foreach ($file_arr as $file) $asset_arr[] = $file;
+		
 		//https://docs.dropzone.dev/getting-started/setup/imperative
 		$asset_arr[] = "{$path_vendor}/enyo/dropzone/dist/min/dropzone.min.css";
 
@@ -102,6 +105,10 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
         $file_arr = glob(DIR_ASSETS."/ui/app/css/*");
         foreach ($file_arr as $file) $asset_arr[] = $file;
 
+        //section
+        $file_arr = glob(DIR_ASSETS."/ui/website/css/*");
+        foreach ($file_arr as $file) $asset_arr[] = $file;
+        
 		// done
 		return $asset_arr;
 	}
