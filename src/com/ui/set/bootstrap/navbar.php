@@ -15,7 +15,8 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 	public $item_arr = [];
 	public $buffer = false;
 	public $type = "standard";
-	public $brand_html;
+	public $brand = [];
+	public $append = ["html" => false,];
 	//--------------------------------------------------------------------------------
 	// magic
 	//--------------------------------------------------------------------------------
@@ -34,9 +35,16 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 	}
 	//--------------------------------------------------------------------------------
-    public function set_brand_html($mixed) {
-        if(is_string($mixed)) $this->brand_html = $mixed;
-        else if(is_callable($mixed)) $this->brand_html = $mixed();
+    public function set_brand_html($mixed, $options = []) {
+	    $brand_html = false;
+        if(is_string($mixed)) $brand_html = $mixed;
+        else if(is_callable($mixed)) $brand_html = $mixed();
+
+        $this->brand = array_merge([
+            "html" => $brand_html,
+            ".navbar-brand" => true,
+            "@href" => "#",
+        ], $options);
     }
 	//--------------------------------------------------------------------------------
 	/**
@@ -52,6 +60,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 		$options = array_merge([
 			"icon" => false,
 			"auth" => false,
+			"/nav-item" => [],
 		], $options);
 
 		// sub menu item
@@ -99,6 +108,18 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 	}
 	//--------------------------------------------------------------------------------
+	public function append($mixed, $options = []) {
+
+		$html = false;
+        if(is_string($mixed)) $html = $mixed;
+        else if(is_callable($mixed)) $html = $mixed();
+
+        $this->append = array_merge([
+            "html" => $html,
+        ], $options);
+
+	}
+	//--------------------------------------------------------------------------------
 	private function build_standard(&$buffer, $options = []){
 
 		$options = array_merge([
@@ -112,24 +133,25 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
         $buffer->nav_($options);
             $buffer->div_([".container-fluid" => true, ]);
 
-                if($this->brand_html){
-                    $buffer->a_([".navbar-brand" => true, "@href" => "#", ]);
-                        $buffer->add($this->brand_html);
+                if(isset($this->brand["html"])){
+                    $buffer->a_($this->brand);
+                        $buffer->add($this->brand["html"]);
                     $buffer->_a();
                 }
 
-                $buffer->button_([".navbar-toggler" => true, "@type" => "button", "@data-bs-toggle" => "collapse", "@data-bs-target" => "#{$this->id}", "@aria-controls" => $this->id, "@aria-expanded" => "false", "@aria-label" => "Toggle navigation", ]);
-                    $buffer->span([".navbar-toggler-icon" => true, ]);
+                $buffer->button_([".navbar-toggler" => true, "@type" => "button", "@data-bs-toggle" => "collapse", "@data-bs-target" => "#{$this->id}_collapse", "@aria-controls" => "{$this->id}_collapse", "@aria-expanded" => "false", "@aria-label" => "Toggle navigation", ]);
+                    $buffer->xicon("fa-bars", [".text-white fs-3" => true]);
                 $buffer->_button();
 
-                $buffer->div_([".collapse navbar-collapse" => true, "@id" => $this->id, ]);
+                $buffer->div_([".collapse navbar-collapse" => true, "@id" => "{$this->id}_collapse", ]);
                     $buffer->ul_([".navbar-nav me-auto mb-2 mb-lg-0" => true, ]);
 
                         $fn_add_li = function($link, $label, $options = []) use(&$buffer){
 							$is_dropdown = (bool) $options["submenu"];
                             if(!$is_dropdown){
-                                $options[".nav-link"] = true;
-                                $buffer->li_([".nav-item" => true]);
+                                $options["/nav-item"][".nav-item"] = true;
+                                $buffer->li_($options["/nav-item"]);
+                                    $options[".nav-link"] = true;
                                     $buffer->xlink($link, $label, $options);
                                 $buffer->_li();
                             }else{
@@ -154,6 +176,10 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 							$fn_add_li($item["link"], $item["label"], $item);
 						}
                     $buffer->_ul();
+
+                    if($this->append["html"])
+                        $buffer->add($this->append["html"]);
+
                 $buffer->_div();
             $buffer->_div();
         $buffer->_nav();

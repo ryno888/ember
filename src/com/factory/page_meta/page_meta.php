@@ -44,7 +44,8 @@ class page_meta extends \Kwerqy\Ember\com\intf\standard {
 
 		$this->name = getenv("ember.company_name");
 		$this->author = "Kwerqy Web Development";
-		$this->title = getenv("ember.website.title")." | ".\Kwerqy\Ember\com\str\str::propercase(\Kwerqy\Ember\com\arr\arr::get_last_element(explode("/", uri_string())));
+
+		$this->title = $this->build_title();
 		$this->description = getenv("ember.website.description");
 		$this->keywords = getenv("ember.website.keywords");
 		$this->set_action($options["action"]);
@@ -53,6 +54,19 @@ class page_meta extends \Kwerqy\Ember\com\intf\standard {
 		if(\Kwerqy\Ember\Ember::is_live()) $this->google_site_verification = "iuLbNCvMWuivh9u741HOFUnfuwlnEikXE6cslrBgi9E";
 
 	}
+	//--------------------------------------------------------------------------------
+    private function build_title(){
+	    $title_parts = [];
+	    $title_parts[] = getenv("ember.title");
+
+	    $view = \Kwerqy\Ember\com\http\http::get_current_view();
+
+	    if($view == "index") $view = "Home";
+	    $title_parts[] = \Kwerqy\Ember\com\str\str::propercase($view);
+
+	    return implode(" | ", $title_parts);
+
+    }
 	//--------------------------------------------------------------------------------
 	/**
 	 * @return array

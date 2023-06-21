@@ -105,6 +105,15 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 
     /**
+     * @param array $options
+     * @return mixed
+     */
+	public function scrolltotop($options = []) {
+	    return $this->section->get_ui()->get("scrolltotop")->build($options);
+	}
+	//--------------------------------------------------------------------------------
+
+    /**
      * @param $url
      * @param array $options
      * @return \Kwerqy\Ember\com\intf\standard|set\bootstrap\panel
