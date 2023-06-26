@@ -54,7 +54,7 @@ EOD;
 
 		\Kwerqy\Ember\com\os\os::mkdir(dirname($filename));
 		file_put_contents($filename, $content);
-	    
+
 	}
     //--------------------------------------------------------------------------------
     

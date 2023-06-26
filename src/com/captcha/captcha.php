@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\captcha;
  * @package mod\debug
  * @author Ryno Van Zyl
  */
-class captcha extends \mod\intf\standard {
+class captcha extends \Kwerqy\Ember\com\intf\standard {
 
 	//--------------------------------------------------------------------------------
 	public static function get_html() {

@@ -44,38 +44,40 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 		$path_js = DIR_COM."/ui/incl/js";
 		$path_vendor = DIR_VENDOR;
 
-		$js_arr = [];
+		$asset_arr = [];
 
 		//jquery UI
-		$js_arr[] = "{$path_vendor}/components/jqueryui/jquery-ui.min.js";
+		$asset_arr[] = "{$path_vendor}/components/jqueryui/jquery-ui.min.js";
 
 		//bootstrap
-		$js_arr[] = "{$path_vendor}/twbs/bootstrap/dist/js/bootstrap.min.js";
+		$asset_arr[] = "{$path_vendor}/twbs/bootstrap/dist/js/bootstrap.min.js";
 
 		//https://github.com/botmonster/jquery-bootpag
-		$js_arr[] = "{$path_vendor}/intelogie/jquery-bootpag/lib/jquery.bootpag.min.js";
+		$asset_arr[] = "{$path_vendor}/intelogie/jquery-bootpag/lib/jquery.bootpag.min.js";
 
         //https://docs.dropzone.dev/getting-started/setup/imperative
-		$js_arr[] = "{$path_vendor}/enyo/dropzone/dist/min/dropzone.min.js";
+		$asset_arr[] = "{$path_vendor}/enyo/dropzone/dist/min/dropzone.min.js";
 
 		//https://github.com/fengyuanchen/jquery-cropper
-		$js_arr[] = "{$path_vendor}/fengyuanchen/cropper/dist/cropper.min.js";
-
+		$asset_arr[] = "{$path_vendor}/fengyuanchen/cropper/dist/cropper.min.js";
 
 		//ember
-        $js_arr[] = "{$path_js}/ember.mod.ui.incl.app.js";
-        $js_arr[] = "{$path_js}/ember.mod.ui.incl.panel.js";
-        $js_arr[] = "{$path_js}/ember.mod.ui.incl.form.js";
-        $js_arr[] = "{$path_js}/ember.mod.ui.incl.table.js";
-        $js_arr[] = "{$path_js}/ember.mod.ui.incl.popup.js";
-        $js_arr[] = "{$path_js}/ember.mod.ui.incl.toast.js";
+        $asset_arr[] = "{$path_js}/ember.mod.ui.incl.app.js";
+        $asset_arr[] = "{$path_js}/ember.mod.ui.incl.panel.js";
+        $asset_arr[] = "{$path_js}/ember.mod.ui.incl.form.js";
+        $asset_arr[] = "{$path_js}/ember.mod.ui.incl.table.js";
+        $asset_arr[] = "{$path_js}/ember.mod.ui.incl.popup.js";
+        $asset_arr[] = "{$path_js}/ember.mod.ui.incl.toast.js";
 
-        //custom
-        $file_arr = glob(DIR_ASSETS."/ui/".strtolower($this->get_name())."/js/*");
-        foreach ($file_arr as $file) $js_arr[] = $file;
+        //bootstrap
+        $file_arr = glob(DIR_ASSETS."/ui/bootstrap/js/*");
+        foreach ($file_arr as $file) $asset_arr[] = $file;
+
+        //ember
+		if(file_exists("{$path_js}/js.css")) $asset_arr[] = "{$path_js}/js.css";
 
 		// done
-		return $js_arr;
+		return $asset_arr;
 	}
 	//--------------------------------------------------------------------------------
 	public function get_css_includes():array {
@@ -96,6 +98,10 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
         foreach ($file_arr as $file) $asset_arr[] = $file;
 
         //bootstrap
+        $file_arr = glob(DIR_ASSETS."/ui/bootstrap/css/*");
+        foreach ($file_arr as $file) $asset_arr[] = $file;
+
+        //ember
 		if(file_exists("{$path_css}/app.css")) $asset_arr[] = "{$path_css}/app.css";
 
 		//custom
@@ -104,6 +110,7 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 
 		// done
 		return $asset_arr;
+
 	}
 	//--------------------------------------------------------------------------------
     public function get_js_cdn_includes(): array {
@@ -127,7 +134,7 @@ class bootstrap extends \Kwerqy\Ember\com\ui\intf\set {
 	    return [
 	        "pre" => [
 	            //font-awesome 5
-	            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css"
             ],
             "post" => [
                 //https://michalsnik.github.io/aos/

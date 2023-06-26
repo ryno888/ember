@@ -124,8 +124,7 @@ class date{
 
 		// format
 		$time = Time::parse($string);
-		$time->format($format);
-		return $time->toDateString();
+		return $time->format($format);
 	}
 	//--------------------------------------------------------------------------------
 	public static function strtodatetime($string = "now", $format = false, $options = []) {
@@ -134,8 +133,7 @@ class date{
 
 		// format
 		$time = Time::parse($string);
-		$time->format($format);
-		return $time->toDateTimeString();
+		return $time->format($format);
 	}
 	//--------------------------------------------------------------------------------
 	public static function strtotime($string = "now", $format = false, $options = []) {

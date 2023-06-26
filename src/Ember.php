@@ -159,7 +159,7 @@ class Ember {
      * @return bool
      */
 	public static function set_installed() {
-		file_put_contents(DIR_ROOT.".kwerqy_install_log", Kwerqy\Ember\com\date\date::strtodatetime());
+		file_put_contents(DIR_ROOT.".kwerqy_install_log", \Kwerqy\Ember\com\date\date::strtodatetime());
 	}
     //--------------------------------------------------------------------------------
 	public static function init() {

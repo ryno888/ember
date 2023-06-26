@@ -17,6 +17,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 	public $type = "standard";
 	public $brand = [];
 	public $append = ["html" => false,];
+	public $prepend = ["html" => false,];
 	//--------------------------------------------------------------------------------
 	// magic
 	//--------------------------------------------------------------------------------
@@ -75,13 +76,13 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 				$label_text = $current_label;
 
 				// add item
-				$current_item[$current_label] = [
+				$current_item[$current_label] = array_merge([
 					"label" => $label_text,
 					"link" => $link,
 					"icon" => $options["icon"],
 					"submenu" => [],
 					"dropdown_type" => "dropdown",
-				];
+				], $options);
 			}
 			else {
 				if (!isset($current_item[$current_label])) return false;
@@ -120,12 +121,26 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
 
 	}
 	//--------------------------------------------------------------------------------
+	public function prepend($mixed, $options = []) {
+
+		$html = false;
+        if(is_string($mixed)) $html = $mixed;
+        else if(is_callable($mixed)) $html = $mixed();
+
+        $this->prepend = array_merge([
+            "html" => $html,
+        ], $options);
+
+	}
+	//--------------------------------------------------------------------------------
 	private function build_standard(&$buffer, $options = []){
 
 		$options = array_merge([
 		    "bg_color" => "light",
 			"@id" => $this->id,
 			".navbar navbar-expand-lg" => true,
+			"/navbar-toggler" => [],
+			"/navbar-collapse" => [],
 		], $options);
 
 		if($options["bg_color"]) $options[".bg-{$options["bg_color"]}"] = true;
@@ -139,11 +154,22 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
                     $buffer->_a();
                 }
 
-                $buffer->button_([".navbar-toggler" => true, "@type" => "button", "@data-bs-toggle" => "collapse", "@data-bs-target" => "#{$this->id}_collapse", "@aria-controls" => "{$this->id}_collapse", "@aria-expanded" => "false", "@aria-label" => "Toggle navigation", ]);
+
+                $options["/navbar-toggler"][".navbar-toggler"] = true;
+                $options["/navbar-toggler"]["@type"] = "button";
+                $options["/navbar-toggler"]["@data-bs-toggle"] = "collapse";
+                $options["/navbar-toggler"]["@data-bs-target"] = "#{$this->id}_collapse";
+                $options["/navbar-toggler"]["@aria-controls"] = "{$this->id}_collapse";
+                $options["/navbar-toggler"]["@aria-expanded"] = "false";
+                $options["/navbar-toggler"]["@aria-label"] = "Toggle navigation";
+                $buffer->button_($options["/navbar-toggler"]);
                     $buffer->xicon("fa-bars", [".text-white fs-3" => true]);
                 $buffer->_button();
 
-                $buffer->div_([".collapse navbar-collapse" => true, "@id" => "{$this->id}_collapse", ]);
+                $options["/navbar-collapse"][".collapse navbar-collapse"] = true;
+                $options["/navbar-collapse"]["@id"] = "{$this->id}_collapse";
+                $buffer->div_($options["/navbar-collapse"]);
+
                     $buffer->ul_([".navbar-nav me-auto mb-2 mb-lg-0" => true, ]);
 
                         $fn_add_li = function($link, $label, $options = []) use(&$buffer){
