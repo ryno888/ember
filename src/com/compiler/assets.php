@@ -82,7 +82,8 @@ class assets extends \Kwerqy\Ember\com\intf\standard {
 	        $buffer->link(["@rel" => "stylesheet", "@href" => $include]);
         }
 
-	    $buffer->link(["@rel" => "stylesheet", "@href" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.css"])]);
+	    $filename = WRITEPATH."cache/ui/{$this->section->get_set()}/ui.min.css";
+	    $buffer->link(["@rel" => "stylesheet", "@href" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.css"])."?cache=".filemtime($filename)]);
 
 	    foreach ($css_includes_arr["post"] as $include){
 	        $buffer->link(["@rel" => "stylesheet", "@href" => $include]);
@@ -102,7 +103,8 @@ class assets extends \Kwerqy\Ember\com\intf\standard {
 	        $buffer->script(["@src" => $include]);
         }
 
-	    $buffer->script(["@src" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.js"])]);
+	    $filename = WRITEPATH."cache/ui/{$this->section->get_set()}/ui.min.js";
+	    $buffer->script(["@src" => site_url(["stream", "xasset", "ui", $this->section->get_set(), "ui.min.js"])."?cache=".filemtime($filename)]);
 
 	    foreach ($css_includes_arr["post"] as $include){
 	        $buffer->script(["@src" => $include]);
