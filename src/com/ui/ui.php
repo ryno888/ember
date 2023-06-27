@@ -71,6 +71,14 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 		return \Kwerqy\Ember\com\ui\set\bootstrap\parallax::make()->build($options);
 	}
 	//--------------------------------------------------------------------------------
+    /**
+     * @param array $options
+     * @return \Kwerqy\Ember\com\intf\standard|set\bootstrap\offcanvas
+     */
+	public function offcanvas($options = []) {
+		return $this->section->get_ui()->get("offcanvas", $options);
+	}
+	//--------------------------------------------------------------------------------
 
     /**
      * @param array $options

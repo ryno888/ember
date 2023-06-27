@@ -29,6 +29,10 @@ class button extends \Kwerqy\Ember\com\ui\intf\component {
 		    $options["/icon"] = [".me-2" => true];
         }
 
+		if(!is_string($options["label"]) && is_callable($options["label"])){
+		    $options["label"] = $options["label"]();
+        }
+
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 		switch ($options["@type"]){
@@ -65,6 +69,16 @@ class button extends \Kwerqy\Ember\com\ui\intf\component {
 			".btn-icon-split" => (bool) $options["icon"],
 		    "/icon" => [],
 		], $options);
+
+		if($options["!click"] instanceof offcanvas){
+		    $offcanvas = $options["!click"];
+		    $options["!click"] = "javascript:;";
+		    $options["@data-bs-toggle"] = "offcanvas";
+		    $options["@data-bs-target"] = "#{$offcanvas->get_id()}";
+		    $options["@aria-controls"] = "offcanvasRight";
+		    $options["@type"] = "button";
+            $buffer->add($offcanvas->build());
+        }
 
 		$buffer->button_($options);
 			if($options["icon"]){

@@ -29,6 +29,16 @@ class link extends \Kwerqy\Ember\com\ui\intf\component {
 			"/badge" => [],
 		], $options);
 
+
+		if($options["@href"] instanceof offcanvas){
+		    $offcanvas = $options["@href"];
+		    $options["@href"] = "#";
+		    $options["@data-bs-toggle"] = "offcanvas";
+		    $options["@data-bs-target"] = "#{$offcanvas->get_id()}";
+		    $options["@aria-controls"] = "offcanvasRight";
+		    $options["@type"] = "button";
+        }
+
 		if(substr($options["@href"], 0, 1) == "!"){
 			$options["@href"] = \mod\http::build_url(substr($options["@href"], 1, strlen($options["@href"])));
 		}
