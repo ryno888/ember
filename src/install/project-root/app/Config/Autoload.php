@@ -43,8 +43,11 @@ class Autoload extends AutoloadConfig
     public $psr4 = [
         APP_NAMESPACE   => APPPATH, // For custom app namespace
         'Config'        => APPPATH . 'Config',
-        'ui'            => APPPATH . 'Libraries/ui',
+        'app'           => APPPATH . 'Libraries/app',
         'db'            => APPPATH . 'Libraries/db',
+        'set'           => APPPATH . 'Libraries/app/ui',
+        'ui'            => APPPATH . 'Libraries/app/ui/set/bootstrap',
+        'section'       => APPPATH . 'Libraries/section',
     ];
 
     /**
