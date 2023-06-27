@@ -8,6 +8,7 @@ namespace Kwerqy\Ember\com\ui\set\bootstrap;
  */
 class offcanvas extends \Kwerqy\Ember\com\ui\intf\component {
 
+    protected $options = [];
     protected $heading = [];
     protected $body = [];
 
@@ -16,6 +17,7 @@ class offcanvas extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------
 	protected function __construct($options = []) {
 		// init
+		$this->options = $options;
 		$this->name = "Offcanvas";
 		$this->id = \Kwerqy\Ember\com\str\str::generate_id();
 	}
@@ -28,7 +30,7 @@ class offcanvas extends \Kwerqy\Ember\com\ui\intf\component {
 
         $this->heading = array_merge([
             "type" => $type,
-            "*" => $title,
+            "title" => $title,
         ], $options);
 
     }
@@ -48,14 +50,18 @@ class offcanvas extends \Kwerqy\Ember\com\ui\intf\component {
 	public function build($options = []) {
 
 		$options = array_merge([
-		], $options);
+		    "/offcanvas-header" => [],
+		    "/offcanvas-body" => [],
+		], $options, $this->options);
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 		$buffer->div_([".offcanvas offcanvas-end" => true, "@tabindex" => "-1", "@id" => $this->id, "@aria-labelledby" => "{$this->id}Label", ]);
-            $buffer->div_([".offcanvas-header" => true, ]);
+
+		    $options["/offcanvas-header"][".offcanvas-header"] = true;
+            $buffer->div_($options["/offcanvas-header"]);
                 if($this->heading){
-                    $buffer->xheader($this->heading["type"], $this->heading["*"], false, $this->heading);
+                    $buffer->xheader($this->heading["type"], $this->heading["title"], false, $this->heading);
                 }
                 $buffer->button(["@type" => "button", ".btn-close text-reset" => true, "@data-bs-dismiss" => "offcanvas", "@aria-label" => "Close", ]);
             $buffer->_div();

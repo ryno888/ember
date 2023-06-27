@@ -134,6 +134,25 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	    return $this->section->get_ui()->get("panel", $options);
 
     }
+    //--------------------------------------------------------------------------------
+	/**
+	 * @param $id
+	 * @param int $value
+	 * @param array $options
+	 * @return false|string|null
+	 */
+	public function icounter($id, $value = 0, $options = []) {
+
+		$options = array_merge([
+		    "id" => $id,
+		    "value" => $value,
+		    "!change" => false,
+			"min" => 0,
+			"max" => null,
+		], $options);
+
+		return $this->section->get_ui()->get("icounter")->build($options);
+	}
 	//--------------------------------------------------------------------------------
     /**
      * @param array $options
