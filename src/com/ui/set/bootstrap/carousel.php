@@ -49,7 +49,7 @@ class carousel extends \Kwerqy\Ember\com\intf\standard {
 			".carousel" => true,
 			".slide" => true,
 			".carousel-fade" => false,
-			"@data-ride" => "carousel",
+			"@data-bs-ride" => "carousel",
 			"/carousel_inner" => [],
 
 			"/indicators" => [".d-none d-md-flex" => true],
@@ -65,15 +65,14 @@ class carousel extends \Kwerqy\Ember\com\intf\standard {
 		$first_index = \Kwerqy\Ember\com\arr\arr::get_first_index($this->item_arr);
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
-
 		$buffer->div_($options);
 			if($options["enable_indicators"] && sizeof($this->item_arr) > 1){
 				$buffer->ol_(array_merge([".carousel-indicators" => true, ], $options["/indicators"]));
 					foreach ($this->item_arr as $key => $item){
 
 					    $item_options = array_merge([
-					        "@data-target" => "#{$options["@id"]}",
-                            "@data-slide-to" => $key,
+					        "@data-bs-target" => "#{$options["@id"]}",
+                            "@data-bs-slide-to" => $key,
                             ".active" => $first_index == $key,
                         ], $options["/indicators_li"]);
 
@@ -116,19 +115,19 @@ class carousel extends \Kwerqy\Ember\com\intf\standard {
 			$buffer->_div();
 
 			if(sizeof($this->item_arr) > 1 && $options["enable_controls"]){
-				$buffer->a_(array_merge([".carousel-control-prev" => true, "@href" => "javascript:$('#{$options["@id"]}').carousel('prev')", "@role" => "button", "@data-slide" => "prev"], $options["/control"]));
-					$buffer->xicon("fa-chevron-left", ["@aria-hidden" => "true"]);
-					$buffer->span_([".sr-only" => true, ]);
-						$buffer->add("Previous");
-					$buffer->_span();
-				$buffer->_a();
+			    $buffer->button_([".carousel-control-prev" => true, "@type" => "button", "!click" => "$('#{$options["@id"]}').carousel('prev')", "@data-bs-target" => "#{$options["@id"]}", "@data-bs-slide" => "prev"]);
+                    $buffer->span([".carousel-control-prev-icon" => true, "@aria-hidden" => "true", ]);
+                    $buffer->span_([".visually-hidden" => true, ]);
+                        $buffer->add("Previous");
+                    $buffer->_span();
+                $buffer->_button();
 
-				$buffer->a_(array_merge([".carousel-control-next" => true, "@href" => "javascript:$('#{$options["@id"]}').carousel('next')", "@role" => "button", "@data-slide" => "next"], $options["/control"]));
-                    $buffer->xicon("fa-chevron-right", ["@aria-hidden" => "true"]);
-					$buffer->span_([".sr-only" => true, ]);
-						$buffer->add("Next");
-					$buffer->_span();
-				$buffer->_a();
+                $buffer->button_([".carousel-control-next" => true, "@type" => "button", "!click" => "$('#{$options["@id"]}').carousel('next')", "@data-bs-target" => "#{$options["@id"]}", "@data-bs-slide" => "next"]);
+                    $buffer->span([".carousel-control-next-icon" => true, "@aria-hidden" => "true", ]);
+                    $buffer->span_([".visually-hidden" => true, ]);
+                        $buffer->add("Next");
+                    $buffer->_span();
+                $buffer->_button();
 			}
 		$buffer->_div();
 

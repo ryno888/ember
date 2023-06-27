@@ -253,6 +253,10 @@ class Ember {
      * @return false|mixed|\Kwerqy\Ember\com\intf\section
      */
     public static function get_section($name) {
+        if(file_exists(APPPATH."Libraries/section/{$name}.php")){
+            return call_user_func(["\\section\\{$name}", "make"]);
+        }
+
         return call_user_func(["\\Kwerqy\\Ember\\com\\factory\\section\\{$name}", "make"]);
     }
     //--------------------------------------------------------------------------------
