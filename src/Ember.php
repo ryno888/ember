@@ -172,10 +172,12 @@ class Ember {
 		// shutdown handler
 		register_shutdown_function(["Kwerqy\Ember\Ember", "close"]);
 
+		//install
+		if(!file_exists(APPPATH."Libraries/incl/library.php")) \Kwerqy\Ember\com\solid_classes\coder::make()->build_library();
+		if(!file_exists(APPPATH."Libraries/incl/constants.php")) \Kwerqy\Ember\com\solid_classes\coder::make()->build_constants();
+
 		//load constants
-//		if(file_exists(DIR_EMBER."/solid_classes/mod.solid_classes.constants.php")){
-//			include_once DIR_EMBER."/solid_classes/mod.solid_classes.constants.php";
-//		}
+		if(file_exists(APPPATH."Libraries/incl/constants.php")) include_once APPPATH."Libraries/incl/constants.php";
 
 		//methods
 		function _console($mixed){ \Kwerqy\Ember\com\debug\debug::console($mixed); }
@@ -193,16 +195,11 @@ class Ember {
             return false;
         }
 
-//		self::$session = session();
 		self::$session = \Kwerqy\Ember\com\session\session::make();
 		self::$user = \Kwerqy\Ember\com\user\user::make();
 		self::$request = \Kwerqy\Ember\com\request\request::make();
 		self::$panel = self::$request->get_get("p", TYPE_STRING, ["default" => "mod"]);
-//
-//
-//		\app\app::make()->install();
-//
-//
+
 		header(\Kwerqy\Ember\com\http\http::get_content_security_policy(self::$content_security_policy_arr));
 
 	}

@@ -15,7 +15,7 @@ class helper extends \Kwerqy\Ember\com\intf\standard {
 	 */
 	public function get($namespace, $name) {
 		try{
-			$class = "\\mod\\solid_classes\\{$namespace}\\{$name}";
+			$class = "\\Kwerqy\\Ember\\com\\solid_classes\\{$namespace}\\{$name}";
 			return call_user_func([$class, "make"]);
 		}catch(\Exception $ex){
 			\Kwerqy\Ember\com\error\error::create($ex->getMessage(), ["fatal" => true]);
@@ -26,13 +26,15 @@ class helper extends \Kwerqy\Ember\com\intf\standard {
 	 * @param $constant
 	 * @return false|mixed|intf
 	 */
-	public function get_from_constant($constant) {
+	public function get_from_constant(string $constant) {
 
-		$arr = library::make()->index_arr;
-		if(isset($arr[strtoupper($constant)])){
-			$data = $arr[strtoupper($constant)];
-			return $this->get_from_classname($data["classname"]);
-		}
+	    if(file_exists(APPPATH."Libraries/incl/library.php")){
+            $arr = \incl\library::make()->index_arr;
+            if(isset($arr[strtoupper($constant)])){
+                $data = $arr[strtoupper($constant)];
+                return $this->get_from_classname($data["classname"]);
+            }
+        }
 	}
 	//--------------------------------------------------------------------------------
 	public function constant_to_str($namespace, $constant) {

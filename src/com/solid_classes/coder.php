@@ -9,16 +9,19 @@ namespace Kwerqy\Ember\com\solid_classes;
 class coder extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 	public function loop_solid_classes($fn) {
-		foreach (directory_map(DIR_ROOT."/solid_classes/") as $key => $item){
-			if(strpos($key, "\\") !== false){
-				foreach ($item as $solid_class){
-				    if(!is_array($solid_class)){
-                        $class_name = \Kwerqy\Ember\com\os\os::php_filename_to_classname($solid_class);
-                        call_user_func($fn, $class_name, str_replace("\\", "/", DIR_EMBER."/solid_classes/".$solid_class));
+
+	    foreach (glob(DIR_COM."/solid_classes/*") as $key => $directory){
+	        if(is_dir($directory)) {
+	            $dirmap = directory_map($directory);
+                $category = basename($directory);
+	            foreach ($dirmap as $key => $solid_class){
+                    if(!is_array($solid_class)){
+                        $class_name = "\\Kwerqy\\Ember\\com\\solid_classes\\{$category}\\".(str_replace(".php", "", $solid_class));
+                        call_user_func($fn, $class_name, "{$directory}/{$solid_class}");
                     }
-				}
-			}
-		};
+                }
+            }
+        }
 	}
 	//--------------------------------------------------------------------------------
 	/**
@@ -27,8 +30,7 @@ class coder extends \Kwerqy\Ember\com\intf\standard {
 	public function get_constant_arr(): array {
 		$constant_arr = [];
 		$this->loop_solid_classes(function($class_name, $filename) use(&$constant_arr){
-
-			$category = str_replace("mod.solid_classes.", "", basename($filename));
+			$category = basename($filename);
 			$category_parts = explode(".", $category);
 			$category = reset($category_parts);
 
@@ -50,14 +52,14 @@ class coder extends \Kwerqy\Ember\com\intf\standard {
 		$constants_str = $this->get_constants_arr_string();
 
 		if ($constants_str) {
-			$dir = DIR_EMBER . "/solid_classes";
-			$filename = "mod.solid_classes.constants.php";
+			$dir = APPPATH . "Libraries/incl";
+			$filename = "constants.php";
 
 			$constant_str = implode("\n", $constants_str);
 
 			$content = <<<EOD
 <?php
-namespace Kwerqy\Ember\com\solid_classes;
+namespace incl;
 
 /**
  * @package mod\solid_classes
@@ -69,6 +71,7 @@ $constant_str
 
 EOD;
 
+			\Kwerqy\Ember\com\os\os::mkdir($dir);
 			file_put_contents("$dir/$filename", $content);
 		}
 
@@ -101,8 +104,8 @@ EOD;
 		$constant_arr = $this->get_constant_arr();
 
 		if ($constant_arr) {
-			$dir = DIR_EMBER . "/solid_classes";
-			$filename = "mod.solid_classes.library.php";
+			$dir = APPPATH . "Libraries/incl";
+			$filename = "library.php";
 
 			$content_arr= [];
 
@@ -131,7 +134,7 @@ EOD;
 
 			$content = <<<EOD
 <?php
-namespace Kwerqy\Ember\com\solid_classes;
+namespace incl;
 
 /**
  * @package mod\solid_classes
@@ -148,7 +151,7 @@ class library extends \Kwerqy\Ember\com\intf\standard {
 
 
 EOD;
-
+            \Kwerqy\Ember\com\os\os::mkdir($dir);
 			file_put_contents("$dir/$filename", $content);
 		}
 

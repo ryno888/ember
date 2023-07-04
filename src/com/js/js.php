@@ -106,7 +106,7 @@ class js {
 			"*beforeSend" => null,
 			"*autoscroll" => null,
 			"*done" => null,
-			"*success" => null,
+			"*success" => "function(response){ app.ajax.process_response(response); }",
 			"*complete" => null,
 			"*enable_reset_html" => null,
 			"*cancel_confirm" => null,

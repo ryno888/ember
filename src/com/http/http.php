@@ -191,7 +191,7 @@ class http {
 	        "layout" => "website",
 	    ], $options);
 
-		$solid_helper = \mod\solid_classes\helper::make()->get("error", "error_code_{$nr}");
+		$solid_helper = \Kwerqy\Ember\com\solid_classes\helper::make()->get("error", "error_code_{$nr}");
 
 		$control = [];
 		if($options["layout"]) $control[] = $options["layout"];

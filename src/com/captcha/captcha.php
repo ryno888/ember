@@ -11,6 +11,8 @@ class captcha extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 	public static function get_html() {
 
+	    if(\Kwerqy\Ember\Ember::is_dev()) return "";
+
 	    if(getenv("ember.google.sitekey")){
             return \Kwerqy\Ember\com\ui\ui::make()->tag()->script(["@src" => "https://www.google.com/recaptcha/api.js?render=".getenv("ember.google.sitekey")]);
         }
@@ -18,6 +20,9 @@ class captcha extends \Kwerqy\Ember\com\intf\standard {
 	}
     //--------------------------------------------------------------------------------
 	public static function is_valid($g_recaptcha_response = false) {
+
+	    if(\Kwerqy\Ember\Ember::is_dev()) return true;
+
 		// params
 		if(!$g_recaptcha_response) $g_recaptcha_response = \Kwerqy\Ember\com\request\request::make()->get("g-recaptcha-response");
 

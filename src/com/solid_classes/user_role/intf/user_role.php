@@ -16,11 +16,11 @@ abstract class user_role extends \Kwerqy\Ember\com\solid_classes\intf {
 	//--------------------------------------------------------------------------------
     public function __destruct() {
 
-	    if(!\core::is_db_enabled()) return;
+	    if(!\Kwerqy\Ember\Ember::is_db_enabled()) return;
 
-        $acl_code_arr = \core::$session->get("acl_role_arr", ["default" => []]);
+        $acl_code_arr = \Kwerqy\Ember\Ember::$session->get("acl_role_arr", ["default" => []]);
         if(!array_key_exists($this->get_code(), $acl_code_arr)){
-            $acl_role = \core::dbt("acl_role")->find([
+            $acl_role = \Kwerqy\Ember\Ember::dbt("acl_role")->find([
                 ".acl_code" => $this->get_code(),
                 "create" => true,
             ]);

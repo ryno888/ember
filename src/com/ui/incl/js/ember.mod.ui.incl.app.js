@@ -305,7 +305,7 @@ var app = {
 			options = $.extend({
 				width: 'modal-md',
 				closable: true,
-				ok_callback: function(){},
+				ok_callback: undefined,
 			}, (options === undefined ? {} : options));
 
 			if(!title) title = "Alert";
@@ -313,18 +313,19 @@ var app = {
 			let alert = new popup(options);
 			alert.set_title(title);
 			alert.set_body_content(message);
-			alert.set_footer_content('<button type="button" class="btn btn-primary" commodal-btn="ok" data-dismiss="modal">Ok</button>');
+			alert.set_footer_content('<button type="button" class="btn btn-primary" commodal-btn="ok" data-bs-dismiss="modal">Ok</button>');
+			if(options.ok_callback !== undefined){
+				alert.on_show(function(){
+					var $this = $(this);
+					$this.find('button[commodal-btn=ok]')
+						.click(function() {
+							options.ok_callback.apply(this, []);
+						}).focus();
+					app.overlay.hide();
+				});
+			}
 
 			var $popup = alert.build();
-
-			$popup.on('shown.bs.modal', function (event) {
-				var $this = $(this);
-				$this.find('button[commodal-btn=ok]')
-					.click(function() {
-						if (options.ok_callback !== undefined) options.ok_callback.apply(this, []);
-					}).focus();
-				app.overlay.hide();
-			});
 
 			return $popup;
 

@@ -63,6 +63,8 @@ class os {
 		    $basename_parts = explode(".", $basename);
 		    array_pop($basename_parts);
 
+		    if(sizeof($basename_parts) == 1) return reset($basename_parts);
+
 		    return "\\".implode("\\", $basename_parts);
 
 		}catch(\Exception $ex){
