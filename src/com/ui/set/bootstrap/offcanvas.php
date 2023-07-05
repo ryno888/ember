@@ -56,7 +56,12 @@ class offcanvas extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
-		$buffer->div_([".offcanvas offcanvas-end" => true, "@tabindex" => "-1", "@id" => $this->id, "@aria-labelledby" => "{$this->id}Label", ]);
+		$options[".offcanvas offcanvas-end"] = true;
+		$options["@tabindex"] = "-1";
+		$options["@id"] = $this->id;
+		$options["@aria-labelledby"] = "{$this->id}Label";
+
+		$buffer->div_($options);
 
 		    $options["/offcanvas-header"][".offcanvas-header"] = true;
             $buffer->div_($options["/offcanvas-header"]);

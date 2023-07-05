@@ -16,6 +16,7 @@ defined('DIR_ASSETS') || define('DIR_ASSETS', DIR_WRITABLE."assets");
 defined('DIR_ASSETS_FILES') || define('DIR_ASSETS_FILES', DIR_ASSETS."/files");
 defined('DIR_ASSETS_IMG') || define('DIR_ASSETS_IMG', DIR_ASSETS_FILES."/img");
 defined('DIR_TEMP') || define('DIR_TEMP', DIR_WRITABLE."temp");
+defined('DIR_QUOTES') || define('DIR_QUOTES', DIR_WRITABLE."quotes");
 
 defined('DIR_VENDOR') || define('DIR_VENDOR', ROOTPATH.'vendor');
 

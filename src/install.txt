@@ -33,6 +33,7 @@ ember.copyright 		= "Kwerqy | All rights reserved"
 # ember.integrations.google.captcha.sitekey = ""
 # ember.integrations.google.captcha.secret = ""
 
+# ember.email.developer	 	= ""
 # ember.email.no_reply	 	= ""
 # ember.email.from		 	= ""
 # ember.email.accounts	 	= ""

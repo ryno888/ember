@@ -53,7 +53,7 @@ class coder extends \Kwerqy\Ember\com\intf\standard {
 
 		if ($constants_str) {
 			$dir = APPPATH . "Libraries/incl";
-			$filename = "constants.php";
+			$filename = "generated_constants.php";
 
 			$constant_str = implode("\n", $constants_str);
 

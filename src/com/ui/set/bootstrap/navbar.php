@@ -155,6 +155,7 @@ class navbar extends \Kwerqy\Ember\com\ui\intf\component {
                 }
 
 
+                $options["/navbar-toggler"][".mt-2"] = true;
                 $options["/navbar-toggler"][".navbar-toggler"] = true;
                 $options["/navbar-toggler"]["@type"] = "button";
                 $options["/navbar-toggler"]["@data-bs-toggle"] = "collapse";

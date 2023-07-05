@@ -204,32 +204,11 @@ var app = {
     	btn_arr:[],
 		//------------------------------------------------------------------------------
     	set_btn_loading:function(el){
-    		el = $(el).first();
-
-    		//set target
-    		let target = app.str.generate_id();
-    		el.attr('data-el-id', target);
-
-    		//store original html
-    		app.html.btn_arr[target] = el.html();
-
-    		//set to loading
-    		el.html("Loading...<span class='fas fa-spinner fa-spin ml-2'></span>");
+    		app.ui.set_button_loading(el);
 		},
 		//------------------------------------------------------------------------------
 		unset_btn_loading:function(el){
-    		el = $(el).first();
-
-    		//get target
-    		let target = el.attr("data-el-id");
-
-    		//get original html
-    		let original = app.html.btn_arr[target];
-
-    		//replace
-			el.html(original);
-			el.removeAttr("data-el-id");
-
+    		app.ui.unset_button_loading(el);
 		},
 		//------------------------------------------------------------------------------
 	},
@@ -270,15 +249,16 @@ var app = {
 				title: '',
 				width: 'modal-lg',
 				id: app.str.generate_id(),
-				popup_id: 'modal_panel',
+				popup_id: 'modal_panel_'+app.str.generate_id(),
 				closable: true,
 				backdrop: "static",
-				height_class: "mh-40",
+				class_modal_body: "mh-40",
 				data: {},
 				ok_callback: function(){},
 			}, (options === undefined ? {} : options));
 
         	url = app.http.appendURL(url, 'mid=' + options.id);
+
 
         	let p = new popup(options);
 			p.set_title(options.title);
@@ -487,6 +467,8 @@ var app = {
 				});
 				el.html('Loading... <i class=\'fas fa-spinner fa-spin\'></i>');
 				el.prop('disabled', true);
+				el.attr('disabled', true);
+				el.addClass('.disabled', true);
 				el.attr('data-accessor', accessor);
 				el.addClass("loading");
 			});
@@ -507,6 +489,8 @@ var app = {
 				$.each( result, function( key, value ) {
 					el.html(value.html);
 					el.prop('disabled', false);
+					el.removeAttr('disabled', true);
+					el.removeClass('.disabled', true);
 					el.removeAttr('data-accessor');
 					el.removeClass("loading");
 				});

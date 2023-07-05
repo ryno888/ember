@@ -169,15 +169,22 @@ class Ember {
 
 		self::$app = config('App');
 
+		// error handler
+		error_reporting(E_ALL);
+		ini_set("error_log", WRITEPATH."logs/log-".\Kwerqy\Ember\com\date\date::strtodate().".log");
+
 		// shutdown handler
 		register_shutdown_function(["Kwerqy\Ember\Ember", "close"]);
 
 		//install
 		if(!file_exists(APPPATH."Libraries/incl/library.php")) \Kwerqy\Ember\com\solid_classes\coder::make()->build_library();
-		if(!file_exists(APPPATH."Libraries/incl/constants.php")) \Kwerqy\Ember\com\solid_classes\coder::make()->build_constants();
+		if(!file_exists(APPPATH."Libraries/incl/generated_constants.php")) \Kwerqy\Ember\com\solid_classes\coder::make()->build_constants();
 
-		//load constants
-		if(file_exists(APPPATH."Libraries/incl/constants.php")) include_once APPPATH."Libraries/incl/constants.php";
+		//load includes
+		$incl_arr = glob(APPPATH."Libraries/incl/*");
+		foreach ($incl_arr as $incl){
+		    include_once $incl;
+        }
 
 		//methods
 		function _console($mixed){ \Kwerqy\Ember\com\debug\debug::console($mixed); }
@@ -276,6 +283,10 @@ class Ember {
      */
 	public static function is_db_enabled() {
 		return (bool) self::get_env("database.default.hostname");
+	}
+    //--------------------------------------------------------------------------------
+	public static function get_copyright() {
+		return sprintf(getenv("ember.copyright"), \Kwerqy\Ember\com\date\date::strtodate("today", "Y"));
 	}
     //--------------------------------------------------------------------------------
 }

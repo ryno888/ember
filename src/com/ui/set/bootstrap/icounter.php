@@ -30,7 +30,7 @@ class icounter extends \Kwerqy\Ember\com\ui\intf\component {
 			"!keyup" => false,
 			"/input" => [],
 			"/btn" => [],
-			"disabled" => true,
+			"disabled_input" => true,
 			"color" => "primary",
 			"required_skipval" => false,
 			"required" => false,
@@ -137,11 +137,11 @@ class icounter extends \Kwerqy\Ember\com\ui\intf\component {
 				var intervalId = 0;
 				var timeoutId = 0;
 
-				$('body').on('click', '#{$input_id}', function(){
+				$('body').on('click', '#{$input_id}', function(e){
 				   $(this).select();
 				});
-				$('body').on('keyup', '#{$input_id}', function(){
-				   {$options["!change"]}
+				$('body').on('blur', '#{$input_id}', function(e){
+				   {$input_id}.change(e);
 				});
 
 				$('body').on('mousedown', '#{$wrapper_id} .plus', function(){
@@ -192,7 +192,7 @@ class icounter extends \Kwerqy\Ember\com\ui\intf\component {
 					
 				});
 				
-				".($options["disabled"] ? "$('#{$input_id}').prop('disabled', true);" : "")."
+				".($options["disabled_input"] ? "$('#{$input_id}').prop('disabled', true);" : "")."
 				
 			});
 		");

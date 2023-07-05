@@ -219,7 +219,7 @@ class http {
 	        "layout" => "website",
 	    ], $options);
 
-	    $solid_helper = \mod\solid_classes\helper::make()->get("message", "message_code_{$nr}");
+	    $solid_helper = \Kwerqy\Ember\com\solid_classes\helper::make()->get("message", "message_code_{$nr}");
 
 		$control = [];
 		if($options["layout"]) $control[] = $options["layout"];
@@ -445,6 +445,25 @@ class http {
 
 		// done
 		return "Content-Security-Policy: {$header}";
+	}
+	//--------------------------------------------------------------------------------
+	public static function is_valid_email($email){
+
+        if(!$email)
+            return false;
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+            return false;
+
+        if(!preg_match("/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/", $email))
+            return false;
+
+        $email_arr = explode("@", $email);
+        if (!checkdnsrr(array_pop($email_arr), "MX")) {
+            return false;
+        }
+
+		return true;
 	}
 	//--------------------------------------------------------------------------------
 }

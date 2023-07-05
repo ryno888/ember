@@ -17,6 +17,7 @@ class popup {
         this.options = $.extend({
             class: '',
             class_modal_content: '',
+            class_modal_body: '',
             width: 'auto',
             id: app.util.id_generator({prepend: "modal"}),
             title: 'Alert',
@@ -84,7 +85,7 @@ class popup {
 							'<h5 class="modal-title" id="'+this.aria_labelledby+'">'+this.options.title+'</h5>'+
 							'<button type="button" class="btn-close '+(!this.options.closable ? 'd-none' : '')+'" data-bs-dismiss="modal" aria-label="Close"></button>'+
 						'</div>'+
-						'<div class="modal-body">'+
+						'<div class="modal-body '+this.options.class_modal_body+'">'+
 							this.options.body_content+
 						'</div>'+
 						'<div class="modal-footer'+((this.options.hide_footer || !this.options.footer_content) ? "d-none" : "")+'">'+

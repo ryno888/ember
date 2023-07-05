@@ -116,16 +116,20 @@ abstract class session_helper extends \Kwerqy\Ember\com\intf\standard {
     public function update($options = []){
     	$this->on_update($options);
         $this->com_session->set($this->name, $this);
+        
+        return $this;
     }
     //--------------------------------------------------------------------------
 
     /**
-     * @param $session_name
      * @param array $options
-     * @return \app\session\standard
+     * @return \Kwerqy\Ember\com\intf\standard|session_helper|static
      */
-    public static function create($session_name, $options = []){
-        return call_user_func( ["\\session\\$session_name","make"], $options);
+    public static function make($options = []) {
+        $obj = parent::make($options);
+        $obj->update();
+
+        return $obj;
     }
     //--------------------------------------------------------------------------
     public function clear($options = []){
@@ -143,6 +147,8 @@ abstract class session_helper extends \Kwerqy\Ember\com\intf\standard {
         foreach ($default_arr as $property => $default){
             $this->{$property} = $default;
         }
+
+        self::make();
     }
     //--------------------------------------------------------------------------
 }
