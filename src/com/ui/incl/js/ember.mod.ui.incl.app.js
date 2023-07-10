@@ -143,7 +143,7 @@ var app = {
                             }
                         }
 
-                        if (options.done) options.done.apply(this, [options, data]);
+                        if (options.done) options.done.apply(this, [data, options]);
 
                     },
                     complete: function (d) {
@@ -331,10 +331,12 @@ var app = {
 				$this.find('button[commodal-btn=ok]')
 					.click(function() {
 						if (ok_callback) ok_callback.apply(this, []);
+						alert.close();
 					}).focus();
 
 				$this.find('button[commodal-btn=cancel]').click(function() {
 					if (cancel_callback) cancel_callback.apply(this, []);
+					alert.close();
 				});
 			});
 			return alert.build();
@@ -500,6 +502,26 @@ var app = {
     },
     //==================================================================================
 	str: {
+		//------------------------------------------------------------------------------
+		format_bytes: function (bytes, options) {
+
+			options = $.extend({
+				decimals: 2,
+				symbol: true,
+			}, (options === undefined ? {} : options));
+
+			if (!+bytes) return options.symbol ? '0 Bytes' : 0
+
+			const k = 1024
+			const dm = options.decimals < 0 ? 0 : options.decimals
+			const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+
+			const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+			if(!options.symbol) return parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+
+			return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+		},
 		//------------------------------------------------------------------------------
 		extension: function (filename) {
 			return filename.substr((filename.lastIndexOf('.') + 1));

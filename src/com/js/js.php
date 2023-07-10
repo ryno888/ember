@@ -129,6 +129,7 @@ class js {
 		if ($options["*beforeSend"] && substr($options["*beforeSend"], 0, 9) == "function(") $options["*beforeSend"] = "!{$options["*beforeSend"]}";
 		if ($options["*success"] && substr($options["*success"], 0, 9) == "function(") $options["*success"] = "!{$options["*success"]}";
 		if ($options["*complete"] && substr($options["*complete"], 0, 9) == "function(") $options["*complete"] = "!{$options["*complete"]}";
+		if ($options["*done"] && substr($options["*done"], 0, 9) == "function(") $options["*done"] = "!{$options["*done"]}";
 		if ($options["*cancel_confirm"] && substr($options["*cancel_confirm"], 0, 9) == "function(") $options["*cancel_confirm"] = "!{$options["*cancel_confirm"]}";
 
 		// confirm

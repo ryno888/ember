@@ -41,6 +41,7 @@ class coder extends \Kwerqy\Ember\com\intf\standard {
 				"constant" => $solid->get_code(),
 				"value" => $solid->get_value(),
 				"category" => strtoupper($category),
+				"description" => $solid->get_description(),
 			];
 		});
 
@@ -90,6 +91,10 @@ EOD;
 //-------------------------------------------------------------
 EOD;
 			foreach ($constant_data_arr as $constant => $data) {
+				$return_arr[] = "/**
+ * {$constant}
+ * {$data["description"]}
+ */";
 				$return_arr[] = "if(!defined(\"{$constant}\")) define(\"{$constant}\", \"{$data["value"]}\");";
 			}
 

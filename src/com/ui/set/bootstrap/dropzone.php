@@ -17,7 +17,7 @@ class dropzone extends \Kwerqy\Ember\com\ui\intf\component {
 	}
 	//--------------------------------------------------------------------------------
 	public function build($options = []) {
-	    $dropzone = \mod\incl\dropzone\dropzone::make();
+	    $dropzone = \Kwerqy\Ember\com\incl\dropzone\dropzone::make();
 	    return $dropzone->build($options);
 	}
 	//--------------------------------------------------------------------------------

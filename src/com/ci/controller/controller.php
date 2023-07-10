@@ -49,6 +49,15 @@ class controller{
             "default" => false,
         ], $options);
 
+        //try to find data in URL
+        $control = \Kwerqy\Ember\com\http\http::get_control();
+        if(strpos($control, $name) !== false){
+            $control_parts = explode("/", $control);
+            $key = array_search($name, $control_parts);
+            $value = isset($control_parts[$key+1]) ? $control_parts[$key+1] : false;
+            if($value) return $value;
+        }
+
         $value = $this->cache->get($name);
         if($value) return $value;
 
