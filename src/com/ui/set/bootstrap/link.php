@@ -20,6 +20,7 @@ class link extends \Kwerqy\Ember\com\ui\intf\component {
 		$options = array_merge([
 			"label" => null,
 			"@href" => "#",
+			"@title" => false,
 
 			"icon" => false,
 			"/icon" => [],
@@ -53,8 +54,18 @@ class link extends \Kwerqy\Ember\com\ui\intf\component {
 		    $options["/icon"][".me-2"] = true;
         }
 
-		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+		if($options["@title"]){
+		    $id = \Kwerqy\Ember\com\str\str::generate_id();
+		    $options[".$id"] = true;
+		    $options[".position-relative"] = "tooltip";
+		    $options["@data-bs-toggle"] = "tooltip";
+		    $options["@data-bs-title"] = $options["@title"];
+		    $options["@data-bs-html"] = "true";
+		    $options["@data-bs-placement"] = "top";
+		    \Kwerqy\Ember\com\js\js::add_script("app.html.tooltip({container:'.$id'});");
+        }
 
+		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 		$buffer->a_($options);
 			if($options["icon"]) $buffer->xicon($options["icon"], $options["/icon"]);
 			if($label) $buffer->add($label);

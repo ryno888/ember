@@ -60,8 +60,6 @@ class http {
 		}catch(\Exception $ex){
 
 		}
-
-		return "stream";
 	}
 	//--------------------------------------------------------------------------------
     public static function add_stream_headers($filename, $options = []) {

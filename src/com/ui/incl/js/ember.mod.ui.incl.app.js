@@ -211,6 +211,11 @@ var app = {
     		app.ui.unset_button_loading(el);
 		},
 		//------------------------------------------------------------------------------
+		tooltip:function(options){
+    		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+			const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, options))
+		},
+		//------------------------------------------------------------------------------
 	},
     //==================================================================================
 	form: {
