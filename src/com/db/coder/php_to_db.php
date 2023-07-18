@@ -13,7 +13,7 @@ class php_to_db extends \CodeIgniter\Database\Forge {
 
 	//--------------------------------------------------------------------------------
 	public function get_table_arr() {
-	    $file_arr = glob(DIR_APP."/db/*");
+	    $file_arr = glob(APPPATH."Libraries/db/*");
 	    $return_arr = [];
 
 	    foreach ($file_arr as $db_file){
@@ -36,7 +36,7 @@ class php_to_db extends \CodeIgniter\Database\Forge {
 
     }
 	//--------------------------------------------------------------------------------
-    public function __get_table_install_sql($table){
+    private function __get_table_install_sql($table){
 
 	    if(array_key_exists($table, $this->sql_arr)) return;
 
@@ -57,7 +57,7 @@ class php_to_db extends \CodeIgniter\Database\Forge {
         if(!array_key_exists($table, $this->sql_arr)){
             $this->sql_arr[$table] = implode("\n", [
                 "-- {$table}",
-                $this->get_create_sql($table).";",
+                $this->get_create_sql($table),
             ]);
         }
 
@@ -113,7 +113,7 @@ class php_to_db extends \CodeIgniter\Database\Forge {
             $this->addForeignKey($reference_field["name"], $reference_field["reference"], $reference_field["key"]);
         }
 
-	    return $this->_createTable($coder->get_name(), $options["if_not_exists"], $options["attributes"]);
+	    return $this->_createTable($coder->get_name(), $options["if_not_exists"], $options["attributes"]).";";
 	}
 	//--------------------------------------------------------------------------------
 	public static function make($options = []) {

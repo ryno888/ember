@@ -109,6 +109,15 @@ abstract class table {
 
 	}
 	//--------------------------------------------------------------------------------
+    /**
+     * @param $value
+     * @param array $options
+     * @return array|false|table|table[]|\Kwerqy\Ember\com\db\row|\Kwerqy\Ember\com\db\row[]|\Kwerqy\Ember\com\intf\standard
+     */
+    public function get_fromstring($value, $options = []) {
+        return $this->get_fromdb("{$this->string} = ".\Kwerqy\Ember\dbvalue($value));
+    }
+	//--------------------------------------------------------------------------------
     public function format_name($obj, $options = []) : string {
         $options = array_merge([
             "field_arr" => ["name"],
@@ -163,6 +172,32 @@ abstract class table {
 	}
 
 	//--------------------------------------------------------------------------------
+	public function splat($mixed) {
+		// from object \com\db\row
+		if ($mixed instanceof \Kwerqy\Ember\com\db\row) return $mixed;
+
+		// check if null
+		if (\Kwerqy\Ember\isnull($mixed)) return false;
+
+		// from database id
+		if (is_numeric($mixed)) return $this->get_fromdb($mixed);
+
+		// from array
+		if (is_array($mixed)) return $this->get_fromarray($mixed);
+
+		// from string field specified by string property
+		if ($this->string && is_string($mixed)) return $this->get_fromstring($mixed);
+
+		// all other types
+		return false;
+	}
+
+	//--------------------------------------------------------------------------------
+	public function splatid($mixed) {
+		$obj = $this->splat($mixed);
+		return $obj ? $obj->id : false;
+	}
+	//--------------------------------------------------------------------------------
 
 	/**
 	 * @param array $options
@@ -179,7 +214,7 @@ abstract class table {
 		if($options["create"] && $options["multiple"])
 		    throw new \Exception("Unsupported: Multiple and Create cant both be true");
 
-		$where_arr = \Kwerqy\Ember\arr::extract_signature_items(".", $options);
+		$where_arr = \Kwerqy\Ember\com\arr\arr::extract_signature_items(".", $options);
 
 		$sql = \Kwerqy\Ember\com\db\sql\select::make();
 		$sql->select("{$this->name}.*");
@@ -240,6 +275,7 @@ abstract class table {
     public function on_save_complete($obj) {}
     public function on_delete($obj) {}
     public function on_delete_complete($obj) {}
+    public function install_defaults($options = []) {}
 	//--------------------------------------------------------------------------------
     public function save($obj, $options = []) {
         if(isempty($obj->{$this->key})){
@@ -364,6 +400,9 @@ abstract class table {
 
 		$obj = \Kwerqy\Ember\com\db\row::make($this, $options["source"]);
 
+		if(isset($arr[$this->key]))
+		    $obj->id = $arr[$this->key];
+
 		//defaults
 		foreach ($this->field_arr as $field => $field_options){
 			$obj->{$field} = $field_options[1];
@@ -394,7 +433,10 @@ abstract class table {
         $sql->from($this->name);
         $sql->orderby($this->key, "DESC");
 
-        return \core::db()->selectsingle($sql->build());
+        $id = \core::db()->selectsingle($sql->build());
+        
+        if($id && !\Kwerqy\Ember\isnull($id)) return $id;
+        return 0;
 
     }
 	//--------------------------------------------------------------------------------
@@ -404,7 +446,7 @@ abstract class table {
 
         $slug_parts = [];
         $slug_parts[] = $this->get_prefix();
-        $slug_parts[] = md5($this->get_last_inserted_id());
+        $slug_parts[] = $this->get_last_inserted_id();
 
         return implode("-", $slug_parts);
 

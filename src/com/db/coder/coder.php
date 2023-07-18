@@ -85,7 +85,7 @@ class coder extends \Kwerqy\Ember\com\intf\standard {
 	}
 	//--------------------------------------------------------------------------------
     public function get_field_type($type) {
-        return \Kwerqy\Ember\data::get_class($type)->get_dbvalue();
+        return \Kwerqy\Ember\com\data\data::get_class($type)->get_dbvalue();
     }
 	//--------------------------------------------------------------------------------
     public function get_field_constraint($type) {

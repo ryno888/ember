@@ -49,7 +49,7 @@ class row {
      */
   	public function __call($name, $arguments) {
   		if (method_exists($this->instance, $name)) {
-  			$arguments = [-1 => $this] + \Kwerqy\Ember\arr::splat($arguments);
+  			$arguments = [-1 => $this] + \Kwerqy\Ember\com\arr\arr::splat($arguments);
 			return call_user_func_array([$this->instance, $name], $arguments);
   		}
   		else throw new \Exception("Call to undefined function: $name");
