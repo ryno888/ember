@@ -97,6 +97,18 @@ class arr {
         return false;
     }
     //--------------------------------------------------------------------------------
+
+    /**
+     * @param $arr
+     * @return int|string|null
+     */
+    public static function get_last_index($arr) {
+		// params
+    	$arr = self::splat($arr);
+
+		return key(array_slice($arr, -1, 1, true));
+    }
+    //--------------------------------------------------------------------------------
 	/**
 	 * Trims all items in the array recursively. This function changes the input array
 	 * and returns nothing.

@@ -10,9 +10,9 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 
 	protected $id;
 
-	/**
-	 * @var \mod\db\sql\select
-	 */
+    /**
+     * @var \Kwerqy\Ember\com\db\sql\select
+     */
 	protected $sql;
 	protected $orderby = false;
 
@@ -66,16 +66,25 @@ class table extends \Kwerqy\Ember\com\intf\standard {
         $this->key = $key;
     }
 	//--------------------------------------------------------------------------------
-	public function build(&$buffer, $options = []) {
+	public function build($options = []) {
 
 		$options = array_merge([
 		], $options);
 
 		if($this->sql) $this->init_db();
 
-		$this->build_html($buffer);
-		$this->build_js($buffer);
+		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
+		$this->build_html($buffer, ["table_only" => \Kwerqy\Ember\com\http\http::is_ajax()]);
+        $this->build_js($buffer);
+
+		if(\Kwerqy\Ember\com\http\http::is_ajax()){
+		    ob_clean();
+		    \Kwerqy\Ember\com\http\http::json($buffer->build());
+		    exit();
+        }
+
+		return $buffer->build();
 	}
 	//--------------------------------------------------------------------------------
     public function nav_append_left($fn) {
@@ -88,10 +97,10 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
     public function parse_requests() {
 
-        $this->page = \core::$request->get("page", TYPE_INT, ["default" => 1]);
-        $this->orderby = \core::$request->get("orderby", TYPE_STRING);
-        $this->search = \core::$request->get("search", TYPE_STRING);
-        $id = \core::$request->get("ui_table", TYPE_STRING);
+        $this->page = \Kwerqy\Ember\Ember::$request->get("page", TYPE_INT, ["default" => 1]);
+        $this->orderby = \Kwerqy\Ember\Ember::$request->get("orderby", TYPE_STRING);
+        $this->search = \Kwerqy\Ember\Ember::$request->get("search", TYPE_STRING);
+        $id = \Kwerqy\Ember\Ember::$request->get("ui_table", TYPE_STRING);
         if($id) $this->id = $id;
 
     }
@@ -112,9 +121,14 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 
 	/**
-	 * @param $sql \mod\db\sql\select
+	 * @param $sql \mod\db\sql\select | callable
 	 */
-	public function set_sql(\mod\db\sql\select $sql) {
+	public function set_sql($sql) {
+
+	    if(!is_string($sql) && is_callable($sql)){
+	        $sql = $sql();
+        }
+
 		$this->sql = $sql;
 	}
 	//--------------------------------------------------------------------------------
@@ -174,7 +188,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	}
 	//--------------------------------------------------------------------------------
     public function is_stream() {
-        return \mod\http::is_ajax() && isset($_REQUEST["ui_table"]);
+        return \Kwerqy\Ember\com\http\http::is_ajax() && isset($_REQUEST["ui_table"]);
     }
 	//--------------------------------------------------------------------------------
 	public function stream_json_data() {
@@ -203,7 +217,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 
 			    ob_clean();
 
-                \mod\http::json($buffer->build());
+                \Kwerqy\Ember\com\http\http::json($buffer->build());
             }
 			return "stream";
 		}
@@ -225,7 +239,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		$clone = clone $this->sql;
 		$clone->clear_select();
 		$clone->select_count($this->key);
-		$this->total_items = \mod\db::make()->selectsingle($clone->build());
+		$this->total_items = \Kwerqy\Ember\Ember::db()->selectsingle($clone->build());
 		$this->total_pages = ceil($this->total_items/$this->limit);
 
 		//sql
@@ -301,7 +315,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	    $is_empty = $this->toolbar_right->is_empty() && $this->toolbar_left->is_empty();
 
 	    if(!$is_empty){
-            $buffer->div_([".ui-table-toolbar" => true]);
+            $buffer->div_([".container-fluid ui-table-toolbar" => true]);
 
                 $buffer->div_([".row align-items-center my-2" => true]);
                     if(!$this->toolbar_left->is_empty()){
@@ -427,20 +441,28 @@ class table extends \Kwerqy\Ember\com\intf\standard {
         $buffer->_tfoot();
     }
 	//--------------------------------------------------------------------------------
-	private function build_html(&$buffer = false){
+	private function build_html(&$buffer, $options = []){
 
-		$buffer->div_([".ui-table-wrapper" => true, "@data-id" => $this->id]);
+	    $options = array_merge([
+	        "table_only" => false
+	    ], $options);
 
-		    if($this->enable_toolbar){
-		        $this->build_toolbar($buffer);
-            }
+	    if(!$options["table_only"]){
+            $buffer->div_([".ui-table-wrapper" => true, "@data-id" => $this->id]);
+                if($this->enable_toolbar){
+                    $this->build_toolbar($buffer);
+                }
+        }
 
 			$buffer->table_(["@class" => "table table-striped table-bordered valign-middle", "@id" => $this->id]);
 			    $this->build_thead($buffer);
 			    $this->build_tbody($buffer);
 			    $this->build_tfoot($buffer);
 			$buffer->_table();
-		$buffer->_div();
+
+        if(!$options["table_only"]){
+            $buffer->_div();
+        }
 	}
 	//--------------------------------------------------------------------------------
 	private function build_js(&$buffer){
@@ -448,7 +470,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		$js_options = [];
 		$js_options["*id"] = $this->id;
 		$js_options["*url"] = current_url()."?ui_table={$this->id}";
-		$js_options["*panel"] = \core::$panel;
+		$js_options["*panel"] = \Kwerqy\Ember\Ember::$panel;
 		$js_options = \Kwerqy\Ember\com\js\js::create_options($js_options);
 
 		$buffer->script(["*" => "
@@ -459,15 +481,6 @@ class table extends \Kwerqy\Ember\com\intf\standard {
                 });
             }
 		"]);
-//		\Kwerqy\Ember\com\js\js::add_script("
-//		    if(typeof {$this->id} === 'undefined'){
-//                var {$this->id};
-//                $(function(){
-//                    {$this->id} = new table({$js_options});
-//                });
-//            }
-//
-//		");
 	}
 	//--------------------------------------------------------------------------------
 }

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		bg.style.backgroundSize = 'cover';
 		bg.style.backgroundPosition = 'center';
 		bg.style.position = 'absolute';
-		bg.style.height = '130%';
+		bg.style.height = '135%';
 		bg.style.width = '100%';
 		bg.style.top = 0;
 		bg.style.left = 0;

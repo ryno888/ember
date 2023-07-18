@@ -10,8 +10,8 @@
   content: ""; }
 
 .text-bg-primary {
-  color: #fff !important;
-  background-color: RGBA(13, 110, 253, var(--bs-bg-opacity, 1)) !important; }
+  color: #000 !important;
+  background-color: RGBA(255, 81, 0, var(--bs-bg-opacity, 1)) !important; }
 
 .text-bg-secondary {
   color: #fff !important;
@@ -35,16 +35,16 @@
 
 .text-bg-light {
   color: #000 !important;
-  background-color: RGBA(248, 249, 250, var(--bs-bg-opacity, 1)) !important; }
+  background-color: RGBA(222, 226, 230, var(--bs-bg-opacity, 1)) !important; }
 
 .text-bg-dark {
   color: #fff !important;
   background-color: RGBA(33, 37, 41, var(--bs-bg-opacity, 1)) !important; }
 
 .link-primary {
-  color: #0d6efd !important; }
+  color: #ff5100 !important; }
   .link-primary:hover, .link-primary:focus {
-    color: #0a58ca !important; }
+    color: #ff7433 !important; }
 
 .link-secondary {
   color: #6c757d !important; }
@@ -72,9 +72,9 @@
     color: #b02a37 !important; }
 
 .link-light {
-  color: #f8f9fa !important; }
+  color: #dee2e6 !important; }
   .link-light:hover, .link-light:focus {
-    color: #f9fafb !important; }
+    color: #e5e8eb !important; }
 
 .link-dark {
   color: #212529 !important; }

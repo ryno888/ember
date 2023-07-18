@@ -16,7 +16,7 @@
         $buffer->link(["@rel" => "preconnect", "@href" => "https://fonts.gstatic.com", "@crossorigin" => true]);
         $buffer->link(["@rel" => "stylesheet", "@href" => "https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200;300;400;700&family=Poppins:ital,wght@0,200;0,400;0,600;1,200;1,400;1,600&display=swap"]);
 
-        $assets_builder = \Kwerqy\Ember\com\compiler\assets::make(["section" => "system"]);
+        $assets_builder = \Kwerqy\Ember\com\compiler\assets::make(["section" => "bootstrap"]);
         $assets_builder->run();
         $buffer->add($assets_builder->get_stream_css());
 

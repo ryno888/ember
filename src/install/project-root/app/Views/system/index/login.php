@@ -19,7 +19,7 @@
 						    $buffer->div([".mb-4 lead fs-7" => true, "*" => "ADMIN PORTAL"]);
 
 							if(\Kwerqy\Ember\com\db\db::is_enabled()){
-                                $buffer->form(\Kwerqy\Ember\com\http\http::build_action_url("system/xlogin"));
+                                $buffer->form("system/xlogin");
                                 $buffer->xitext("per_username", false, false, ["@placeholder" => "Username", ".mb-3" => true]);
                                 $buffer->xitext("per_password", false, false, ["@placeholder" => "Password", ".mb-3" => true, "mask" => true]);
                                 $buffer->submit_button(["label" => "Login", ".w-100 mb-2" => true]);

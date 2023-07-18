@@ -63,7 +63,7 @@ class toolbar extends \Kwerqy\Ember\com\ui\intf\component {
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 		$buffer->div_([".ui-toolbar d-flex flex-wrap" => true]);
-		    $last_index = \mod\arr::get_last_index($this->item_arr);
+		    $last_index = \Kwerqy\Ember\com\arr\arr::get_last_index($this->item_arr);
 		    foreach ($this->item_arr as $index => $item){
 
 		        $item["/toolbar_item"][".ui-toolbar-item mb-2 d-flex"] = true;

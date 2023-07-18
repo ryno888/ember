@@ -35,4 +35,8 @@ class product extends \Kwerqy\Ember\com\db\intf\table {
         "pro_price"                      	=> array("price"                     	, 0			, TYPE_DECIMAL),
 	);
  	//--------------------------------------------------------------------------------
+    public $pro_type = [
+        null => "-- Not Selected --",  
+    ];
+ 	//--------------------------------------------------------------------------------
 }

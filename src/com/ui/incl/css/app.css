@@ -1212,6 +1212,9 @@ table.loading > tbody:after, .table.loading > tbody:after {
 .max-h-50px {
   max-height: 50px !important; }
 
+.max-h-70px {
+  max-height: 50px !important; }
+
 .max-h-100px {
   max-height: 100px !important; }
 
@@ -3693,7 +3696,7 @@ mark, .ui-highlight {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, currently
-     supported by Chrome, Edge, Opera and Firefox */
+                                supported by Chrome, Edge, Opera and Firefox */
   display: flex; }
   .qty-input .minus {
     border-radius: 5px 0px 0px 5px; }
@@ -3710,7 +3713,7 @@ mark, .ui-highlight {
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 0;
-    transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     width: 50%;
     margin-left: -1px;
     margin-right: -1px;
@@ -3731,5 +3734,56 @@ mark, .ui-highlight {
 
 .tooltip {
   min-width: 150px; }
+
+/*pagination*/
+.ui-pagination {
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+  list-style: none;
+  display: flex; }
+  .ui-pagination > li:first-child > a, .ui-pagination > li:first-child > span {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px; }
+  .ui-pagination > li > a, .ui-pagination > li > span {
+    position: relative;
+    padding: 6px 0px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    height: 35px;
+    align-items: center; }
+    .ui-pagination > li > a:hover, .ui-pagination > li > span:hover {
+      border-color: var(--bs-primary);
+      z-index: 3; }
+  .ui-pagination > .active > a, .ui-pagination > .active > span {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary); }
+    .ui-pagination > .active > a:focus, .ui-pagination > .active > a:hover, .ui-pagination > .active > span:focus, .ui-pagination > .active > span:hover {
+      z-index: 2;
+      cursor: default;
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+      opacity: .9; }
+  .ui-pagination > .disabled > a, .ui-pagination > .disabled > span {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: var(--bs-gray-400);
+    border-color: var(--bs-gray-400); }
+    .ui-pagination > .disabled > a:focus, .ui-pagination > .disabled > a:hover, .ui-pagination > .disabled > span:focus, .ui-pagination > .disabled > span:hover {
+      z-index: 2;
+      cursor: not-allowed;
+      opacity: .9;
+      border-color: var(--bs-gray-400); }
 
 /*# sourceMappingURL=app.css.map */
