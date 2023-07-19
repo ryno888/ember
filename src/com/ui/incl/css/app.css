@@ -3738,10 +3738,10 @@ mark, .ui-highlight {
 /*pagination*/
 .ui-pagination {
   padding-left: 0;
-  margin: 20px 0;
   border-radius: 4px;
   list-style: none;
-  display: flex; }
+  display: flex;
+  margin-bottom: 0; }
   .ui-pagination > li:first-child > a, .ui-pagination > li:first-child > span {
     margin-left: 0;
     border-top-left-radius: 4px;
@@ -3757,7 +3757,7 @@ mark, .ui-highlight {
     width: 30px;
     display: flex;
     justify-content: center;
-    height: 35px;
+    height: 30px;
     align-items: center; }
     .ui-pagination > li > a:hover, .ui-pagination > li > span:hover {
       border-color: var(--bs-primary);

@@ -5,14 +5,38 @@ class table {
         this.options = $.extend({
             id: null,
             url: null,
+            total_pages: 0,
+            total_items: 0,
         }, (options === undefined ? {} : options));
 
         this.data = {
             page:1,
             search:"",
             orderby:"",
+            is_reset:0,
             ui_table:this.options.id,
         };
+
+    }
+    //----------------------------------------------------------------
+    set_options(options){
+        this.options = $.extend({
+            id: null,
+            url: null,
+            total_pages: 0,
+            total_items: 0,
+        }, (options === undefined ? {} : options));
+
+        //update pagination
+        if(this.options.total_pages <= 1){
+            $("#"+this.options.id+"_pagination").addClass('d-none');
+        }else{
+            
+            $("#"+this.options.id+"_pagination").removeClass('d-none');
+
+            let pagination = eval(this.options.id+"_pagination");
+            pagination.update({total:this.options.total_pages});
+        }
 
     }
     //----------------------------------------------------------------
@@ -27,6 +51,7 @@ class table {
 
         this.data.page = 1;
         this.data.search = "";
+        this.data.is_reset = 1;
         this.update();
 
         let reset_btn = this.get_element("reset_btn");
@@ -74,6 +99,7 @@ class table {
                 setTimeout(function(){
                     $("#"+instance.options.id).html(response);
                     $("#"+instance.options.id).removeClass('loading');
+                    instance.data.is_reset = 0;
                 }, 200);
             },
         });

@@ -48,23 +48,36 @@ class pagination extends \Kwerqy\Ember\com\ui\intf\component {
 		    "*prevClass" => false,
 		    "*lastClass" => false,
 		    "*firstClass" => false,
+		    "/wrapper" => [],
 
 		], $options);
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 		//init element
-		$buffer->div(["@id" => $options["id"]]);
+        $options["/wrapper"]["@id"] = $options["id"];
+		$buffer->div($options["/wrapper"]);
 
 		//init json options
 		$json_options = \Kwerqy\Ember\com\js\js::create_options($options);
 
 		//apply script
 		\Kwerqy\Ember\com\js\js::add_script("
-		    $('#{$options["id"]}').bootpag($json_options).on('page', function(event, num){
+		    var {$options["id"]} = $('#{$options["id"]}').bootpag($json_options);
+		    {$options["id"]}.on('page', function(event, num){
 		        var fn = {$options["!click"]};
                 if (fn) fn.apply(this, [num]);
             });
+            
+            {$options["id"]}.update = function(options){
+            
+                options = $.extend({
+                    maxVisible: {$options["*maxVisible"]},
+                    total: {$options["*maxVisible"]},
+                }, (options === undefined ? {} : options));
+            
+                {$options["id"]}.bootpag(options);
+            }
 		");
 
 		// done

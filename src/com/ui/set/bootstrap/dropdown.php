@@ -30,7 +30,7 @@ class dropdown extends \Kwerqy\Ember\com\ui\intf\component {
 		], $options);
 	}
 	//--------------------------------------------------------------------------------
-	public function add_button($label, $onclick, $options = []) {
+	public function add_button($label, $onclick = "void", $options = []) {
 		$this->item_arr[] = array_merge( [
 			"label" => $label,
 			"@href" => "javascript:{$onclick};",

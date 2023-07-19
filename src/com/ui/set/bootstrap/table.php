@@ -23,8 +23,11 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	protected $page = 1;
 	protected $search = "";
 	protected $search_field = "";
+	protected $is_reset = false;
 
 	protected $key = "";
+
+	protected $options = [];
 
 	protected $action_arr = [];
 	protected $field_arr = [];
@@ -43,13 +46,22 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	// magic
 	//--------------------------------------------------------------------------------
 	protected function __construct($options = []) {
+
+	    $options = array_merge([
+	        "/table" => [],
+	        "/title" => [],
+	    ], $options);
+
 		// init
 		$this->name = "Button";
-		$this->id = \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "table"]);
-		$this->parse_requests();
+		$this->id = "table_".md5(\Kwerqy\Ember\com\http\http::get_control());
+		$this->options = $options;
 
 		$this->toolbar_left = \Kwerqy\Ember\com\ui\ui::make()->toolbar();
 		$this->toolbar_right = \Kwerqy\Ember\com\ui\ui::make()->toolbar();
+
+		$this->parse_requests();
+
 	}
 	//--------------------------------------------------------------------------------
     /**
@@ -66,6 +78,18 @@ class table extends \Kwerqy\Ember\com\intf\standard {
         $this->key = $key;
     }
 	//--------------------------------------------------------------------------------
+    public function set_title($title, $sub_title = false, $options = []) {
+        
+        $options = array_merge([
+            "size" => 2,
+            "title" => $title,
+            "sub_title" => $sub_title,
+            ".my-2" => true,
+        ], $options);
+
+        $this->options["/title"] = $options;
+    }
+	//--------------------------------------------------------------------------------
 	public function build($options = []) {
 
 		$options = array_merge([
@@ -73,12 +97,13 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 
 		if($this->sql) $this->init_db();
 
-		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+		$table_contents_only = \Kwerqy\Ember\com\http\http::is_ajax() && \Kwerqy\Ember\Ember::$request->get("ui_table", TYPE_STRING) == $this->id;
 
-		$this->build_html($buffer, ["table_only" => \Kwerqy\Ember\com\http\http::is_ajax()]);
+		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+		$this->build_html($buffer, ["table_contents_only" => $table_contents_only]);
         $this->build_js($buffer);
 
-		if(\Kwerqy\Ember\com\http\http::is_ajax()){
+		if($table_contents_only){
 		    ob_clean();
 		    \Kwerqy\Ember\com\http\http::json($buffer->build());
 		    exit();
@@ -87,6 +112,11 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		return $buffer->build();
 	}
 	//--------------------------------------------------------------------------------
+
+    /**
+     * function($table, $toolbar){}
+     * @param $fn
+     */
     public function nav_append_left($fn) {
         call_user_func_array($fn, [$this, &$this->toolbar_left]);
     }
@@ -95,14 +125,62 @@ class table extends \Kwerqy\Ember\com\intf\standard {
         call_user_func_array($fn, [$this, &$this->toolbar_right]);
     }
 	//--------------------------------------------------------------------------------
+    public function request_value($id, $datatype, $options = []) {
+
+        //load from request
+        $value = \Kwerqy\Ember\Ember::$request->get($id, $datatype, $options);
+
+
+        //attempt to load from session
+        $session_id = "{$this->id}{$id}";
+        $session_data = \Kwerqy\Ember\Ember::$session->get($session_id);
+
+        if($this->is_reset){
+            $value = $this->get_request_defaults()[$id];
+            \Kwerqy\Ember\Ember::$session->set($session_id, $value);
+            return $value;
+        }
+
+        if(!$value) $value = $session_data;
+        else {
+            \Kwerqy\Ember\Ember::$session->set($session_id, $value);
+        }
+
+        return $value;
+    }
+	//--------------------------------------------------------------------------------
     public function parse_requests() {
 
-        $this->page = \Kwerqy\Ember\Ember::$request->get("page", TYPE_INT, ["default" => 1]);
-        $this->orderby = \Kwerqy\Ember\Ember::$request->get("orderby", TYPE_STRING);
-        $this->search = \Kwerqy\Ember\Ember::$request->get("search", TYPE_STRING);
         $id = \Kwerqy\Ember\Ember::$request->get("ui_table", TYPE_STRING);
         if($id) $this->id = $id;
 
+        $this->is_reset = \Kwerqy\Ember\Ember::$request->get("is_reset", TYPE_BOOL);
+
+        $this->page = $this->request_value("page", TYPE_INT, ["default" => 1]);
+        $this->orderby = $this->request_value("orderby", TYPE_STRING);
+        $this->search = $this->request_value("search", TYPE_STRING);
+
+        return $this->get_requests();
+    }
+	//--------------------------------------------------------------------------------
+    public function get_requests() {
+        return [
+            "page" => $this->page,
+            "orderby" => $this->orderby,
+            "search" => $this->search,
+            "is_reset" => $this->is_reset,
+            "id" => $this->id,
+        ];
+    }
+	//--------------------------------------------------------------------------------
+    public function get_request_defaults() {
+        return [
+            "page" => 1,
+            "orderby" => false,
+            "search" => false,
+            "is_reset" => false,
+            "id" => $this->id,
+        ];
     }
 	//--------------------------------------------------------------------------------
     public function set_search_field($field) {
@@ -171,6 +249,11 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	}
 	//--------------------------------------------------------------------------------
 
+    /**
+     * function($item_data, $dropdown, $table){}
+     * @param $fn
+     * @param array $options
+     */
 	public function add_action_dropdown($fn, $options = []){
 
 	    $options = array_merge([
@@ -276,10 +359,9 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
     private function init_pagination() {
 
-	    if($this->total_pages <= 1) return;
-
         $this->toolbar_right->add_html(function(){
 	        return \Kwerqy\Ember\com\ui\ui::make()->pagination([
+	            "/wrapper" => [".d-none" => $this->total_pages <= 1],
 	            "id" => "{$this->id}_pagination",
 	            "*total" => $this->total_pages,
                 "*page" => $this->page,
@@ -308,16 +390,16 @@ class table extends \Kwerqy\Ember\com\intf\standard {
         });
     }
 	//--------------------------------------------------------------------------------
-    public function build_toolbar(&$buffer) {
+    private function build_toolbar(&$buffer) {
 
 	    $this->init_pagination();
 
 	    $is_empty = $this->toolbar_right->is_empty() && $this->toolbar_left->is_empty();
 
 	    if(!$is_empty){
-            $buffer->div_([".container-fluid ui-table-toolbar" => true]);
+            $buffer->div_([".container-fluid ui-table-toolbar p-0" => true]);
 
-                $buffer->div_([".row align-items-center my-2" => true]);
+                $buffer->div_([".row align-items-center mt-3 mb-2" => true]);
                     if(!$this->toolbar_left->is_empty()){
                         $buffer->div_([".col-auto" => true]);
                             $buffer->add($this->toolbar_left->build());
@@ -444,24 +526,34 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	private function build_html(&$buffer, $options = []){
 
 	    $options = array_merge([
-	        "table_only" => false
+	        "table_contents_only" => false
 	    ], $options);
 
-	    if(!$options["table_only"]){
-            $buffer->div_([".ui-table-wrapper" => true, "@data-id" => $this->id]);
-                if($this->enable_toolbar){
-                    $this->build_toolbar($buffer);
+	    if($options["table_contents_only"]){
+	        $this->build_thead($buffer);
+            $this->build_tbody($buffer);
+            $this->build_tfoot($buffer);
+        }else{
+	        $buffer->div_([".ui-table-wrapper" => true, "@data-id" => $this->id]);
+
+                if($this->options["/title"]){
+                    $buffer->xheader($this->options["/title"]["size"], $this->options["/title"]["title"], $this->options["/title"]["sub_title"], $this->options["/title"]);
                 }
-        }
+                if($this->enable_toolbar) $this->build_toolbar($buffer);
+                
+                $table_opt = array_merge([
+                    ".table" => true,
+                    ".table-bordered" => true,
+                    ".valign-middle" => true,
+                    "@id" => $this->id,
+                ], $this->options["/table"]);
 
-			$buffer->table_(["@class" => "table table-striped table-bordered valign-middle", "@id" => $this->id]);
-			    $this->build_thead($buffer);
-			    $this->build_tbody($buffer);
-			    $this->build_tfoot($buffer);
-			$buffer->_table();
-
-        if(!$options["table_only"]){
-            $buffer->_div();
+                $buffer->table_($table_opt);
+                    $this->build_thead($buffer);
+                    $this->build_tbody($buffer);
+                    $this->build_tfoot($buffer);
+                $buffer->_table();
+			$buffer->_div();
         }
 	}
 	//--------------------------------------------------------------------------------
@@ -471,6 +563,8 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		$js_options["*id"] = $this->id;
 		$js_options["*url"] = current_url()."?ui_table={$this->id}";
 		$js_options["*panel"] = \Kwerqy\Ember\Ember::$panel;
+		$js_options["*total_pages"] = $this->total_pages;
+		$js_options["*total_items"] = $this->total_items;
 		$js_options = \Kwerqy\Ember\com\js\js::create_options($js_options);
 
 		$buffer->script(["*" => "
@@ -479,6 +573,8 @@ class table extends \Kwerqy\Ember\com\intf\standard {
                 $(function(){
                     {$this->id} = new table({$js_options});
                 });
+            }else{
+                {$this->id}.set_options({$js_options});
             }
 		"]);
 	}

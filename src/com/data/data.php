@@ -33,9 +33,11 @@ class data{
             case TYPE_INT:
             case TYPE_ENUM:
             case TYPE_TINYINT:
-            case TYPE_BOOL:
             case TYPE_KEY:
                 return \Kwerqy\Ember\com\data\type\type_int::make();
+
+            case TYPE_BOOL:
+                return \Kwerqy\Ember\com\data\type\type_bool::make();
 
             case TYPE_TELNR:
             case TYPE_EMAIL:

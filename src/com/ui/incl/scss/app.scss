@@ -4550,10 +4550,10 @@ mark, .ui-highlight {
 .ui-pagination {
 
     padding-left: 0;
-    margin: 20px 0;
     border-radius: 4px;
     list-style: none;
     display: flex;
+    margin-bottom: 0;
 
     &>li:first-child>a, &>li:first-child>span {
         margin-left: 0;
@@ -4571,7 +4571,7 @@ mark, .ui-highlight {
         width: 30px;
         display: flex;
         justify-content: center;
-        height: 35px;
+        height: 30px;
         align-items: center;
 
         &:hover{

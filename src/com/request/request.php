@@ -82,6 +82,7 @@ class request extends \Kwerqy\Ember\com\intf\standard {
 		    "default" => false,
 		    "get" => false,
 		    "trusted" => false,
+		    "index" => false,
 		], $options);
 
 		$value = null;
@@ -108,6 +109,11 @@ class request extends \Kwerqy\Ember\com\intf\standard {
 		    return $options["default"];
         }
 
+		if($options["index"] && is_array($value)){
+		    if(isset($value[$options["index"]])) $value = $value[$options["index"]];
+		    return $options["default"];
+        }
+		
 		//parse
 		return \Kwerqy\Ember\com\data\data::parse($value, $data_type);
 
