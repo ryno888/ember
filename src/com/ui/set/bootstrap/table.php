@@ -148,7 +148,8 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 
         if($datatype == TYPE_INT){
             if(\Kwerqy\Ember\Ember::$request->get("is_sort", TYPE_BOOL) || \Kwerqy\Ember\Ember::$request->get("page", TYPE_INT)) \Kwerqy\Ember\Ember::$session->set($session_id, $value);
-            else $value = $session_data;
+            else if($session_data) $value = $session_data;
+            else $value = $options["default"];
         }else{
             if($value == $options["default"]) $value = $session_data;
             else \Kwerqy\Ember\Ember::$session->set($session_id, $value);
@@ -432,19 +433,23 @@ class table extends \Kwerqy\Ember\com\intf\standard {
             $buffer->tr_();
                 foreach ($this->field_arr as $index => $field){
                     $columns_name = $field["title"];
-                    $buffer->th_();
-                        $buffer->div_([".d-flex" => true]);
+
+                    $th_options = [];
+                    if(!$field["nosort"]){
+                        $th_options[".cursor-pointer text-hover-primary"] = true;
+                        $th_options["!click"] = "{$this->id}.sort(parseInt({$index}), parseInt({$sortorder}));";
+                        if($this->sortfield == $index) $th_options[".text-primary"] = true;
+                    }
+
+                    $buffer->th_($th_options);
+                        $buffer->div_([".d-flex align-items-center" => true]);
                             $buffer->div_([".w-100" => true]);
                                 $buffer->add(\Kwerqy\Ember\com\str\str::propercase($columns_name));
                             $buffer->_div();
 
                             if(!$field["nosort"]){
                                 $buffer->div_();
-                                    $buffer->xicon($this->sortorder == 0 ? "fa-sort-amount-down-alt" : "fa-sort-amount-up-alt", [
-                                        "!click" => "{$this->id}.sort(parseInt({$index}), parseInt({$sortorder}));",
-                                        "#opacity" => $this->sortfield == $index ? false : "0.4",
-                                        ".cursor-pointer" => true,
-                                    ]);
+                                    $buffer->xicon($this->sortorder == 0 ? "fa-sort-amount-down-alt" : "fa-sort-amount-up");
                                 $buffer->_div();
                             }
                         $buffer->_div();

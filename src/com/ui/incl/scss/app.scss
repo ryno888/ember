@@ -3,6 +3,47 @@
 @import "../../../../../../../../writable/assets/ui/bootstrap/scss/bootstrap/variables";
 
 
+@each $color, $value in $colors {
+    .text-#{$color} {
+        color: $value !important;
+    }
+
+    .btn-#{$color}-gradient{
+        background: $value;
+        background: linear-gradient(180deg, $value 0%, darken($value, 10%) 100%);
+        border: none;
+        &:hover{
+            background: linear-gradient(180deg, lighten($value, 10%) 0%, $value 100%);
+        }
+    }
+
+    .bg-#{$color}-gradient{
+        background: $value;
+        background: linear-gradient(180deg, $value 0%, darken($value, 10%) 100%);
+    }
+}
+
+@each $color, $value in $theme-colors {
+    .btn-#{$color}-gradient{
+        background: $value;
+        background: linear-gradient(180deg, $value 0%, darken($value, 10%) 100%);
+        border: none;
+        &:hover{
+            background: linear-gradient(180deg, lighten($value, 10%) 0%, $value 100%);
+        }
+    }
+
+    .bg-#{$color}-gradient{
+        background: $value;
+        background: linear-gradient(180deg, $value 0%, darken($value, 10%) 100%);
+    }
+    .text-hover-#{$color}{
+        &:hover{
+            color: $value !important;
+        }
+    }
+}
+
 .fs-1 {
     font-size: calc(1.35rem + 1.2vw) !important;
 }

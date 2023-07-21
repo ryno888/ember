@@ -185,7 +185,7 @@ var app = {
 			if(response.js) eval(response.js);
 			if(response.alert) app.browser.alert(response.alert, (response.title ? response.title : "Alert"), {ok_callback : new Function(response.ok_callback)});
 			if(response.message) app.browser.alert(response.message, (response.title ? response.title : "Alert"), {ok_callback : new Function(response.ok_callback), class:'custom'});
-			if(response.notice) app.message.show_notice(response.notice, false, {color:(response.notice_color ? response.notice_color : 'primary')});
+			if(response.notice) app.message.show_notice(response.notice, {color:(response.notice_color ? response.notice_color : 'bg-primary')});
 			if(response.redirect){ app.overlay.show(); document.location=response.redirect;}
 			if(response.refresh) document.location.reload();
 			// if(response.popup) app.browser.popup(response.popup);
@@ -621,14 +621,14 @@ var app = {
 		is_notice_created: false,
 		is_static_created: false,
 		//------------------------------------------------------------------------------
-		show_notice: function(message_arr, delay, options) {
+		show_notice: function(message_arr, options) {
 			// options
 			options = $.extend({
 				header: false,
 				sub_header: false,
 				color: 'bg-primary',
 				autohide: true,
-				delay: delay,
+				delay: 2000,
 				message: false,
 			}, (options === undefined ? {} : options));
 

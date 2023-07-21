@@ -420,7 +420,7 @@ class http {
             "refresh" => false,
             "popup" => false,
             "notice" => false,
-            "notice_color" => "info",
+            "notice_color" => "bg-success",
             "js" => false,
         ], $options);
 

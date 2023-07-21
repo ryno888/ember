@@ -28,13 +28,13 @@ class toast {
 
         //build toasts
         options.html = '' +
-            '<div id="'+options.id+'" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="'+(options.autohide ? 'true' : 'false')+'" data-delay="'+options.delay+'" class="toast fade show">' +
+            '<div id="'+options.id+'" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="'+(options.autohide ? 'true' : 'false')+'" data-bs-delay="'+options.delay+'" class="toast">' +
                 '<div class="toast-header">' +
-                    '<div class="rounded mr-2 p-2 '+options.color+'"></div>' +
-                    (options.header ? '<'+header_type+' class="mr-auto">'+options.header+'</'+header_type+'>' : '') +
+                    '<div class="rounded me-2 p-2 '+options.color+'"></div>' +
+                    (options.header ? '<'+header_type+' class="me-auto">'+options.header+'</'+header_type+'>' : '') +
                     (options.sub_header ? '<small class="text-muted">'+options.sub_header+'</small>' : '') +
 
-                    '<button type="button" class="ml-auto mb-1 close" data-dismiss="toast" aria-label="Close">' +
+                    '<button type="button" class="ml-auto mb-1 btn-close" data-bs-dismiss="toast" aria-label="Close">' +
                         '<span class="text">×</span>' +
                     '</button>' +
                 '</div>' +

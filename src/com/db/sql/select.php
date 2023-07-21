@@ -397,7 +397,7 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
      */
 	public function limit($value) {
 
-		$this->limit = $value;
+		$this->limit = abs($value);
 
 		return $this;
 //		$this->builder->limit($value, $offset);
