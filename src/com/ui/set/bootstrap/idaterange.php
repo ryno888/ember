@@ -70,8 +70,8 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
 		$onchange = '';
 
 		// value
-  		if($startdate) $startdate = \mod\date::strtodate($startdate, ($options["value_format"] ?: \mod\date::$DATE_FORMAT), ["default" => \mod\date::strtodate()]);
-  		if($enddate) $enddate = \mod\date::strtodate($enddate, ($options["value_format"] ?: \mod\date::$DATE_FORMAT), ["default" => \mod\date::strtodate()]);
+  		if($startdate) $startdate = \Kwerqy\Ember\com\date\date::strtodate($startdate, ($options["value_format"] ?: \Kwerqy\Ember\com\date\date::$DATE_FORMAT), ["default" => \Kwerqy\Ember\com\date\date::strtodate()]);
+  		if($enddate) $enddate = \Kwerqy\Ember\com\date\date::strtodate($enddate, ($options["value_format"] ?: \Kwerqy\Ember\com\date\date::$DATE_FORMAT), ["default" => \Kwerqy\Ember\com\date\date::strtodate()]);
 
         $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
         $options["prepend"] = \Kwerqy\Ember\com\ui\ui::make()->icon("calendar", [".me-2" => false]);
@@ -93,7 +93,7 @@ class idaterange extends \Kwerqy\Ember\com\ui\intf\component {
                 "*singleDatePicker" => $options["singlepicker"],
                 "*autoApply" => $options["autoapply"],
                 "*opens" => "center",
-                "*minDate" => \mod\date::strtodate(),
+                "*minDate" => \Kwerqy\Ember\com\date\date::strtodate(),
                 "*locale" => ["format" => "YYYY-MM-DD"],
             ]).", function(start, end, label) {
                 $onchange

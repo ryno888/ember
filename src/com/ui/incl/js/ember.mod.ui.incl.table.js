@@ -12,8 +12,9 @@ class table {
         this.data = {
             page:1,
             search:"",
-            orderby:"",
             is_reset:0,
+            sortfield:0,
+            sortorder:0,
             ui_table:this.options.id,
         };
 
@@ -44,7 +45,17 @@ class table {
 
         this.data.page = page;
         this.update();
+    }
+    //----------------------------------------------------------------
+    sort(sortfield, sortorder){
 
+        this.data.sortfield = sortfield;
+        this.data.sortorder = sortorder;
+        this.data.is_sort = true;
+        this.data.is_reset = 0;
+        this.update();
+        
+        this.data.is_sort = false;
     }
     //----------------------------------------------------------------
     reset(){
@@ -52,11 +63,16 @@ class table {
         this.data.page = 1;
         this.data.search = "";
         this.data.is_reset = 1;
+        this.data.sortfield = 0;
+        this.data.sortorder = 0;
         this.update();
 
         let reset_btn = this.get_element("reset_btn");
         if(!reset_btn.hasClass("d-none")) reset_btn.addClass('d-none');
         this.get_element("search_input").val('');
+        
+        let pagination = eval(this.options.id+"_pagination");
+        pagination.update({page:this.data.page});
 
     }
     //----------------------------------------------------------------

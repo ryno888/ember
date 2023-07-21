@@ -76,6 +76,22 @@ abstract class table {
 	    return $this->find($options);
     }
 	//--------------------------------------------------------------------------------
+    public function get_fromarray($array) {
+		// init
+		$obj = $this->get_fromdefault();
+		$obj->source = "array";
+
+		if(isset($array[$this->key])) $obj->id = $array[$this->key];
+
+		// build object from array
+		foreach ($this->field_arr as $field_index => $field_item) {
+			if (isset($array[$field_index])) $obj->{$field_index} = $array[$field_index];
+		}
+
+		// end
+		return $obj;
+	}
+	//--------------------------------------------------------------------------------
 
 	/**
 	 * @param $mixed
@@ -307,9 +323,9 @@ abstract class table {
 		$builder = $this->connection->table($this->name);
 		$builder->where("{$this->key} = ".dbvalue($obj->id));
 
-		$field_arr = $obj->get_array(["filter_empty" => true]);
+		$field_arr = $obj->get_array();
 		foreach ($field_arr as $field => $value){
-			$builder->set($field, $value);
+			$builder->set($field, $value, true);
 		}
 		$builder->update();
 
@@ -410,13 +426,17 @@ abstract class table {
 
 		//merge data
 		foreach ($arr as $field => $value){
-			$obj->{$field} = $value;
+			$obj->{$field} = \Kwerqy\Ember\com\data\data::parse($value, $this->get_field_datatype($field));
 		}
 
 		$this->obj_current = $obj;
 
 		return $obj;
 
+	}
+	//--------------------------------------------------------------------------------
+	public function get_field_datatype($field) {
+	    return $this->field_arr[$field][2];
 	}
 	//--------------------------------------------------------------------------------
 	public function get_reference_arr() {
@@ -447,6 +467,7 @@ abstract class table {
         $slug_parts = [];
         $slug_parts[] = $this->get_prefix();
         $slug_parts[] = $this->get_last_inserted_id();
+        $slug_parts[] = $this->obj_current->{$this->name};
 
         return implode("-", $slug_parts);
 

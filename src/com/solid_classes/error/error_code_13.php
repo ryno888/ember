@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\solid_classes\error;
  * @package mod\debug
  * @author Ryno Van Zyl
  */
-class error_code_13 extends \Kwerqy\Ember\com\solid_classes\intf {
+class error_code_13 extends \Kwerqy\Ember\com\solid_classes\user_role\intf\error_code {
 	//--------------------------------------------------------------------------------
 	public function get_display_name(): string {
 		return "System offline";

@@ -14,7 +14,6 @@ class table extends \Kwerqy\Ember\com\intf\standard {
      * @var \Kwerqy\Ember\com\db\sql\select
      */
 	protected $sql;
-	protected $orderby = false;
 
 	protected $total_items = 0;
 	protected $total_pages = 0;
@@ -24,6 +23,8 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	protected $search = "";
 	protected $search_field = "";
 	protected $is_reset = false;
+	protected $sortfield = 0;
+	protected $sortorder = 0;
 
 	protected $key = "";
 
@@ -34,6 +35,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	public $item_arr = [];
 
 	protected $is_db_init = false;
+	protected $is_ajax_request = false;
 
 	protected $enable_toolbar = true;
 
@@ -55,10 +57,12 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		// init
 		$this->name = "Button";
 		$this->id = "table_".md5(\Kwerqy\Ember\com\http\http::get_control());
+
 		$this->options = $options;
 
 		$this->toolbar_left = \Kwerqy\Ember\com\ui\ui::make()->toolbar();
 		$this->toolbar_right = \Kwerqy\Ember\com\ui\ui::make()->toolbar();
+		$this->is_ajax_request = \Kwerqy\Ember\com\http\http::is_ajax() && \Kwerqy\Ember\Ember::$request->get("ui_table", TYPE_STRING) == $this->id;
 
 		$this->parse_requests();
 
@@ -97,13 +101,11 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 
 		if($this->sql) $this->init_db();
 
-		$table_contents_only = \Kwerqy\Ember\com\http\http::is_ajax() && \Kwerqy\Ember\Ember::$request->get("ui_table", TYPE_STRING) == $this->id;
-
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-		$this->build_html($buffer, ["table_contents_only" => $table_contents_only]);
+		$this->build_html($buffer);
         $this->build_js($buffer);
 
-		if($table_contents_only){
+		if($this->is_ajax_request){
 		    ob_clean();
 		    \Kwerqy\Ember\com\http\http::json($buffer->build());
 		    exit();
@@ -127,13 +129,16 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
     public function request_value($id, $datatype, $options = []) {
 
+        $options = array_merge([
+            "default" => false,
+        ], $options);
+
         //load from request
         $value = \Kwerqy\Ember\Ember::$request->get($id, $datatype, $options);
 
-
         //attempt to load from session
         $session_id = "{$this->id}{$id}";
-        $session_data = \Kwerqy\Ember\Ember::$session->get($session_id);
+        $session_data = \Kwerqy\Ember\Ember::$session->get($session_id, ["datatype" => $datatype]);
 
         if($this->is_reset){
             $value = $this->get_request_defaults()[$id];
@@ -141,10 +146,15 @@ class table extends \Kwerqy\Ember\com\intf\standard {
             return $value;
         }
 
-        if(!$value) $value = $session_data;
-        else {
-            \Kwerqy\Ember\Ember::$session->set($session_id, $value);
+        if($datatype == TYPE_INT){
+            if(\Kwerqy\Ember\Ember::$request->get("is_sort", TYPE_BOOL) || \Kwerqy\Ember\Ember::$request->get("page", TYPE_INT)) \Kwerqy\Ember\Ember::$session->set($session_id, $value);
+            else $value = $session_data;
+        }else{
+            if($value == $options["default"]) $value = $session_data;
+            else \Kwerqy\Ember\Ember::$session->set($session_id, $value);
         }
+
+        $value = \Kwerqy\Ember\com\data\data::parse($value, $datatype);
 
         return $value;
     }
@@ -157,8 +167,9 @@ class table extends \Kwerqy\Ember\com\intf\standard {
         $this->is_reset = \Kwerqy\Ember\Ember::$request->get("is_reset", TYPE_BOOL);
 
         $this->page = $this->request_value("page", TYPE_INT, ["default" => 1]);
-        $this->orderby = $this->request_value("orderby", TYPE_STRING);
         $this->search = $this->request_value("search", TYPE_STRING);
+        $this->sortfield = $this->request_value("sortfield", TYPE_INT);
+        $this->sortorder = $this->request_value("sortorder", TYPE_INT);
 
         return $this->get_requests();
     }
@@ -166,9 +177,10 @@ class table extends \Kwerqy\Ember\com\intf\standard {
     public function get_requests() {
         return [
             "page" => $this->page,
-            "orderby" => $this->orderby,
             "search" => $this->search,
             "is_reset" => $this->is_reset,
+            "sortfield" => $this->sortfield,
+            "sortorder" => $this->sortorder,
             "id" => $this->id,
         ];
     }
@@ -176,10 +188,11 @@ class table extends \Kwerqy\Ember\com\intf\standard {
     public function get_request_defaults() {
         return [
             "page" => 1,
-            "orderby" => false,
             "search" => false,
             "is_reset" => false,
             "id" => $this->id,
+            "sortfield" => 0,
+            "sortorder" => 0,
         ];
     }
 	//--------------------------------------------------------------------------------
@@ -191,10 +204,11 @@ class table extends \Kwerqy\Ember\com\intf\standard {
             return \Kwerqy\Ember\com\ui\ui::make()->itext("search[{$this->id}]", $this->search, false, [
                 ".form-control-sm" => true,
                 "@placeholder" => "Search",
+                "!enter" => "$('.btn[data-identifier=btn-search-{$this->id}]').click();",
             ]);
         });
-        $this->toolbar_left->add_button(false, "{$this->id}.search();", [".btn-primary btn-sm" => true, "icon" => "fa-search"]);
-        $this->toolbar_left->add_button("Clear", "{$this->id}.reset();", [".btn-primary btn-sm btn-reset" => true, ".d-none" => !$this->search]);
+        $this->toolbar_left->add_button(false, "{$this->id}.search();", [".btn-primary btn-sm" => true, "icon" => "fa-search", "@data-identifier" => "btn-search-{$this->id}"]);
+        $this->toolbar_left->add_button("Reset", "{$this->id}.reset();", [".btn-primary btn-sm" => true, "@data-identifier" => "btn-reset-{$this->id}"]);
     }
 	//--------------------------------------------------------------------------------
 
@@ -211,12 +225,22 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	}
 	//--------------------------------------------------------------------------------
 
+    /**
+     * @param $title
+     * @param $field
+     * @param array $options
+     *  function($content, $item_index, $field_index, $table){}
+     */
 	public function add_field($title, $field, $options = []){
 
 	    $options = array_merge([
 	        "title" => $title,
 	        "index" => $field,
+
 	        "function" => false,
+	        "sortfield" => $field,
+	        "nosort" => false,
+
 	    ], $options);
 
 		$this->field_arr[] = $options;
@@ -327,34 +351,16 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 
 		//sql
         $this->offset = ($this->page == 1 ? 0 : ($this->limit * ($this->page-1)));
-	    $this->sql->limit($this->limit);
+	    if($this->sql->is_empty("limit")) $this->sql->limit($this->limit);
 	    $this->sql->offset($this->offset);
+
+	    $sortfield = $this->field_arr[$this->sortfield]["sortfield"];
+	    if($sortfield){
+	        $this->sql->orderby($sortfield, $this->sortorder == 0 ? "ASC" : "DESC");
+        }
 
 	    //build
 		$this->item_arr = $this->sql->run();
-	}
-	//--------------------------------------------------------------------------------
-	public function get_item_arr() {
-		return [
-			0 => [
-				"id" => "1",
-				"name" => "Tiger Nixon",
-				"position" => "System Architect",
-				"salary" => "$320,800",
-				"start_date" => "2011/04/25",
-				"office" => "Edinburgh",
-				"extn" => "5421"
-			],
-			1 => [
-				"id" => "2",
-				"name" => "Garrett Winters",
-				"position" => "System Architect",
-				"salary" => "$320,800",
-				"start_date" => "2011/04/25",
-				"office" => "Edinburgh",
-				"extn" => "5422"
-			]
-		];
 	}
 	//--------------------------------------------------------------------------------
     private function init_pagination() {
@@ -420,12 +426,30 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
     private function build_thead(&$buffer){
 
-	    $columns_name_arr = array_column($this->field_arr, "title");
+        $sortorder = $this->sortorder == 0 ? 1 : 0;
 
 	    $buffer->thead_();
             $buffer->tr_();
-                foreach ($columns_name_arr as $columns_name)
-                    $buffer->th(["*" => \Kwerqy\Ember\com\str\str::propercase($columns_name)]);
+                foreach ($this->field_arr as $index => $field){
+                    $columns_name = $field["title"];
+                    $buffer->th_();
+                        $buffer->div_([".d-flex" => true]);
+                            $buffer->div_([".w-100" => true]);
+                                $buffer->add(\Kwerqy\Ember\com\str\str::propercase($columns_name));
+                            $buffer->_div();
+
+                            if(!$field["nosort"]){
+                                $buffer->div_();
+                                    $buffer->xicon($this->sortorder == 0 ? "fa-sort-amount-down-alt" : "fa-sort-amount-up-alt", [
+                                        "!click" => "{$this->id}.sort(parseInt({$index}), parseInt({$sortorder}));",
+                                        "#opacity" => $this->sortfield == $index ? false : "0.4",
+                                        ".cursor-pointer" => true,
+                                    ]);
+                                $buffer->_div();
+                            }
+                        $buffer->_div();
+                    $buffer->_th();
+                }
 
                 if($this->action_arr){
                     $buffer->th(["@colspan" => sizeof($this->action_arr)]);
@@ -445,7 +469,6 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 
                 $field_name = $field_item["index"];
                 $field_value = $item_data[$field_name];
-
                 if($field_item["function"]){
                     $field_value = call_user_func_array($field_item["function"], [&$item_data[$field_name], $item_index, $field_index, $this]);
                 }
@@ -525,11 +548,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 	private function build_html(&$buffer, $options = []){
 
-	    $options = array_merge([
-	        "table_contents_only" => false
-	    ], $options);
-
-	    if($options["table_contents_only"]){
+	    if($this->is_ajax_request){
 	        $this->build_thead($buffer);
             $this->build_tbody($buffer);
             $this->build_tfoot($buffer);

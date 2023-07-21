@@ -106,12 +106,12 @@ class request extends \Kwerqy\Ember\com\intf\standard {
         }
 
 		if(!$value) {
-		    return $options["default"];
+		    return \Kwerqy\Ember\com\data\data::parse($options["default"], $data_type);
         }
 
 		if($options["index"] && is_array($value)){
 		    if(isset($value[$options["index"]])) $value = $value[$options["index"]];
-		    return $options["default"];
+		    return \Kwerqy\Ember\com\data\data::parse($options["default"], $data_type);
         }
 		
 		//parse

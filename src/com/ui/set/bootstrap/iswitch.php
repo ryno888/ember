@@ -38,16 +38,18 @@ class iswitch extends \Kwerqy\Ember\com\ui\intf\component {
 		if($options["required"]) $options["@required"] = true;
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-        $buffer->div_([".custom-control custom-switch" => true, ]);
+
+		$options["/wrapper"][".form-check form-switch"] = true;
+        $buffer->div_($options["/wrapper"]);
 
             $options["@id"] = $id;
             $options["@name"] = $id;
             $options["@checked"] = $value;
-            $options[".custom-control-input"] = true;
+            $options[".form-check-input"] = true;
             $options["@type"] = "checkbox";
             $buffer->input($options);
 
-            $buffer->label(["@for" => $id, "*" => $label, ".custom-control-label" => true]);
+            $buffer->label(["@for" => $id, "*" => $label, ".form-check-label" => true]);
         $buffer->_div();
 
 		return $buffer->build();

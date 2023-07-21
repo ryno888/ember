@@ -655,7 +655,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	    $options = array_merge([
 		    "id" => $id,
 			"label" => $label,
-			"value" => $value,
+			"value" => (bool)$value,
 		], $options);
 
 	    return $this->section->get_ui()->get("iswitch")->build($options);

@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\solid_classes\error;
  * @package mod\debug
  * @author Ryno Van Zyl
  */
-class error_code_404 extends \Kwerqy\Ember\com\solid_classes\intf {
+class error_code_404 extends \Kwerqy\Ember\com\solid_classes\user_role\intf\error_code {
 	//--------------------------------------------------------------------------------
 	public function get_display_name(): string {
 		return "Error 404";
@@ -21,6 +21,10 @@ class error_code_404 extends \Kwerqy\Ember\com\solid_classes\intf {
 	}
 	//--------------------------------------------------------------------------------
 	public function get_value(): int {
+		return 404;
+	}
+	//--------------------------------------------------------------------------------
+	public function get_http_status_code(): int {
 		return 404;
 	}
 	//--------------------------------------------------------------------------------

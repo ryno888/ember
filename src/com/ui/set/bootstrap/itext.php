@@ -33,14 +33,28 @@ class itext extends \Kwerqy\Ember\com\ui\intf\component {
 
 			"valid_feedback" => "",
 			"invalid_feedback" => "This field is required",
+
+			"!enter" => false,
 		], $options);
 
 		$id = $options["id"];
 		$label = $options["label"];
 		$value = $options["value"];
 
+		$options["@data-identifier"] = \Kwerqy\Ember\com\str\str::generate_id();
+
 		if($options["required"]) $options["@required"] = true;
 		if($options["mask"]) $options["type"] = "password";
+
+
+		if($options["!enter"]){
+		    $options["!keypress"] = "
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode == '13') {$options["!enter"]};
+		    ";
+		    unset($options["!enter"]);
+        }
+
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
@@ -77,6 +91,7 @@ class itext extends \Kwerqy\Ember\com\ui\intf\component {
 
 
 		$buffer->_div();
+
 
 		return $buffer->build();
 

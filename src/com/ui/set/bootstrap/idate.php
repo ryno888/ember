@@ -66,7 +66,7 @@ class idate extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$fn_js_array = function ($array) {
 			$temp = array_map(function($s){
-				$s = \mod\date::strtodate($s, "d-m-Y");
+				$s = \Kwerqy\Ember\com\date\date::strtodate($s, "d-m-Y");
 				return "'" . addcslashes($s, "\0..\37\"\\") . "'";
 			}, $array);
 			return "[". implode(",", $temp) ."]";
@@ -76,7 +76,7 @@ class idate extends \Kwerqy\Ember\com\ui\intf\component {
 
 
 		// value
-  		if($value) $value = \mod\date::strtodate($value, ($options["value_format"] ?: \mod\date::$DATE_FORMAT), ["default" => ""]);
+  		if($value) $value = \Kwerqy\Ember\com\date\date::strtodate($value, ($options["value_format"] ?: \Kwerqy\Ember\com\date\date::$DATE_FORMAT), ["default" => ""]);
 
 		// html
 		$html = \Kwerqy\Ember\com\ui\ui::make()->buffer();
@@ -98,7 +98,7 @@ class idate extends \Kwerqy\Ember\com\ui\intf\component {
                     "*autoApply" => true,
                     "*drops" => "auto",
                     "*opens" => "center",
-                    "*minDate" => \mod\date::strtodate(),
+                    "*minDate" => \Kwerqy\Ember\com\date\date::strtodate(),
                     "*locale" => ["format" => "YYYY-MM-DD"],
                     "*isInvalidDate" => "!function(date){
 						for(var ii = 0; ii < disabled_dates_arr.length; ii++){

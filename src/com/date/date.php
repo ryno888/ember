@@ -122,6 +122,8 @@ class date{
 
 		if(!$format) $format = self::$DATE_FORMAT;
 
+		if(is_null($string) || $string === "null") $string = "";
+
 		// format
 		$time = Time::parse($string);
 		return $time->format($format);
@@ -130,6 +132,8 @@ class date{
 	public static function strtodatetime($string = "now", $format = false, $options = []) {
 
 		if(!$format) $format = self::$DATE_TIME_FORMAT;
+
+		if(is_null($string) || $string === "null") $string = "";
 
 		// format
 		$time = Time::parse($string);

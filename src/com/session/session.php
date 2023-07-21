@@ -23,7 +23,8 @@ class session extends \Kwerqy\Ember\com\intf\standard {
     public function get($key, $options = []) {
 
 	    $options = array_merge([
-	        "default" => false
+	        "default" => false,
+	        "datatype" => false,
 	    ], $options);
 
         $value = $this->session->get($key);
@@ -31,6 +32,9 @@ class session extends \Kwerqy\Ember\com\intf\standard {
         if(\Kwerqy\Ember\isnull($value))
             return $options["default"];
 
+        if($options["datatype"]) 
+            $value = \Kwerqy\Ember\com\data\data::parse($value, $options["datatype"]);
+        
         return $value;
     }
 	//--------------------------------------------------------------------------------

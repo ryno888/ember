@@ -32,7 +32,7 @@ class type_date extends \Kwerqy\Ember\com\data\type\intf\standard {
     	], $options);
 
     	try{
-    		return \mod\date::strtodate($value, $options["format"], $options);
+    		return \Kwerqy\Ember\com\date\date::strtodate($value, $options["format"], $options);
 		}catch(\Exception $ex){
 			return $this->default;
 		}

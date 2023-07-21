@@ -489,4 +489,10 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 
 	}
 	//--------------------------------------------------------------------------------
+    public function is_empty($field) {
+        if(property_exists($this, $field)){
+            if(!$this->{$field}) return true;
+        }
+    }
+	//--------------------------------------------------------------------------------
 }
