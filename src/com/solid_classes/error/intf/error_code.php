@@ -1,6 +1,6 @@
 <?php
 
-namespace Kwerqy\Ember\com\solid_classes\user_role\intf;
+namespace Kwerqy\Ember\com\solid_classes\error\intf;
 
 /**
  * @package mod\debug
