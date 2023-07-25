@@ -168,6 +168,16 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 
 	}
 	//--------------------------------------------------------------------------------
+	public function icurrency($label, $id, $value = false, $options = []) {
+
+		$this->apply_options($options);
+
+		$this->buffer->xform_input($id, function($buffer) use($label, $id, $value, $options){
+			$buffer->xicurrency($id, $value, $label, $options);
+		}, $options);
+
+	}
+	//--------------------------------------------------------------------------------
 	public function idate($label, $id, $value = false, $options = []) {
 
 		$this->apply_options($options);

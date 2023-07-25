@@ -264,7 +264,6 @@ var app = {
 
         	url = app.http.appendURL(url, 'mid=' + options.id);
 
-
         	let p = new popup(options);
 			p.set_title(options.title);
 			p.on_show(function(e){

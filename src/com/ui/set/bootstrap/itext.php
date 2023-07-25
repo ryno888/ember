@@ -45,8 +45,6 @@ class itext extends \Kwerqy\Ember\com\ui\intf\component {
 
 		if($options["required"]) $options["@required"] = true;
 		if($options["mask"]) $options["type"] = "password";
-
-
 		if($options["!enter"]){
 		    $options["!keypress"] = "
                 var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -54,7 +52,6 @@ class itext extends \Kwerqy\Ember\com\ui\intf\component {
 		    ";
 		    unset($options["!enter"]);
         }
-
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 

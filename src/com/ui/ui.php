@@ -583,6 +583,30 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	}
 	//--------------------------------------------------------------------------------
 
+    /**
+     * @param $id
+     * @param bool $value
+     * @param bool $label
+     * @param array $options
+     * @return mixed | \Kwerqy\Ember\com\ui\set\bootstrap\itext
+     */
+	public function icurrency($id, $value = false, $label = false, $options = []) {
+
+		$options = array_merge([
+		    "id" => $id,
+			"value" => $value,
+			"label" => $label,
+			"type" => "number",
+			"prepend" => getenv("ember.currency.symbol"),
+			"@min" => false,
+			"@max" => false,
+		], $options);
+		
+		return $this->section->get_ui()->get("itext")->build($options);
+
+	}
+	//--------------------------------------------------------------------------------
+
 	public function ihidden($id, $value, $options = []) {
 
 		return \Kwerqy\Ember\com\ui\ui::make()->input("hidden", $id, $value, $options);
@@ -791,6 +815,23 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	 */
 	public function html($options = []) {
 		return $this->section->get_ui()->get("html", $options);
+	}
+	//--------------------------------------------------------------------------------
+    /**
+     * @param $url
+     * @param array $options
+     * @return string
+     */
+	public function js_popup($url, $options = []) {
+
+	    $options = array_merge([
+	        "url" => $url,
+            "*title" => "Alert",
+            "*width" => "modal-lg",
+
+	    ], $options);
+
+	    return $this->section->get_ui()->get("js_popup")->build($options);
 	}
 	//--------------------------------------------------------------------------------
 }
