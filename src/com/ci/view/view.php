@@ -62,7 +62,7 @@ class view {
     public function run($fn){
 
         if($this->auth && !\Kwerqy\Ember\Ember::auth_check($this->auth)){
-            return \Kwerqy\Ember\com\http\http::go_error(ERROR_CODE_ACCESS_DENIED);
+            return \Kwerqy\Ember\com\http\http::go_error(ERROR_CODE_ACCESS_DENIED, ["layout" => $this->section->get_layout(),]);
         }
 
         $buffer = \Kwerqy\Ember\com\ui\ui::make()->html();

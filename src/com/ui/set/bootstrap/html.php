@@ -116,7 +116,10 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 		$options = array_merge([
 		    "*form" => "#{$this->form_id}",
 			"*action" => $this->form_action,
+			"@data-captcha" => false,
 		], $options);
+
+		if(\Kwerqy\Ember\Ember::is_dev()) $options["@data-captcha"] = false;
 
 		$data = \Kwerqy\Ember\com\js\js::create_options($options);
 
@@ -124,17 +127,43 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 		$js_arr[] = "let data = {$data};";
 		$js_arr[] = "event.preventDefault();";
 		$js_arr[] = "event.stopPropagation();";
-		$js_arr[] = \Kwerqy\Ember\com\js\js::ajax($options["*action"], [
-			"*form" => "#{$this->form_id}",
-			"*beforeSend" => "function(){ 
-                app.html.set_btn_loading(btn);
-                $('#{$this->form_id}').find('.form-control').removeClass('is-invalid'); 
-			}",
-			"*success" => "function(response){
-			    {$this->form_id}.process_form_response(response);
-			    app.html.unset_btn_loading(btn);
-			}",
-		]);
+
+		if($options["@data-captcha"]){
+		    $this->buffer->add(\Kwerqy\Ember\com\captcha\captcha::get_html());
+		    $js_arr[] = "
+		        app.html.set_btn_loading(btn);
+                if (typeof grecaptcha != 'undefined') {
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('".getenv("ember.integrations.google.captcha.sitekey")."', {action: 'submit'}).then(function(token) {
+                            ".\Kwerqy\Ember\com\js\js::ajax($options["*action"], [
+                                "*no_overlay" => true,
+                                "*data" => "!{'g-recaptcha-response':token}",
+                                "*form" => "#{$this->form_id}",
+                                "*beforeSend" => "function(){ 
+                                    $('#{$this->form_id}').find('.form-control').removeClass('is-invalid'); 
+                                }",
+                                "*success" => "function(response){
+                                    {$this->form_id}.process_form_response(response);
+                                    app.html.unset_btn_loading(btn);
+                                }",
+                            ])."
+                        });
+                    });
+                }
+		    ";
+        }else{
+		    $js_arr[] = \Kwerqy\Ember\com\js\js::ajax($options["*action"], [
+                "*form" => "#{$this->form_id}",
+                "*beforeSend" => "function(){ 
+                    app.html.set_btn_loading(btn);
+                    $('#{$this->form_id}').find('.form-control').removeClass('is-invalid'); 
+                }",
+                "*success" => "function(response){
+                    {$this->form_id}.process_form_response(response);
+                    app.html.unset_btn_loading(btn);
+                }",
+            ]);
+        }
 
 		return " let btn = $(this); ".implode("\n", $js_arr);
 	}

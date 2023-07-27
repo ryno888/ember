@@ -11,10 +11,10 @@ class captcha extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 	public static function get_html() {
 
-	    if(\Kwerqy\Ember\Ember::is_dev()) return "";
+//	    if(\Kwerqy\Ember\Ember::is_dev()) return "";
 
-	    if(getenv("ember.google.sitekey")){
-            return \Kwerqy\Ember\com\ui\ui::make()->tag()->script(["@src" => "https://www.google.com/recaptcha/api.js?render=".getenv("ember.google.sitekey")]);
+	    if(getenv("ember.integrations.google.captcha.sitekey")){
+            return \Kwerqy\Ember\com\ui\ui::make()->tag()->script(["@src" => "https://www.google.com/recaptcha/api.js?render=".getenv("ember.integrations.google.captcha.sitekey")]);
         }
 
 	}
@@ -29,7 +29,7 @@ class captcha extends \Kwerqy\Ember\com\intf\standard {
 		if (!$g_recaptcha_response) return false;
 
 		$postdata = http_build_query([
-		    "secret"=>getenv("ember.google.secret"),
+		    "secret"=>getenv("ember.integrations.google.captcha.secret"),
             "response"=>$g_recaptcha_response,
         ]);
         $opts = [

@@ -6,7 +6,7 @@ namespace db;
  * @package db
  * @author Ryno Van Zyl
  */
-class address extends \Kwerqy\Ember\com\db\table\address {
+class product extends \Kwerqy\Ember\com\db\table\product {
 	//--------------------------------------------------------------------------------
 	// properties
 	//--------------------------------------------------------------------------------

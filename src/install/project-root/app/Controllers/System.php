@@ -5,7 +5,15 @@ namespace App\Controllers;
 class System extends BaseController {
     //---------------------------------------------------------------------------------------
     public function index($page) {
-        return \Kwerqy\Ember\com\ui\ui::make()->ci_controller("system", "system/index/{$page}");
+
+        if(!\Kwerqy\Ember\Ember::$user->active_user)
+            \Kwerqy\Ember\com\http\http::redirect("system/login");
+
+        return \Kwerqy\Ember\com\ui\ui::make()->ci_controller("system", "system/index/{$page}", ["auth" => "admins"]);
+    }
+    //---------------------------------------------------------------------------------------
+    public function person($page) {
+        return \Kwerqy\Ember\com\ui\ui::make()->ci_controller("system", "system/person/{$page}", ["auth" => "admins"]);
     }
     //---------------------------------------------------------------------------------------
     public function error() {

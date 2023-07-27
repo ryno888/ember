@@ -74,8 +74,18 @@ class controller{
     //--------------------------------------------------------------------------------
 	public function build($section, $page, $options = []) {
 
+	    $options = array_merge([
+	        "auth" => ""
+	    ], $options, $this->options);
+	    $this->auth = $options["auth"];
+
 	    $this->section = \Kwerqy\Ember\Ember::get_section($section);
 	    $this->layout = $this->section->get_layout();
+
+	    //check controller auth
+        if($this->auth && !\Kwerqy\Ember\Ember::auth_check($this->auth)){
+            return \Kwerqy\Ember\com\http\http::go_error(ERROR_CODE_ACCESS_DENIED, ["layout" => $this->layout,]);
+        }
 
 	    $options = array_merge([
 	        "data" => [],

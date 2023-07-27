@@ -48,6 +48,24 @@ class panel extends \Kwerqy\Ember\com\ui\intf\component {
         $this->html = $html;
     }
 	//--------------------------------------------------------------------------------
+    public function get_script() {
+        $js_options = \Kwerqy\Ember\com\js\js::create_options([
+            "*id" => $this->id,
+            "*url" => $this->url,
+        ]);
+
+        return "
+            if(typeof {$this->id} === 'undefined'){
+                var {$this->id};
+                $(function(){
+                    
+                    {$this->id} = new panel({$js_options});
+                    ".(!$this->html ? "{$this->id}.refresh();" : "")."
+                });
+            }
+        ";
+    }
+	//--------------------------------------------------------------------------------
 	public function build($options = []) {
 
 	    $options = array_merge([
@@ -63,22 +81,7 @@ class panel extends \Kwerqy\Ember\com\ui\intf\component {
                 $buffer->add($this->html);
             $buffer->_div();
 
-
-            $js_options = \Kwerqy\Ember\com\js\js::create_options([
-                "*id" => $this->id,
-                "*url" => $this->url,
-            ]);
-
-            \Kwerqy\Ember\com\js\js::add_script("
-                if(typeof {$this->id} === 'undefined'){
-                    var {$this->id};
-                    $(function(){
-                        
-                        {$this->id} = new panel({$js_options});
-                        ".(!$this->html ? "{$this->id}.refresh();" : "")."
-                    });
-                }
-            ");
+            \Kwerqy\Ember\com\js\js::add_script($this->get_script());
         }
 
 	    return $buffer->build();

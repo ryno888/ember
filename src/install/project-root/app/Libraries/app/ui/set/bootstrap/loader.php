@@ -32,7 +32,7 @@ class loader extends \Kwerqy\Ember\com\ui\intf\component {
 				height: 100%;
 				position: fixed;
 				background: rgb(41 41 41 / 76%);
-				z-index: 9999;
+				z-index: 99999;
 			}
 			
 			.page-loader-inner {

@@ -544,6 +544,15 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 
 	/**
+	 * @param array $options
+	 * @return mixed|\Kwerqy\Ember\com\ui\set\bootstrap\vmanage
+	 */
+	public function vmanage($options = []) {
+		return $this->section->get_ui()->get("vmanage", $options);
+	}
+	//--------------------------------------------------------------------------------
+
+	/**
 	 * @param $type
 	 * @param $id
 	 * @param $value
