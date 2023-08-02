@@ -235,11 +235,15 @@ class page_meta extends \Kwerqy\Ember\com\intf\standard {
 
 	}
 	//--------------------------------------------------------------------------------
-	public function build() {
+	public function build($options = []) {
+	    
+	    $options = array_merge([
+	        "section" => "bootstrap"
+	    ], $options);
 
 		$this->load();
 
-		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+		$buffer = \Kwerqy\Ember\com\ui\ui::make($options)->buffer();
 		$buffer->title(["*" => $this->title]);
 		foreach ($this->meta_arr as $meta){
 			$buffer->meta($meta);

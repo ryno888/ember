@@ -75,7 +75,16 @@ class panel extends \Kwerqy\Ember\com\ui\intf\component {
 	    $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 	    if(\Kwerqy\Ember\com\http\http::is_panel_request()){
-	        $buffer->add($this->html);
+	        $buffer->div_($options);
+                $buffer->add($this->html);
+            $buffer->_div();
+
+            $buffer->script(["*" => "
+                $(function(){
+                    {$this->get_script()}
+                });
+            "]);
+
         }else{
             $buffer->div_($options);
                 $buffer->add($this->html);

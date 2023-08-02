@@ -19,6 +19,12 @@ abstract class section extends \Kwerqy\Ember\com\intf\standard{
 	 */
 	public abstract function get_layout();
 	//--------------------------------------------------------------------------------
+    public function get_name() {
+        $called_class = get_called_class();
+        $called_class_parts = explode("\\", $called_class);
+        return end($called_class_parts);
+    }
+    //--------------------------------------------------------------------------------
 
     /**
      * @param array $options

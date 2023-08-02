@@ -53,6 +53,11 @@ class itext extends \Kwerqy\Ember\com\ui\intf\component {
 		    unset($options["!enter"]);
         }
 
+		if($options["type"] == "number"){
+		    $value = round(\Kwerqy\Ember\com\data\data::parse($value, TYPE_FLOAT), $options["fraction"]);
+            if($value == 0) $value = false;
+        }
+
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 		if(!$options["prepend"] && !$options["append"] && !$label && !$options["help"]){

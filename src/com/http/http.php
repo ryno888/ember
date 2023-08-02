@@ -37,6 +37,10 @@ class http {
         exit(); // or die()
 	}
 	//--------------------------------------------------------------------------------
+	public static function get_url($options = []) {
+        return current_url();
+    }
+	//--------------------------------------------------------------------------------
 	public static function stream($data, $filename, $options = []) {
 		// options
 		$options = array_merge([

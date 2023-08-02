@@ -15,7 +15,7 @@ class cropper extends \Kwerqy\Ember\com\intf\standard {
 	 * 3: restrict the minimum canvas size to fill fit the container. If the proportions of the canvas and the container are different, the container will not be able to fit the whole canvas in one of the dimensions.
 	 * @var int
 	 */
-	protected $view_mode = 0;
+	protected $view_mode = 1;
 
     protected $identifier;
 
@@ -130,7 +130,7 @@ class cropper extends \Kwerqy\Ember\com\intf\standard {
 		$js_options["*minContainerWidth"] = 400;
 		$js_options["*minContainerHeight"] = 200;
 
-		$js_options["*wheelZoomRatio"] = 0.1;
+		$js_options["*wheelZoomRatio"] = 0.05;
 		$js_options["*rotatable"] = false;
 		$js_options["*viewMode"] = $this->view_mode;
 		$js_options["*aspectRatio"] = "!{$this->parse_ratio()}";

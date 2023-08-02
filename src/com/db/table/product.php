@@ -33,6 +33,7 @@ class product extends \Kwerqy\Ember\com\db\intf\table {
         "pro_slug"                          => array("seo_name"                     , ""        , TYPE_VARCHAR),
         "pro_source"                      	=> array("source"                     	, 0			, TYPE_ENUM),
         "pro_price"                      	=> array("price"                     	, 0			, TYPE_DECIMAL),
+        "pro_stock"                         => array("stock"                        , 0         , TYPE_INT),
 	);
  	//--------------------------------------------------------------------------------
     public $pro_type = [

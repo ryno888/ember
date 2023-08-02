@@ -202,14 +202,22 @@ class table extends \Kwerqy\Ember\com\intf\standard {
         $this->search_field = $field;
 
         $this->toolbar_left->add_html(function(){
-            return \Kwerqy\Ember\com\ui\ui::make()->itext("search[{$this->id}]", $this->search, false, [
-                ".form-control-sm" => true,
-                "@placeholder" => "Search",
-                "!enter" => "$('.btn[data-identifier=btn-search-{$this->id}]').click();",
-            ]);
+
+            $buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+            $buffer->div_([".d-flex" => true]);
+                $buffer->xitext("search[{$this->id}]", $this->search, false, [
+                    ".form-control-sm me-1" => true,
+                    "@placeholder" => "Search",
+                    "!enter" => "$('.btn[data-identifier=btn-search-{$this->id}]').click();",
+                ]);
+
+                $buffer->xbutton(false, "{$this->id}.search();", [".btn-primary btn-sm me-1" => true, "icon" => "fa-search", "@data-identifier" => "btn-search-{$this->id}"]);
+                $buffer->xbutton("Reset", "{$this->id}.reset();", [".btn-primary btn-sm" => true, "@data-identifier" => "btn-reset-{$this->id}"]);
+
+            $buffer->_div();
+
+            return $buffer->build();
         });
-        $this->toolbar_left->add_button(false, "{$this->id}.search();", [".btn-primary btn-sm" => true, "icon" => "fa-search", "@data-identifier" => "btn-search-{$this->id}"]);
-        $this->toolbar_left->add_button("Reset", "{$this->id}.reset();", [".btn-primary btn-sm" => true, "@data-identifier" => "btn-reset-{$this->id}"]);
     }
 	//--------------------------------------------------------------------------------
 
@@ -409,13 +417,13 @@ class table extends \Kwerqy\Ember\com\intf\standard {
                 $buffer->div_([".row align-items-center mt-3 mb-2" => true]);
                     if(!$this->toolbar_left->is_empty()){
                         $buffer->div_([".col-auto" => true]);
-                            $buffer->add($this->toolbar_left->build());
+                            $buffer->add($this->toolbar_left->build(["/toolbar_item" => [".mb-2" => true]]));
                         $buffer->_div();
                     }
 
                     if(!$this->toolbar_right->is_empty()){
                         $buffer->div_([".col-12 col-md d-flex justify-content-lg-end" => true]);
-                            $buffer->add($this->toolbar_right->build());
+                            $buffer->add($this->toolbar_right->build(["/toolbar_item" => [".mb-2" => true]]));
                         $buffer->_div();
                     }
                 $buffer->_div();

@@ -63,6 +63,44 @@ class php_to_db extends \CodeIgniter\Database\Forge {
 
     }
 	//--------------------------------------------------------------------------------
+	public function get_alter_sql($table, $options = []) {
+
+	    $options = array_merge([
+	        "separator" => "<br>"
+	    ], $options);
+
+	    $meta = \Kwerqy\Ember\com\db\meta::make();
+	    $field_data_arr = $meta->get_table_fields($table);
+	    $existing_db_fields = array_column($field_data_arr, "name");
+
+	    $coder = \Kwerqy\Ember\com\db\coder\coder::make();
+	    $coder->load_db_class($table);
+
+	    $new_fields_arr = [];
+	    foreach ($coder->get_field_arr() as $field_data){
+            if(array_search($field_data["name"], $existing_db_fields) === false){
+                $new_fields_arr[$field_data["name"]] = $this->build_field_data($coder, $field_data);
+            }
+        }
+
+	    $return_sql = "";
+
+	    if($new_fields_arr){
+	        $this->addField($new_fields_arr);
+	        $sqls = $this->_alterTable('ADD', $this->db->DBPrefix . $table, $this->_processFields());
+            $this->reset();
+            foreach ($sqls as $line){
+                $return_sql .= "{$line};{$options["separator"]}";
+            }
+        }
+
+        return implode($options["separator"], [
+            "-- alter table {$table}",
+            $return_sql,
+        ]);
+
+    }
+	//--------------------------------------------------------------------------------
 	public function get_create_sql($name, $options = []) {
 
 	    $options = array_merge([
@@ -115,6 +153,30 @@ class php_to_db extends \CodeIgniter\Database\Forge {
 
 	    return $this->_createTable($coder->get_name(), $options["if_not_exists"], $options["attributes"]).";";
 	}
+	//--------------------------------------------------------------------------------
+    private function build_field_data($coder, $field_data){
+	    $data_arr = [];
+        $data_arr['type'] = $coder->get_field_type($field_data["type"]);
+        $data_arr['constraint'] = $coder->get_field_constraint($field_data["type"]);
+
+        $data_arr['unsigned'] = false;
+        if(\Kwerqy\Ember\isnull($field_data["default"])) $data_arr["null"] = true;
+        else $data_arr['default'] = $field_data["default"];
+
+        //is key
+        if($field_data["name"] == $coder->get_key()) {
+            $this->addKey($field_data["name"], true, true);
+            $data_arr['auto_increment'] = true;
+        }
+
+        //is reference
+        if($field_data["reference"]){
+            $dbt_reference = \core::dbt($field_data["reference"]);
+            $this->addForeignKey($field_data["name"], $field_data["reference"], $dbt_reference->key);
+        }
+
+        return $data_arr;
+    }
 	//--------------------------------------------------------------------------------
 	public static function make($options = []) {
 

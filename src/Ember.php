@@ -20,6 +20,8 @@ class Ember {
 	public static $user;
 
 	public static $panel;
+	
+	public static $release;
 
     /**
      * @var com\request\request
@@ -224,8 +226,6 @@ class Ember {
 	    $value = getenv($name);
 
 	    if(!$value) return $options["default"];
-
-//		return \mod\data::parse($value, $options["datatype"]);
 	}
 	//--------------------------------------------------------------------------------
 	public static function close() {
@@ -265,10 +265,7 @@ class Ember {
     }
     //--------------------------------------------------------------------------------
 	public static function auth_check($token) {
-        return true;
-//		$auth = call_user_func(["\\app\\acc\\auth\\{$token}", "make"]);
-//
-//	    return $auth->check(\core::$user->active_role);
+        return \Kwerqy\Ember\com\auth\token::make()->check($token);
 	}
 	//--------------------------------------------------------------------------------
 	/**

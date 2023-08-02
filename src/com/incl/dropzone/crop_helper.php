@@ -405,7 +405,7 @@ class crop_helper extends \Kwerqy\Ember\com\intf\standard {
         $file = reset($this->cropped_data);
 
         if($file && file_exists($file)){
-            \mod\os::removedir(dirname($file));
+            \Kwerqy\Ember\com\os\os::removedir(dirname($file));
         }
     }
     //--------------------------------------------------------------------------------
@@ -433,7 +433,7 @@ class crop_helper extends \Kwerqy\Ember\com\intf\standard {
         $crop_rotate = $fn_request("crop_rotate", TYPE_FLOAT);
         $dest = dirname($filename)."/cropped";
 
-        \mod\os::mkdir(dirname($filename)."/cropped");
+        \Kwerqy\Ember\com\os\os::mkdir(dirname($filename)."/cropped");
 
         // folder path
         if($filename && file_exists($filename)){

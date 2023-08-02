@@ -607,10 +607,15 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 			"label" => $label,
 			"type" => "number",
 			"prepend" => getenv("ember.currency.symbol"),
+			"fraction" => getenv("ember.currency.fraction"),
 			"@min" => false,
 			"@max" => false,
+			"@placeholder" => false,
 		], $options);
-		
+
+
+		if($options["fraction"] == 2 && !$options["@placeholder"]) $options["@placeholder"] = "0.00";
+
 		return $this->section->get_ui()->get("itext")->build($options);
 
 	}

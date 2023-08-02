@@ -55,6 +55,7 @@ class toolbar extends \Kwerqy\Ember\com\ui\intf\component {
 	public function build($options = []) {
 
 		$options = array_merge([
+		    "/toolbar_item" => []
 		], $options);
 
 
@@ -65,7 +66,7 @@ class toolbar extends \Kwerqy\Ember\com\ui\intf\component {
 		$buffer->div_([".ui-toolbar d-flex flex-wrap" => true]);
 		    $last_index = \Kwerqy\Ember\com\arr\arr::get_last_index($this->item_arr);
 		    foreach ($this->item_arr as $index => $item){
-
+                $item["/toolbar_item"] = array_merge($item["/toolbar_item"], $options["/toolbar_item"]);
 		        $item["/toolbar_item"][".ui-toolbar-item d-flex"] = true;
 		        $item["/toolbar_item"][".me-2"] = $index != $last_index;
 		        $buffer->div_($item["/toolbar_item"]);

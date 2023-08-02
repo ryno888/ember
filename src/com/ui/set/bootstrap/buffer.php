@@ -46,8 +46,20 @@ class buffer extends \Kwerqy\Ember\com\ui\intf\component {
 	public function __call($name, $arguments) {
 		// allow calls to be made directly to com.ui by prefixing the function with a x
 		if (substr($name, 0, 1) == "x") {
+
+		    $method_name = substr($name, 1);
+
+		    //see if a app version exists
+            $namespace = "\\Kwerqy\\Ember\\com\\ui\\ui";
+            
+            if(file_exists(APPPATH."Libraries/app/ui/ui.php")){
+                $namespace = "\\app\\ui\\ui";
+            }
+
+            $instance = $namespace::make();
+
 			// chain-able
-			return $this->add(call_user_func_array([\Kwerqy\Ember\com\ui\ui::make(), substr($name, 1)], $arguments));
+			return $this->add(call_user_func_array([$instance, substr($name, 1)], $arguments));
 		}
 
 		// any standard html tag

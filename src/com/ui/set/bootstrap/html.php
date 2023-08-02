@@ -187,6 +187,14 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 
 	}
 	//--------------------------------------------------------------------------------
+	public function ihidden($id, $value = false, $options = []) {
+
+		$this->apply_options($options);
+
+		$this->buffer->xihidden($id, $value, $options);
+
+	}
+	//--------------------------------------------------------------------------------
 	public function itext($label, $id, $value = false, $options = []) {
 
 		$this->apply_options($options);
@@ -203,6 +211,30 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$this->buffer->xform_input($id, function($buffer) use($label, $id, $value, $options){
 			$buffer->xicurrency($id, $value, $label, $options);
+		}, $options);
+
+	}
+	//--------------------------------------------------------------------------------
+	public function icounter($label, $id, $value = 0, $options = []) {
+
+		$this->apply_options($options);
+
+		$this->buffer->xform_input($id, function($buffer) use($label, $id, $value, $options){
+
+		    if($label) $buffer->label(["@for" => $id, "*" => $label]);
+
+			$buffer->xicounter($id, $value, $options);
+
+		}, $options);
+
+	}
+	//--------------------------------------------------------------------------------
+	public function iswitch($label, $id, $value = false, $options = []) {
+
+		$this->apply_options($options);
+
+		$this->buffer->xform_input($id, function($buffer) use($label, $id, $value, $options){
+			$buffer->xiswitch($id, $value, $label, $options);
 		}, $options);
 
 	}

@@ -75,6 +75,7 @@ class controller{
 	public function build($section, $page, $options = []) {
 
 	    $options = array_merge([
+	        "data" => [],
 	        "auth" => ""
 	    ], $options, $this->options);
 	    $this->auth = $options["auth"];
@@ -88,7 +89,6 @@ class controller{
         }
 
 	    $options = array_merge([
-	        "data" => [],
 	        "pre_layout" => [
 	            "{$this->layout}/layout/head",
                 "{$this->layout}/layout/banner",
@@ -105,20 +105,20 @@ class controller{
 	        $options["post_layout"] = [];
         }
 
-	    $options["controller"] = $this;
-
 	    $view_arr = [];
 	    foreach ($options["pre_layout"] as $name) $view_arr[$name] = $name;
 	    $view_arr["body"] = $page;
 	    foreach ($options["post_layout"] as $name) $view_arr[$name] = $name;
 
-        foreach ($this->parse_uri_segments($view_arr["body"]) as $key => $data){
+	    foreach ($this->parse_uri_segments($view_arr["body"]) as $key => $data){
             $this->{$key} = $data;
         }
 
         foreach ($options["data"] as $key => $data){
             $this->{$key} = $data;
         }
+
+	    $options["controller"] = $this;
 
         //first init body to evaluate auth methods
         $body = view($view_arr["body"], $options);
@@ -152,25 +152,13 @@ class controller{
     //--------------------------------------------------------------------------------
     private function parse_uri_segments($route) {
 
-	    $data_arr = [];
+	    $controller_key = strtolower(basename(\Kwerqy\Ember\com\http\http::get_current_controller()));
+	    $request_arr = \Kwerqy\Ember\com\http\http::get_parameters();
 
-	    $route_arr = explode("/", $route);
-	    $segment_arr = \Kwerqy\Ember\Ember::$request->get_segments();
+        if(isset($request_arr[$controller_key]))
+            unset($request_arr[$controller_key]);
 
-
-	    foreach ($segment_arr as $index => $value){
-	        if(in_array($value, $route_arr)) continue;
-	        $data_arr[] = $value;
-        }
-
-	    if(sizeof($data_arr) == 0) return [];
-	    if(sizeof($data_arr) == 1) return ["id" => reset($data_arr)];
-
-        return array_combine(array_filter($data_arr, function ($k) {
-            return !($k & 1);
-        }, ARRAY_FILTER_USE_KEY), array_filter($data_arr, function ($k) {
-            return ($k & 1);
-        }, ARRAY_FILTER_USE_KEY));
+        return $request_arr;
 
     }
     //--------------------------------------------------------------------------------

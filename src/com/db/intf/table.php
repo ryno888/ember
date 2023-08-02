@@ -61,10 +61,31 @@ abstract class table {
 	    if($id) return $this->get_fromdb($id);
     }
 	//--------------------------------------------------------------------------------
+    public function merge_withrequest($obj, $options = []) {
+
+	    $options = array_merge([
+	        "overwrite" => false
+	    ], $options);
+
+	    foreach ($this->field_arr as $field => $field_data){
+
+	        if($field == $this->key) continue;
+
+	        $value = \Kwerqy\Ember\Ember::$request->get($field, $field_data[2], [
+	            "default" => $field_data[1],
+            ]);
+
+	        if($value !== $field_data[1]){
+	            if($options["overwrite"] || $field_data[2] == TYPE_BOOL) $obj->{$field} = $value;
+	            else if ($obj->is_empty($field) && $field_data[1] != $value) $obj->{$field} = $value;
+            }
+        }
+    }
+	//--------------------------------------------------------------------------------
     /**
      * @param $slug
      * @param array $options
-     * @return array|false|\Kwerqy\Ember\com\db\row|\Kwerqy\Ember\com\intf\standard
+     * @return array|\Kwerqy\Ember\com\db\row|\Kwerqy\Ember\com\db\intf\table
      * @throws \Exception
      */
     public function get_fromslug($slug, $options = []) {
@@ -473,11 +494,14 @@ abstract class table {
 
     }
 	//--------------------------------------------------------------------------------
-////--------------------------------------------------------------------------------
-//	public function merge_witharray($arr = []) {
-//		foreach ($arr as $field => $value){
-//			$this->obj->{$field} = $value;
-//		}
-//	}
+    public function get_alter_sql($options = []): string {
+
+	    return \Kwerqy\Ember\com\db\coder\php_to_db::make()->get_alter_sql($this->name, $options);
+    }
+	//--------------------------------------------------------------------------------
+    public function get_create_sql($options = []): string {
+
+	    return \Kwerqy\Ember\com\db\coder\php_to_db::make()->get_create_sql($this->name, $options);
+    }
 	//--------------------------------------------------------------------------------
 }

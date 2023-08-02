@@ -33,7 +33,7 @@ class iswitch extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$id = $options["id"];
 		$label = $options["label"];
-		$value = $options["value"];
+		$value = \Kwerqy\Ember\com\data\data::parse($options["value"], TYPE_BOOL);
 
 		if($options["required"]) $options["@required"] = true;
 
@@ -45,6 +45,7 @@ class iswitch extends \Kwerqy\Ember\com\ui\intf\component {
             $options["@id"] = $id;
             $options["@name"] = $id;
             $options["@checked"] = $value;
+            $options["@value"] = $value;
             $options[".form-check-input"] = true;
             $options["@type"] = "checkbox";
             $buffer->input($options);

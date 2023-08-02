@@ -57,4 +57,43 @@ class debug {
 		file_put_contents(DIR_TEMP."/console.txt", ob_get_clean().PHP_EOL, FILE_APPEND);
 	}
 	//--------------------------------------------------------------------------------
+	/**
+	 * Returns a stack trace from the current point in the code.
+	 *
+	 * @param int $options[count] <p>How many levels should the trace report.</p>
+	 */
+	public static function trace($options = []) {
+		// options
+		$options = array_merge([
+			"count" => 20,
+		], $options);
+
+		// get the stack trace
+		$trace_arr = array_reverse(array_slice(debug_backtrace(), 0, $options["count"]));
+		$trace = PHP_EOL.\Kwerqy\Ember\com\http\http::get_url();
+		foreach ($trace_arr as $trace_index => $trace_item) {
+			// we only want a certain amount of items
+			if ($trace_index >= $options["count"]) break;
+
+			$trace .= PHP_EOL.str_repeat(" ", $trace_index * 4);
+
+			// file and line
+			if (isset($trace_item["file"])) {
+				$filename = basename($trace_item["file"]);
+				$trace .= " -- {$filename} ({$trace_item["line"]}) ";
+			}
+			else $trace .= " -- CALLBACK# ";
+
+			// class
+			if (isset($trace_item["class"])) $trace .= "{$trace_item["class"]}{$trace_item["type"]}";
+
+			// function
+			$trace .= "{$trace_item["function"]}()";
+
+		}
+
+		// done
+		return $trace;
+	}
+	//--------------------------------------------------------------------------------
 }

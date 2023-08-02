@@ -59,7 +59,8 @@ class website extends \Kwerqy\Ember\com\ui\intf\set {
 		$asset_arr[] = "{$path_vendor}/enyo/dropzone/dist/min/dropzone.min.js";
 
 		//https://github.com/fengyuanchen/jquery-cropper
-		$asset_arr[] = "{$path_vendor}/fengyuanchen/cropper/dist/cropper.min.js";
+        $asset_arr[] = DIR_COM."/incl/dropzone/incl/js/cropper.min.js";
+        $asset_arr[] = DIR_COM."/incl/dropzone/incl/js/jquery-cropper.min.js";
 
 		//ember
         $asset_arr[] = "{$path_js}/ember.mod.ui.incl.app.js";
@@ -98,7 +99,7 @@ class website extends \Kwerqy\Ember\com\ui\intf\set {
 		$asset_arr[] = "{$path_vendor}/enyo/dropzone/dist/min/dropzone.min.css";
 
 		//https://github.com/fengyuanchen/jquery-cropper
-		$asset_arr[] = "{$path_vendor}/fengyuanchen/cropper/dist/cropper.min.css";
+        $asset_arr[] = DIR_COM."/incl/dropzone/incl/css/cropper.min.css";
 
 		//bootstrap
         $file_arr = glob(DIR_ASSETS."/ui/bootstrap/css/*");
