@@ -23,6 +23,9 @@ class Ember {
 	
 	public static $release;
 
+	public static $currency_symbol;
+	public static $currency_fraction;
+
     /**
      * @var com\request\request
      */
@@ -208,6 +211,8 @@ class Ember {
 		self::$user = \Kwerqy\Ember\com\user\user::make();
 		self::$request = \Kwerqy\Ember\com\request\request::make();
 		self::$panel = self::$request->get_get("p", TYPE_STRING, ["default" => "mod"]);
+		self::$currency_symbol = getenv("ember.currency.symbol");
+		self::$currency_fraction = getenv("ember.currency.fraction");
 
 		header(\Kwerqy\Ember\com\http\http::get_content_security_policy(self::$content_security_policy_arr));
 
