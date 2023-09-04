@@ -21,6 +21,16 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	}
 
 	//--------------------------------------------------------------------------------
+    public function apply_options(&$options = []) {
+        $options = array_merge([
+            "@title" => false
+        ], $options);
+
+        if($options["@title"]){
+            $options["@data-bs-toggle"] = $options["@title"];
+        }
+    }
+	//--------------------------------------------------------------------------------
 	/**
 	 * @return false|mixed|\Kwerqy\Ember\com\ui\ui\intf\set
 	 */
@@ -40,6 +50,23 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
     public function ci_controller($section, $page, $options = []) {
 	    return \Kwerqy\Ember\com\ci\controller\controller::make()->build($section, $page, $options);
     }
+    //--------------------------------------------------------------------------------
+
+	/**
+	 * @param $width
+	 * @param $height
+	 * @param array $options
+	 * @return \Kwerqy\Ember\com\ui\set\bootstrap\flip_card|\com\intf\standard
+	 */
+	public function flip_card($width, $height, $options = []) {
+
+		$options = array_merge([
+		    "width" => $width,
+			"height" => $height,
+		], $options);
+
+		return \Kwerqy\Ember\com\ui\set\bootstrap\flip_card::make($options);
+	}
 	//--------------------------------------------------------------------------------
 
     /**
@@ -156,7 +183,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
     /**
      * @param array $options
-     * @return false|string|null
+     * @return false|string|null|\Kwerqy\Ember\com\ui\set\bootstrap\pagination
      */
     public function pagination( $options = []) {
 	    return $this->section->get_ui()->get("pagination")->build($options);
@@ -511,6 +538,8 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 		    "sub_title" => $sub_title,
 		], $options);
 
+		$this->apply_options($options);
+
 		return $this->section->get_ui()->get("header")->build($options);
 
 	}
@@ -574,6 +603,29 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 
     /**
      * @param $id
+     * @param int $min
+     * @param false $max
+     * @param array $options
+     * @return mixed | \Kwerqy\Ember\com\ui\set\bootstrap\irange
+     */
+	public function irange($id, $options = []) {
+
+		$options = array_merge([
+		    "id" => $id,
+		    "value_from" => 0,
+		    "value_to" => 1000,
+		    "min" => 0,
+		    "max" => 1000,
+            "/" => [],
+		], $options);
+
+		return $this->section->get_ui()->get("irange")->build($options);
+
+	}
+	//--------------------------------------------------------------------------------
+
+    /**
+     * @param $id
      * @param bool $value
      * @param bool $label
      * @param array $options
@@ -606,8 +658,8 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 			"value" => $value,
 			"label" => $label,
 			"type" => "number",
-			"prepend" => getenv("ember.currency.symbol"),
-			"fraction" => getenv("ember.currency.fraction"),
+			"prepend" => \Kwerqy\Ember\Ember::$currency_symbol,
+			"fraction" => \Kwerqy\Ember\Ember::$currency_fraction,
 			"@min" => false,
 			"@max" => false,
 			"@placeholder" => false,
@@ -645,6 +697,25 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 		], $options);
 
 		return $this->section->get_ui()->get("itextarea")->build($options);
+
+	}
+	//--------------------------------------------------------------------------------
+	/**
+	 * @param $id
+	 * @param false $checked
+	 * @param false $label
+	 * @param array $options
+	 * @return mixed|\Kwerqy\Ember\com\ui\set\bootstrap\icheckbox_round
+	 */
+	public function icheckbox_round($id, $checked = false, $label = false, $options = []) {
+
+		$options = array_merge([
+		    "id" => $id,
+			"checked" => $checked,
+			"label" => $label,
+		], $options);
+
+		return $this->section->get_ui()->get("icheckbox_round")->build($options);
 
 	}
 	//--------------------------------------------------------------------------------

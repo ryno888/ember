@@ -147,11 +147,11 @@ class icon extends \Kwerqy\Ember\com\ui\intf\component {
 
 		// html
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-        $buffer->span_($wrapper_options);
+        if($wrapper_options) $buffer->span_($wrapper_options);
         {
             $buffer->span("{$icon_style}{$icon}", $options);
         }
-		$buffer->_span();
+		if($wrapper_options) $buffer->_span();
 		return $buffer->get_clean();
 
 	}

@@ -20,7 +20,7 @@ class num {
 
         $options = array_merge([
             "include_symbol" => true,
-            "fraction" => getenv("ember.currency.fraction"),
+            "fraction" => \Kwerqy\Ember\Ember::$currency_fraction,
             "currency" => "ZAR",
             "locale" => "en_US",
         ], $options);
@@ -28,7 +28,7 @@ class num {
         $value = number_to_currency($num, $options["currency"], $options["locale"], $options["fraction"]);
 
         $replace_from = ["ZAR"];
-        $replace_to = [getenv("ember.currency.symbol")];
+        $replace_to = [\Kwerqy\Ember\Ember::$currency_symbol];
 
         if(!$options["include_symbol"]){
             $replace_to = "";

@@ -23,11 +23,13 @@ class link extends \Kwerqy\Ember\com\ui\intf\component {
 			"@title" => false,
 
 			"icon" => false,
+			"icon_right" => false,
 			"/icon" => [],
 
 			"badge" => false,
 			"badge_color" => "badge-danger",
 			"/badge" => [],
+			".ui-link" => true,
 		], $options);
 
 
@@ -70,6 +72,10 @@ class link extends \Kwerqy\Ember\com\ui\intf\component {
 			if($options["icon"]) $buffer->xicon($options["icon"], $options["/icon"]);
 			if($label) $buffer->add($label);
 			if($options["badge"]) $buffer->span([".badge {$options["badge_color"]} badge-counter" => true, "*" => $options["badge"]]);
+			if($options["icon_right"]) {
+			    $options["/icon"][".ms-2"] = true;
+			    $buffer->xicon($options["icon_right"], $options["/icon"]);
+            }
 		$buffer->_a();
 
 		return $buffer->build();

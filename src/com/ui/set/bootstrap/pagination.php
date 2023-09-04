@@ -42,12 +42,12 @@ class pagination extends \Kwerqy\Ember\com\ui\intf\component {
 		    "!click" => "function(page){}",
 
 		    "*wrapClass" => "ui-pagination",
-		    "*activeClass" => false,
-		    "*disabledClass" => false,
-		    "*nextClass" => false,
-		    "*prevClass" => false,
-		    "*lastClass" => false,
-		    "*firstClass" => false,
+		    "*activeClass" => "active",
+            "*disabledClass" => "disabled",
+            "*nextClass" => "next",
+            "*prevClass" => "previous",
+            "*lastClass" => "last",
+            "*firstClass" => "first",
 		    "/wrapper" => [],
 
 		], $options);

@@ -658,6 +658,17 @@ var app = {
 	},
 	//==================================================================================
 	session: {
+		//------------------------------------------------------------------------------
+    	set:function(id, value){
+    		sessionStorage.setItem(id, value);
+		},
+		//------------------------------------------------------------------------------
+		get:function(id, default_value){
+    		let value = sessionStorage.getItem(id);
+    		if(!value) value = default_value;
+    		return value; 
+		},
+		//------------------------------------------------------------------------------
 	},
 
 }
@@ -692,6 +703,25 @@ $(function(){
             if(href.substr(0, 3) === "?c=") app.overlay.show();
             if(href.substr(0, 12) === "index.php?c=") app.overlay.show();
         }
+    });
+	//----------------------------------------------------------------------------
+	body.on('click', '.toggle-icon', function () {
+        let el = $(this);
+        let icon_default = el.attr('data-icon-default');
+        let icon_toggle = el.attr('data-icon-toggle');
+        let fontawesome_class = el.attr('data-fontawesome-class');
+        
+        if(!fontawesome_class) fontawesome_class = ".fas"
+
+        let icon_element = el.find(fontawesome_class);
+        
+        if(icon_element){
+        	if(icon_element.hasClass(icon_default)){
+        		icon_element.removeClass(icon_default).addClass(icon_toggle);
+			}else{
+        		icon_element.addClass(icon_default).removeClass(icon_toggle);
+			}
+		}
     });
 	//----------------------------------------------------------------------------
 });

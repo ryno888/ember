@@ -132,6 +132,9 @@ class website extends \Kwerqy\Ember\com\ui\intf\set {
 
                 //https://fancyapps.com/fancybox/getting-started/
                 "https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js",
+
+                //range slider
+                "https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js",
             ]
         ];
     }
@@ -142,6 +145,9 @@ class website extends \Kwerqy\Ember\com\ui\intf\set {
 	        "pre" => [
 	            //font-awesome 5
 	            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css",
+
+                //range slider
+	            "https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css",
             ],
             "post" => [
                 //https://michalsnik.github.io/aos/

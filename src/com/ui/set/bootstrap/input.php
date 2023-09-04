@@ -26,10 +26,7 @@ class input extends \Kwerqy\Ember\com\ui\intf\component {
 
 		if(!$options["@name"]) $options["@name"] = $options["@id"];
 
-		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
-		$buffer->input($options);
-
-		return $buffer->build();
+		return \Kwerqy\Ember\com\ui\ui::make()->tag($options)->input($options);
 
 	}
 	//--------------------------------------------------------------------------------

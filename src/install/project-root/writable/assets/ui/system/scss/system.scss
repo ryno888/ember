@@ -1,3 +1,11 @@
 //import bootstrap
-@import "bootstrap/functions";
-@import "bootstrap/variables";
+@import "../../bootstrap/scss/bootstrap/functions";
+@import "../../bootstrap/scss/bootstrap/variables";
+
+.btn-primary {
+  color: #FFF;
+
+  &:hover, &:active{
+    color: #FFF;
+  }
+}

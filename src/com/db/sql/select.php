@@ -70,6 +70,14 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
         $this->select_arr = [];
     }
 	//--------------------------------------------------------------------------------
+    public function clear_limit() {
+        $this->limit = 0;
+    }
+	//--------------------------------------------------------------------------------
+    public function clear_offset() {
+        $this->offset = 0;
+    }
+	//--------------------------------------------------------------------------------
 	/**
 	 * @param $sql
 	 * @return $this
