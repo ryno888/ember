@@ -78,9 +78,6 @@ class vmanage extends \Kwerqy\Ember\com\ui\intf\component {
                 if($active_item){
                     $panel = \Kwerqy\Ember\com\ui\ui::make()->panel($active_item["link"], ["id" => $options["id"]]);
                     $buffer->add($panel->build());
-//                    if(\Kwerqy\Ember\Ember::$panel == "mod" && \Kwerqy\Ember\com\http\http::is_ajax()){
-//                        $js_arr[] = $panel->get_script();
-//                    }
                 }
             $buffer->_div();
         $buffer->_div();

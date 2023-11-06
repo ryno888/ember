@@ -79,6 +79,7 @@ class user extends \Kwerqy\Ember\com\intf\standard {
 
 		//create user session
         if($options["return_url"]) return $options["success_redirect"];
+
 		return \Kwerqy\Ember\com\http\http::redirect($options["success_redirect"]);
 	}
 	//--------------------------------------------------------------------------------
@@ -127,9 +128,7 @@ class user extends \Kwerqy\Ember\com\intf\standard {
 				return $person;
 			}
 
-		}catch(\Exception $ex){
-			error::create($ex->getMessage());
-		}
+		}catch(\Exception $ex){}
 
 		return null;
 	}

@@ -45,6 +45,9 @@ class panel extends \Kwerqy\Ember\com\ui\intf\component {
      * @param mixed $html
      */
     public function set_html($html): void {
+        if(!is_string($html) && is_callable($html))
+            $html = $html();
+
         $this->html = $html;
     }
 	//--------------------------------------------------------------------------------

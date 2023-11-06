@@ -22,6 +22,7 @@ class collapse extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------
 	public function add_link($href, $label, $options = []) {
 		$this->item_arr[] = array_merge( [
+		    "id" => "link_".sizeof($this->item_arr),
 			"label" => $label,
 			"@href" => $href,
 			"icon" => false,
@@ -32,12 +33,27 @@ class collapse extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------
 	public function add_divider($options = []) {
 		$this->item_arr[] = array_merge( [
+		    "id" => "divider_".sizeof($this->item_arr),
 			"type" => "divider",
 		], $options);
 	}
 	//--------------------------------------------------------------------------------
-	public function add_header($size, $title, $options = []) {
+	public function add_html($html, $options = []) {
+	    
+	    if(!is_string($html) && is_callable($html)){
+		    $html = $html();
+        }
+	    
 		$this->item_arr[] = array_merge( [
+		    "id" => "html_".sizeof($this->item_arr),
+			"html" => $html,
+			"type" => "html",
+		], $options);
+	}
+	//--------------------------------------------------------------------------------
+	public function add_header($size, $title, $options = []) {
+		$this->item_arr[] = array_merge([
+		    "id" => "header_".sizeof($this->item_arr),
 			"size" => $size,
 			"title" => $title,
 			"type" => "header",
@@ -52,10 +68,18 @@ class collapse extends \Kwerqy\Ember\com\ui\intf\component {
 		$this->title = $title;
 	}
 	//--------------------------------------------------------------------------------
-	public function build($options = []) {
+    public function build_id($id_parts = []): string {
 
+	    $id_parts = array_column($this->item_arr, "id");
+	    $id_parts[] = $this->title;
+
+        return parent::build_id($id_parts);
+    }
+
+    //--------------------------------------------------------------------------------
+	public function build($options = []) {
 		$options = array_merge([
-		    "id" => \Kwerqy\Ember\com\str\str::generate_id(["prefix" => "dropdown"]),
+		    "id" => $this->build_id(array_column($this->item_arr, "id")),
 		    "title" => $this->title,
 		    "icon" => false,
 		    "/link" => [],
@@ -64,35 +88,36 @@ class collapse extends \Kwerqy\Ember\com\ui\intf\component {
 			],
 		], $options);
 
-		$id = $options["id"];
+		$this->id = $options["id"];
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
 		$buffer->div_([".collapse-wrapper" => true]);
 
 			$link = $options["/link"];
 			$link[".nav-link collapsed"] = true;
-			$link["@data-target"] = "#{$id}";
-			$link["@aria-controls"] = $id;
+			$link["@data-bs-target"] = "#{$this->id}";
+			$link["@aria-bs-controls"] = $this->id;
 			$link["@href"] = "#";
-			$link["@data-toggle"] = "collapse";
+			$link["@data-bs-toggle"] = "collapse";
 			$link["@aria-expanded"] = "false";
 			$link["icon"] = $options["icon"];
 
 			$buffer->xlink("#", $options["title"], $link);
 
-			$buffer->div_([".collapse" => true, "@id" => $id]);
+			$options["@id"] = $this->id;
+			$options[".collapse"] = true;
+			$buffer->div_($options);
 
 				$collapse_inner = $options["/collapse_inner"];
 				$collapse_inner[".collapse-inner"] = true;
 
 				$buffer->div_($collapse_inner);
-					$buffer->xheader(6, $options["title"], false, [".collapse-header" => true]);
-
 					foreach ($this->item_arr as $item){
 						switch ($item['type']){
 							case "link": $buffer->xlink($item["@href"], $item["label"], $item); break;
 							case "divider": $buffer->div([".collapse-divider" => true]); break;
 							case "header": $buffer->xheader($item["size"], $item["title"], false, $item); break;
+							case "html": $buffer->add($item["html"]); break;
 						}
 					}
 
@@ -100,7 +125,7 @@ class collapse extends \Kwerqy\Ember\com\ui\intf\component {
 			$buffer->_div();
 
 		$buffer->_div();
-
+		
 		return $buffer->build();
 
 	}

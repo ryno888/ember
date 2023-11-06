@@ -189,9 +189,11 @@ class tag extends \Kwerqy\Ember\com\ui\intf\component {
 		$styles = "";
 		$class_arr = [];
 		$attributes = "";
+
+
 		foreach ($options as $option_index => $option_item) {
 
-			if(is_callable($option_item)) continue;
+			if(!is_string($option_item) && is_callable($option_item)) continue;
 
 			$indicator = substr($option_index, 0, 1);
 			$index = substr($option_index, 1);
