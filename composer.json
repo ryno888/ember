@@ -1,6 +1,8 @@
 {
     "name": "kwerqy/ember",
     "description": "A small plugin for use on Codeigniter 4 projects",
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
     "autoload": {
         "psr-4": {
             "Kwerqy\\Ember\\": "src/"
