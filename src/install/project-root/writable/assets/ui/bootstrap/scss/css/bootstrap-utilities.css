@@ -18,8 +18,8 @@
   background-color: RGBA(108, 117, 125, var(--bs-bg-opacity, 1)) !important; }
 
 .text-bg-success {
-  color: #fff !important;
-  background-color: RGBA(25, 135, 84, var(--bs-bg-opacity, 1)) !important; }
+  color: #000 !important;
+  background-color: RGBA(6, 204, 112, var(--bs-bg-opacity, 1)) !important; }
 
 .text-bg-info {
   color: #000 !important;
@@ -52,9 +52,9 @@
     color: #565e64 !important; }
 
 .link-success {
-  color: #198754 !important; }
+  color: #06cc70 !important; }
   .link-success:hover, .link-success:focus {
-    color: #146c43 !important; }
+    color: #38d68d !important; }
 
 .link-info {
   color: #0dcaf0 !important; }
