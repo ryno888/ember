@@ -7,6 +7,30 @@ namespace Kwerqy\Ember\com\solid_classes;
  * @author Ryno Van Zyl
  */
 class helper extends \Kwerqy\Ember\com\intf\standard {
+
+	public static $solid_class_arr = [];
+
+	//--------------------------------------------------------------------------------
+	protected function __construct($options = []) {
+
+		if(file_exists(DIR_LIBRARIES."/incl/library.php"))
+			self::$solid_class_arr = \incl\library::$index_arr;
+
+	}
+	//--------------------------------------------------------------------------------
+
+	/**
+	 * @param $key
+	 * @param array $options
+	 * @return mixed|string[]|null|\Kwerqy\Ember\com\solid_classes\intf\standard|\Kwerqy\Ember\com\solid_classes\intf\dbrow
+	 */
+	protected function get_instance_data($key, $options = []) {
+
+		if(!isset(self::$solid_class_arr[$key])) return null;
+
+		return self::$solid_class_arr[$key];
+
+	}
 	//--------------------------------------------------------------------------------
 	/**
 	 * @param $namespace
@@ -22,9 +46,27 @@ class helper extends \Kwerqy\Ember\com\intf\standard {
 		}
 	}
 	//--------------------------------------------------------------------------------
+
+	/**
+	 * @param $key
+	 * @param array $options
+	 * @return mixed|string[]|null|\Kwerqy\Ember\com\solid_classes\intf\standard|\Kwerqy\Ember\com\solid_classes\intf\dbrow
+	 */
+	public function get_instance($key, $options = []) {
+
+		$instance_data = $this->get_instance_data($key, $options);
+
+		if(!$instance_data) return null;
+
+		$instance_data["instance"] = call_user_func([$instance_data["classname"], "make"]);
+
+		return $instance_data ? $instance_data["instance"] : false;
+
+	}
+	//--------------------------------------------------------------------------------
 	/**
 	 * @param $constant
-	 * @return false|mixed|intf
+	 * @return false|mixed|\Kwerqy\Ember\com\solid_classes\intf\standard
 	 */
 	public function get_from_constant(string $constant) {
 
@@ -35,14 +77,6 @@ class helper extends \Kwerqy\Ember\com\intf\standard {
                 return $this->get_from_classname($data["classname"]);
             }
         }
-	}
-	//--------------------------------------------------------------------------------
-	public function constant_to_str($namespace, $constant) {
-
-		array_filter(library::make()->index_arr, function($item)use($namespace, $constant){
-
-		});
-
 	}
 	//--------------------------------------------------------------------------------
 

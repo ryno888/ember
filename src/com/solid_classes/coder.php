@@ -11,7 +11,7 @@ class coder extends \Kwerqy\Ember\com\intf\standard {
 	public function loop_solid_classes($fn) {
 
 	    foreach (glob(DIR_COM."/solid_classes/*") as $key => $directory){
-	        if(is_dir($directory)) {
+	        if(is_dir($directory) && !in_array(basename($directory), ["intf"])) {
 	            $dirmap = directory_map($directory);
                 $category = basename($directory);
 	            foreach ($dirmap as $key => $solid_class){
@@ -30,16 +30,23 @@ class coder extends \Kwerqy\Ember\com\intf\standard {
 	public function get_constant_arr(): array {
 		$constant_arr = [];
 		$this->loop_solid_classes(function($class_name, $filename) use(&$constant_arr){
-			$category = basename($filename);
-			$category_parts = explode(".", $category);
-			$category = reset($category_parts);
+			$category = $filename;
+			$category_parts = explode("/", $category);
+			$category = $category_parts[sizeof($category_parts)-2];
 
 			$solid = helper::make()->get_from_classname($class_name);
+			if($solid instanceof \Kwerqy\Ember\com\solid_classes\intf\dbrow){
+				$value = $solid->get_key();
+			}else if($solid instanceof \Kwerqy\Ember\com\solid_classes\intf\standard){
+				$value = $solid->get_value();
+			}
+
+
 			$constant_arr[strtoupper($category)][$solid->get_code()] = [
 				"classname" => $class_name,
 				"filename" => $filename,
 				"constant" => $solid->get_code(),
-				"value" => $solid->get_value(),
+				"value" => $value,
 				"category" => strtoupper($category),
 				"description" => $solid->get_description(),
 			];
@@ -148,7 +155,7 @@ namespace incl;
 
 class library extends \Kwerqy\Ember\com\intf\standard {
 
-	public \$index_arr = [
+	public static \$index_arr = [
 		$content_str
 	];
 

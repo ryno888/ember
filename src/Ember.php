@@ -22,7 +22,7 @@ class Ember {
 	public static $panel;
 	
 	public static $release;
-
+	
 	public static $currency_symbol;
 	public static $currency_fraction;
 

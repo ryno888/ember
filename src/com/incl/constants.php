@@ -11,6 +11,7 @@ defined('DIR_COM') || define('DIR_COM', DIR_EMBER."/com");
 //defined('DIR_UI') || define('DIR_UI', DIR_COM.'/ui');
 //defined('DIR_UI_INCL') || define('DIR_UI_INCL', DIR_UI.'/incl');
 //
+defined('DIR_LIBRARIES') || define('DIR_LIBRARIES', DIR_APP."/Libraries");
 defined('DIR_WRITABLE') || define('DIR_WRITABLE', WRITEPATH);
 defined('DIR_ASSETS') || define('DIR_ASSETS', DIR_WRITABLE."assets");
 defined('DIR_ASSETS_FILES') || define('DIR_ASSETS_FILES', DIR_ASSETS."/files");
@@ -39,6 +40,9 @@ define("TYPE_TEXT"		, 13);
 define("TYPE_DECIMAL"	, 14);
 define("TYPE_LONGBLOB"	, 15);
 define("TYPE_FILE"	    , 16);
+define("TYPE_HTML"	    , 17);
+define("TYPE_RAW"	    , 18);
+define("TYPE_CURRENCY"	, 19);
 
 class constants {
 

@@ -30,6 +30,8 @@ class data{
 
         switch ($type){
             case TYPE_REFERENCE:
+            	return \Kwerqy\Ember\com\data\type\type_reference::make();
+
             case TYPE_INT:
             case TYPE_ENUM:
             case TYPE_TINYINT:
@@ -77,6 +79,26 @@ class data{
 		}
 
 		return true;
+	}
+    //--------------------------------------------------------------------------------
+	public static function get_type_as_string($data_type){
+    	switch ($data_type) {
+			case TYPE_ENUM 		: return "TYPE_ENUM";
+			case TYPE_INT 		: return "TYPE_INT";
+			case TYPE_FLOAT 	: return "TYPE_FLOAT";
+			case TYPE_BOOL 		: return "TYPE_BOOL";
+			case TYPE_TELNR 	: return "TYPE_TELNR";
+			case TYPE_STRING 	: return "TYPE_STRING";
+			case TYPE_TEXT 		: return "TYPE_TEXT";
+			case TYPE_DATE 		: return "TYPE_DATE";
+			case TYPE_DATETIME 	: return "TYPE_DATETIME";
+			case TYPE_REFERENCE : return "TYPE_REFERENCE";
+			case TYPE_EMAIL 	: return "TYPE_EMAIL";
+			case TYPE_FILE 		: return "TYPE_FILE";
+			case TYPE_HTML 		: return "TYPE_HTML";
+			case TYPE_RAW 		: return "TYPE_RAW";
+			case TYPE_KEY		: return "TYPE_KEY";
+		}
 	}
     //--------------------------------------------------------------------------------
 

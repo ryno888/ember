@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\solid_classes\user_role\intf;
  * @package mod\debug
  * @author Ryno Van Zyl
  */
-abstract class user_role extends \Kwerqy\Ember\com\solid_classes\intf {
+abstract class user_role extends \Kwerqy\Ember\com\solid_classes\intf\standard {
 	//--------------------------------------------------------------------------------
     abstract public function get_level():int;
 	//--------------------------------------------------------------------------------

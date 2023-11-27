@@ -7,6 +7,9 @@ namespace Kwerqy\Ember\com\db\table;
  * @author Ryno Van Zyl
  */
 class product extends \Kwerqy\Ember\com\db\intf\table {
+
+	use \Kwerqy\Ember\com\db\tra\property_table;
+
 	//--------------------------------------------------------------------------------
 	// properties
 	//--------------------------------------------------------------------------------
@@ -16,6 +19,7 @@ class product extends \Kwerqy\Ember\com\db\intf\table {
 
 	public string $display_name = "product";
 	public string $slug = "pro_slug";
+	public string $property_table = "product_property";
 
 	public array $field_arr = array( // FIELDNAME => DISPLAY[0] DEFAULT[1] TYPE[2] REFERENCE[3]
 		// identification

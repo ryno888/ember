@@ -4,6 +4,43 @@ namespace Kwerqy\Ember\com\ui;
 
 class ui extends \Kwerqy\Ember\com\intf\standard {
 
+	public static $bootstrap_color_arr = [
+        "blue" => "blue",
+        "indigo" => "indigo",
+        "purple" => "purple",
+        "pink" => "pink",
+        "red" => "red",
+        "orange" => "orange",
+        "yellow" => "yellow",
+        "green" => "green",
+        "teal" => "teal",
+        "cyan" => "cyan",
+        "white" => "white",
+        "gray" => "gray",
+        "gray-dark" => "gray-dark",
+        "primary" => "primary",
+        "primary-dark" => "primary-dark",
+        "secondary" => "secondary",
+        "success" => "success",
+        "info" => "info",
+        "warning" => "warning",
+        "danger" => "danger",
+        "light" => "light",
+        "dark" => "dark",
+    ];
+
+    public static $bootstrap_theme_arr = [
+        "primary",
+		"primary-dark",
+		"secondary",
+		"success",
+		"info",
+		"warning",
+		"danger",
+		"light",
+		"dark",
+    ];
+
     /**
      * @var false|mixed |\Kwerqy\Ember\com\intf\section
      */

@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\solid_classes\message;
  * @package mod\debug
  * @author Ryno Van Zyl
  */
-class message_code_101 extends \Kwerqy\Ember\com\solid_classes\intf {
+class message_code_101 extends \Kwerqy\Ember\com\solid_classes\error\intf\error_code {
 	//--------------------------------------------------------------------------------
 	public function get_display_name(): string {
 		return "Quote Submitted Successfully";

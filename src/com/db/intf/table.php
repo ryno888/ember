@@ -315,7 +315,7 @@ abstract class table {
     public function install_defaults($options = []) {}
 	//--------------------------------------------------------------------------------
     public function save($obj, $options = []) {
-        if(isempty($obj->{$this->key})){
+        if(\Kwerqy\Ember\isempty($obj->{$this->key})){
             return $this->insert($obj, $options);
         }else{
             return $this->update($obj, $options);
@@ -346,6 +346,7 @@ abstract class table {
 
 		$field_arr = $obj->get_array();
 		foreach ($field_arr as $field => $value){
+			if(\Kwerqy\Ember\isnull($value)) $value = null;
 			$builder->set($field, $value, true);
 		}
 		$builder->update();
@@ -502,6 +503,268 @@ abstract class table {
     public function get_create_sql($options = []): string {
 
 	    return \Kwerqy\Ember\com\db\coder\php_to_db::make()->get_create_sql($this->name, $options);
+    }
+    //--------------------------------------------------------------------------------
+    public function sanitize_field_arr(&$obj, $options = []) {
+
+        foreach ($obj->db->field_arr as $name => $data){
+    		if(in_array($data[2], [DB_TEXT, DB_STRING, DB_HTML]) && !$obj->is_empty($name)){
+    			$obj->{$name} = $this->sanitize_value($obj->{$name});
+			}
+		}
+    }
+    //--------------------------------------------------------------------------------
+    public function sanitize_value($str, $options = []) {
+
+        return  str_replace("’", "'", $str);
+
+    }
+    //--------------------------------------------------------------------------------
+    public function encode_field_arr(&$obj, $options = []) {
+
+        foreach ($this->field_arr as $name => $data){
+    		if(in_array($data[2], [TYPE_TEXT, TYPE_VARCHAR, TYPE_HTML]) && !$obj->is_empty($name)){
+    			$obj->{$name} = \Kwerqy\Ember\dbvalue(htmlentities($obj->{$name}), false);
+			}
+		}
+    }
+    //--------------------------------------------------------------------------------
+    public function decode_field_arr(&$obj, $options = []) {
+
+        foreach ($obj->db->field_arr as $name => $data){
+    		if(in_array($data[2], [TYPE_TEXT, TYPE_VARCHAR, TYPE_HTML]) && !$obj->is_empty($name)){
+    			$obj->{$name} = str_replace("''", "'", html_entity_decode($obj->{$name}));
+			}
+		}
+    }
+	//--------------------------------------------------------------------------------
+	public function is_unique($obj) {
+		// params
+		$obj = $this->splat($obj);
+
+		// sql
+		$sql = \Kwerqy\Ember\com\db\sql\select::make();
+		$sql->select($this->key);
+		$sql->from($this->name);
+		$sql->and_where("{$this->display} = ".dbvalue($obj->{$this->display}));
+
+		// existing product
+		if (!$obj->is_empty($this->key)) $sql->and_where("{$this->key} <> '$obj->id'");
+
+		// check for unique username
+		return !(bool)\core::db()->selectsingle($sql->build());
+	}
+    //--------------------------------------------------------------------------------
+    public function decode_obj(&$obj, $options = []) {
+
+		if (isset($options["multiple"])) {
+			foreach ($obj as $d) $this->decode_field_arr($d);
+		} else if ($obj) {
+			$this->decode_field_arr($obj);
+		}
+
+    }
+    //--------------------------------------------------------------------------------
+    public function encode_obj(&$obj, $options = []) {
+        $this->encode_field_arr($obj, $options);
+    }
+    //--------------------------------------------------------------------------------
+    public function enum_arr($obj, $field, $unset_index = true, $options = []) {
+
+    	$arr = $this->{$field};
+
+    	if(is_array($unset_index)){
+    		foreach ($unset_index as $key) unset($arr[$key]);
+		}else if($unset_index === true){
+    		\Kwerqy\Ember\com\arr\arr::unset_first_index($arr);
+		}
+
+    	return $arr;
+    }
+    //--------------------------------------------------------------------------------
+    public function get_next_id() {
+
+        $sql = \Kwerqy\Ember\com\db\sql\select::make();
+        $sql->select("AUTO_INCREMENT");
+        $sql->from("information_schema.TABLES");
+        $sql->and_where("TABLE_SCHEMA = '".\core::$app->get_instance()->get_db_name()."'");
+        $sql->and_where("TABLE_NAME = '$this->name'");
+
+        return intval(\core::db()->selectsingle($sql->build()));
+    }
+    //--------------------------------------------------------------------------------
+    public function get_slug($obj, $options = []) {
+
+    	if(!property_exists($this, "slug")) return false;
+
+        return $obj->{$this->slug};
+    }
+    //--------------------------------------------------------------------------------
+    public function get_slug_name($obj, $options = []) {
+
+    	if(!property_exists($this, "slug")) return false;
+
+        return $obj->{$this->slug};
+    }
+    //--------------------------------------------------------------------------------
+    public function get_seo_name($obj, $options = []) {
+        return $this->get_slug_name($obj);
+    }
+    //--------------------------------------------------------------------------------
+    public function get_fromseo($options = []) {
+        return $this->get_fromslug($options);
+    }
+    //--------------------------------------------------------------------------------
+
+    /**
+     * Select a single field
+     * @param $field
+     * @param $where
+     * @return bool|string
+     */
+    public function selectsingle($mixed, $field = false) {
+
+        // params
+        if (!$field) $field = $this->display;
+
+        $sql = \Kwerqy\Ember\com\db\sql\select::make();
+        $sql->select($field);
+        $sql->from($this->name);
+
+        if (is_numeric($mixed)) {
+            $sql->and_where("$this->key = '$mixed'");
+        } else {
+            $sql->and_where($mixed);
+        }
+
+        $value = \core::db($this->database)->selectsingle($sql->build());
+
+        // with new sql driver 4.3.0+ -- hex2bin is done automatically
+        if (!\core::$instance->get_option("com.db.disable_hex2bin")) {
+            // conversions based on field
+            switch ($this->field_arr[$field][2]) {
+                case DB_BINARY :
+                    if (!isnull($value)) $value = hex2bin($value);
+                    break;
+            }
+        }
+
+        // done
+        return $value;
+    }
+    //--------------------------------------------------------------------------------
+	/**
+	 * @param $obj
+	 * @param array $field_arr
+	 * @param array $options
+	 * @return \com\db\row|\com\db\row[]|\com\db\table|\com\db\table[]|false
+	 * @throws \Exception
+	 */
+    public function decrypt_fields(&$obj, $field_arr = [], $options = []) {
+
+    	if(!$field_arr) return $obj;
+
+    	$fn_decrypt = function(&$obj) use (&$field_arr){
+    		if($obj){
+				foreach ($field_arr as $field){
+					if(!$obj->is_empty($field)) $obj->{$field} = \Kwerqy\Ember\com\str\str::decrypt_r($obj->{$field});
+				}
+			}
+		};
+
+		if(isset($options["multiple"])){
+			foreach ($obj as $key => $o) $fn_decrypt($o);
+		}else{
+			$fn_decrypt($obj);
+		}
+
+		return $obj;
+
+    }
+    //--------------------------------------------------------------------------------
+	/**
+	 * @param $obj
+	 * @param array $field_arr
+	 * @param array $options
+	 * @return mixed
+	 * @throws \Exception
+	 */
+    public function encrypt_fields(&$obj, $field_arr = [], $options = []) {
+
+    	if(!$field_arr) return $obj;
+
+    	$fn_decrypt = function(&$obj) use (&$field_arr){
+    		foreach ($field_arr as $field){
+				if(!$obj->is_empty($field)) $obj->{$field} = \Kwerqy\Ember\com\str\str::encrypt_r($obj->{$field});
+			}
+		};
+
+		$fn_decrypt($obj);
+
+		return $obj;
+
+    }
+    //--------------------------------------------------------------------------------
+	/**
+	 * @param $obj
+	 * @param $field
+	 * @param $where
+	 * @param array $options
+	 * @return array|false|mixed
+	 */
+	public function get_fromdb_json($field, $where, $options = []) {
+
+		$options = array_merge([
+		    "orderby" => "{$this->key} DESC"
+		], $options);
+
+		$where_arr = \com\arr::splat($where);
+
+		$sql = \Kwerqy\Ember\com\db\sql\select::make();
+		$sql->select("{$this->name}.*");
+		$sql->from($this->name);
+		foreach ($where_arr as $key => $value){
+			$sql->json_and_where($field, $key, $value);
+		}
+
+		$sql->extract_options($options);
+
+		if($options["orderby"]) $sql->orderby($options["orderby"]);
+
+		return \Kwerqy\Ember\Ember::dbt($this->name)->get_fromsql($sql->build(), $options);
+	}
+	//--------------------------------------------------------------------------
+    public function select_list($options = []) {
+
+        $options = array_merge([
+            "field1" => $this->key,
+            "field2" => $this->display,
+            "orderby" => "field2 DESC",
+        ], $options);
+
+        $sql = \Kwerqy\Ember\com\db\sql\select::make();
+        $sql->select("{$options["field1"]} AS field1");
+        $sql->select("{$options["field2"]} AS field2");
+
+        $sql->from($this->name);
+
+        $sql->extract_options($options);
+
+        return \core::db()->selectlist($sql->build(), "field1", "field2");
+    }
+    //--------------------------------------------------------------------------------
+    public function get_next_order($options = []) {
+
+	    if(!isset($this->field_arr["{$this->key}_order"]))
+	        return 0;
+
+        $sql = \Kwerqy\Ember\com\db\sql\select::make();
+        $sql->select("MAX({$this->key}_order)");
+        $sql->from($this->name);
+        $sql->extract_options($options);
+
+        return \core::db()->selectsingle($sql->build());
+
     }
 	//--------------------------------------------------------------------------------
 }

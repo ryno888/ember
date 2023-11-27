@@ -181,13 +181,8 @@ class http {
      * @return string
      */
 	public static function go_error($nr, $options = []): string {
-        $options = array_merge([
-            "return_url" => false,
-        ], $options);
-        
+
 		$url = self::get_error_url($nr, $options);
-		
-		if($options["return_url"]) return $url;
 
 		return self::redirect($url, ["wrap" => false]);
 	}

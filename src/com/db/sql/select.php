@@ -497,10 +497,54 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 
 	}
 	//--------------------------------------------------------------------------------
+	public function json_and_where($field, $key, $value) {
+		$this->and_where("{$field} RLIKE '\"{$key}\":\"[[:<:]]{$value}[[:>:]]\"'");
+		return $this;
+	}
+	//--------------------------------------------------------------------------------
+	public function json_or_where($field, $key, $value) {
+		$this->or_where("{$field} RLIKE '\"{$key}\":\"[[:<:]]{$value}[[:>:]]\"'");
+		return $this;
+	}
+	//--------------------------------------------------------------------------------
     public function is_empty($field) {
         if(property_exists($this, $field)){
             if(!$this->{$field}) return true;
         }
     }
+    //--------------------------------------------------------------------------------
+	public function extract_options($options = []) {
+
+	    $fn_extract = function($key, $fn)use($options){
+	        if(isset($options[$key]) && $options[$key]){
+                $options[$key] = \com\arr::splat($options[$key]);
+                foreach ($options[$key] as $from)
+                    if($from) $this->{$fn}($from);
+            }
+        };
+
+	    $fn_extract("from", "from");
+	    $fn_extract("sql_where", "and_where");
+	    $fn_extract("and_where", "and_where");
+	    $fn_extract("where", "and_where");
+	    $fn_extract("limit", "limit");
+	    $fn_extract("orderby", "orderby");
+
+		// extract the fields from options
+		$field_arr = \Kwerqy\Ember\com\arr\arr::extract_signature_items(".", $options);
+		if (!$field_arr) return false;
+
+		// generate sql for find query
+		foreach ($field_arr as $field_index => $field_item) {
+			// handle null
+			if (isnull($field_item)) {
+				$this->and_where("{$field_index} IS NULL");
+			}
+			else {
+				$value = dbvalue($field_item);
+				$this->and_where("{$field_index} = {$value}");
+			}
+		}
+	}
 	//--------------------------------------------------------------------------------
 }
