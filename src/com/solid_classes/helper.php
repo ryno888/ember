@@ -71,7 +71,7 @@ class helper extends \Kwerqy\Ember\com\intf\standard {
 	public function get_from_constant(string $constant) {
 
 	    if(file_exists(APPPATH."Libraries/incl/library.php")){
-            $arr = \incl\library::make()->index_arr;
+            $arr = \incl\library::$index_arr;
             if(isset($arr[strtoupper($constant)])){
                 $data = $arr[strtoupper($constant)];
                 return $this->get_from_classname($data["classname"]);

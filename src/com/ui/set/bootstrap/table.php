@@ -26,6 +26,8 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 	protected $sortfield = 0;
 	protected $sortorder = 0;
 
+	protected $quickfind_mark_text = true;     // highlight text
+
 	protected $key = "";
 
 	protected $options = [];
@@ -104,6 +106,14 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 		$this->build_html($buffer);
         $this->build_js($buffer);
+
+        if($this->search && $this->quickfind_mark_text){
+			$buffer->script(["*" => "
+				$(function(){
+					".$this->get_highlight_script($this->search)."
+				})
+			"]);
+		}
 
 		if($this->is_ajax_request){
 		    ob_clean();
@@ -610,5 +620,31 @@ class table extends \Kwerqy\Ember\com\intf\standard {
             }
 		"]);
 	}
+	//--------------------------------------------------------------------------------
+    public function get_highlight_script($search_text, $options = []) {
+
+	    $options = array_merge([
+	        "target" => "#{$this->id} tbody"
+	    ], $options);
+
+	    $js_options = array_merge([
+	        "*q" => $search_text,
+	        "*delay" => false,
+	        "*easing" => false,
+	        "*className" => "ui-highlight",
+	        "*element" => "span",
+	        "*caseSensitive" => false,
+	        "*diacriticSensitive" => false,
+	        "*wordsOnly" => false,
+	        "*fullText" => false,
+	        "*minLength" => false,
+        ], $options);
+
+	    $js_options = \Kwerqy\Ember\com\js\js::create_options($js_options);
+
+        return "
+            $('{$options["target"]}').highlighter({$js_options});
+        ";
+    }
 	//--------------------------------------------------------------------------------
 }
