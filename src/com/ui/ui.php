@@ -344,6 +344,14 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 		return $this->section->get_ui()->get("dropzone")->build($options);
 	}
 	//--------------------------------------------------------------------------------
+	public function note($note_arr, $options = []) {
+		// options
+  		$options["note_arr"] = $note_arr;
+
+		// done
+		return $this->section->get_ui()->get("note")->build($options);
+	}
+	//--------------------------------------------------------------------------------
 
 	/**
 	 * @param array $options

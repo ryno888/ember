@@ -46,8 +46,6 @@ class iproperty extends \Kwerqy\Ember\com\ui\intf\component {
 		$this->dbentry = $options["dbentry"];
 		$this->solid = \Kwerqy\Ember\com\solid_classes\solid::get_instance($options["key"]);
 
-		display($this->solid);
-
 		if($options["value"] === false && property_exists($this->dbentry, "id") && $this->dbentry->id) $options["value"] = $this->dbentry->get_prop($options["key"]);
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();

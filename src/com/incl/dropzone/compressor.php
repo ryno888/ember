@@ -74,7 +74,7 @@ class compressor extends \Kwerqy\Ember\com\intf\standard {
     //--------------------------------------------------------------------------------
     public function save($filename) {
 
-    	\com\os::mkdir(dirname($filename));
+    	\Kwerqy\Ember\com\os\os::mkdir(dirname($filename));
         $this->factory->save($filename);
 
         return $filename;

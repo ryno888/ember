@@ -129,6 +129,8 @@ class cropper extends \Kwerqy\Ember\com\intf\standard {
 
 		$js_options["*minContainerWidth"] = 400;
 		$js_options["*minContainerHeight"] = 200;
+		
+		$js_options["*maxHeight"] = 400;
 
 		$js_options["*wheelZoomRatio"] = 0.05;
 		$js_options["*rotatable"] = false;
@@ -142,23 +144,23 @@ class cropper extends \Kwerqy\Ember\com\intf\standard {
             var {$this->identifier};
             
             $(function(){
-                let image_cropper = $('#{$this->identifier}');
+                setTimeout(function(){
+                	let image_cropper = $('#{$this->identifier}');
 
-                image_cropper.cropper(".\Kwerqy\Ember\com\js\js::create_options($js_options).");
-            
-                {$this->identifier} = image_cropper.data('cropper');
-                {$this->identifier}.buildPostData = function(){
-                    return $.extend({
-                        crop_x: {$this->identifier}.getData().x,
-                        crop_y: {$this->identifier}.getData().y,
-                        crop_width: {$this->identifier}.getData().width,
-                        crop_height: {$this->identifier}.getData().height,
-                        desired_width: {$this->desired_width},
-                        desired_height: {$this->desired_height},
-                    }, ".json_encode($this->post_data_arr).");
-                };
-                
-                
+					image_cropper.cropper(".\Kwerqy\Ember\com\js\js::create_options($js_options).");
+				
+					{$this->identifier} = image_cropper.data('cropper');
+					{$this->identifier}.buildPostData = function(){
+						return $.extend({
+							crop_x: {$this->identifier}.getData().x,
+							crop_y: {$this->identifier}.getData().y,
+							crop_width: {$this->identifier}.getData().width,
+							crop_height: {$this->identifier}.getData().height,
+							desired_width: {$this->desired_width},
+							desired_height: {$this->desired_height},
+						}, ".json_encode($this->post_data_arr).");
+					};
+                }, 200);
             });
             
         "]);
