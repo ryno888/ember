@@ -190,6 +190,22 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 	}
 	//--------------------------------------------------------------------------------
 
+	/**
+	 * @param $subquery
+	 * @param $alias
+	 * @return $this
+	 */
+	public function from_subquery($subquery, $alias) {
+
+		
+		$this->builder->newQuery()->fromSubquery($subquery, 't');
+		
+//		$this->fromSubquery($subquery, $alias);
+
+		return $this;
+	}
+	//--------------------------------------------------------------------------------
+
     /**
      * @param $table
      * @param $on
@@ -512,6 +528,46 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
             if(!$this->{$field}) return true;
         }
     }
+    //--------------------------------------------------------------------------------
+	public function left_join_property($key, $parent_table, $alias, $options = []) {
+        $options = array_merge([
+            "joining_field" => false,
+            "inner_where" => false,
+            "use_custom_field" => false,
+        ], $options);
+
+        $solid = \Kwerqy\Ember\com\solid_classes\solid::get_instance($key);
+        $parent_dbt = \Kwerqy\Ember\Ember::dbt($parent_table);
+        $property_dbt = \Kwerqy\Ember\Ember::dbt($parent_dbt->get_property_table($parent_dbt));
+        $property_prefix = $property_dbt->get_prefix();
+		$ref_field = "{$property_prefix}_ref_{$parent_dbt->name}";
+		$key_field = "{$property_prefix}_key";
+
+		$sql = self::make();
+        $sql->select("*");
+        $sql->from("{$property_dbt->name} AS a");
+        $sql->from_subquery(function() use($solid, $parent_dbt, $property_dbt, $property_prefix, $ref_field, $key_field, $options){
+        	$sql = self::make();
+			if($options["use_custom_field"]) $sql->select("MAX({$property_prefix}_is_custom) AS max_custom");
+			$sql->select("{$key_field} AS inner_key");
+			$sql->select("{$ref_field} AS inner_ref");
+			$sql->from($property_dbt->name);
+			$sql->and_where("{$key_field} = '{$solid->get_key()}'");
+			if($options["inner_where"]) $sql->and_where($options["inner_where"]);
+			$sql->groupby("{$ref_field}, {$key_field}");
+
+			$join_arr = [];
+			$join_arr[] = "a.{$key_field} = b.inner_key";
+			$join_arr[] = "a.{$ref_field} = b.inner_ref";
+			$join_arr[] = "inner_key = '{$solid->get_key()}'";
+			if($options["use_custom_field"]) $join_arr[] = "a.{$property_prefix}_is_custom = b.max_custom";
+
+        	return $sql->build();
+//        	return "JOIN ({$sql->build()}) AS b ON (".implode(" AND ", $join_arr).") ";
+		}, "b");
+        $this->from_subquery("LEFT JOIN ( {$sql->build()} ) AS {$alias} ON ({$parent_dbt->name}.{$parent_dbt->key} = {$alias}.{$ref_field})");
+//        $this->left_join("LEFT JOIN ( {$sql->build()} ) AS {$alias} ON ({$parent_dbt->name}.{$parent_dbt->key} = {$alias}.{$ref_field})");
+	}
     //--------------------------------------------------------------------------------
 	public function extract_options($options = []) {
 
