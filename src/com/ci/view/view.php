@@ -71,6 +71,9 @@ class view {
 
         //see if this is a panel request
         if(\Kwerqy\Ember\com\http\http::is_panel_request()){
+
+        	$buffer->add(ob_get_clean());
+
             $html = $buffer->build();
             $html .= \Kwerqy\Ember\com\js\js::get_script();
             $html .= \Kwerqy\Ember\com\js\js::get_domready();

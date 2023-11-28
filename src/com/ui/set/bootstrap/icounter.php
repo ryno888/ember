@@ -58,27 +58,35 @@ class icounter extends \Kwerqy\Ember\com\ui\intf\component {
 		$wrapper_options["@id"] = $wrapper_id;
 		$wrapper_options[".qty-input"] = true;
 
-		$buffer->div_($wrapper_options);
-			$buffer->span_(array_merge([".minus btn btn-{$options["color"]}" => true], $options["/btn"]));
-				$buffer->xicon("fa-minus", [".mr-2" => false]);
-			$buffer->_span();
+		$buffer->xform_input($options["id"], function($buffer) use($options, $wrapper_options, $value, $input_id){
 
-			$options["/input"]["@value"] = $value;
-			$options["/input"]["@type"] = "number";
-			$options["/input"][".count"] = true;
-			$options["/input"]["@id"] = $input_id;
-			$options["/input"]["@name"] = $input_id;
+		    if($options["label"]) $buffer->label(["@for" => $options["id"], "*" => $options["label"]]);
 
-			$buffer->xihidden($options["id"], $value);
-			$buffer->input($options["/input"]);
+			$buffer->div_($wrapper_options);
+				$buffer->span_(array_merge([".minus btn btn-{$options["color"]}" => true], $options["/btn"]));
+					$buffer->xicon("fa-minus", [".mr-2" => false]);
+				$buffer->_span();
 
-			$buffer->span_(array_merge([".plus btn btn-{$options["color"]}" => true], $options["/btn"]));
-				$buffer->xicon("fa-plus", [".mr-2" => false]);
-			$buffer->_span();
+				$options["/input"]["@value"] = $value;
+				$options["/input"]["@type"] = "number";
+				$options["/input"][".count"] = true;
+				$options["/input"]["@id"] = $input_id;
+				$options["/input"]["@name"] = $input_id;
 
-		$buffer->_div();
+				$buffer->xihidden($options["id"], $value);
+				$buffer->input($options["/input"]);
 
-		$buffer->div([".invalid-feedback" => true, "@data-target" => $input_id]);
+				$buffer->span_(array_merge([".plus btn btn-{$options["color"]}" => true], $options["/btn"]));
+					$buffer->xicon("fa-plus", [".mr-2" => false]);
+				$buffer->_span();
+
+			$buffer->_div();
+
+			$buffer->div([".invalid-feedback" => true, "@data-target" => $input_id]);
+
+		}, $options);
+
+
 
 		// required
 		if (!$options["required_skipval"]) {

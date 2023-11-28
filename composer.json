@@ -22,6 +22,17 @@
 		"tedivm/jshrink": "~1.0",
 		"enyo/dropzone": "v5.9.3",
         "fengyuanchen/cropper": "dev-master",
-        "mailchimp/marketing": "3.0.80"
+
+        "imagecow/imagecow": "2.4.1",
+        "magicalex/write-ini-file": "2.0.1",
+
+        "mailchimp/marketing": "3.0.80",
+
+        "matthiasmullie/scrapbook": "1.5.1",
+        "league/flysystem": "3.19.0",
+        "ext-json": "*",
+        "ext-gd": "*",
+        "ext-exif": "*",
+        "ext-fileinfo": "*"
     }
 }

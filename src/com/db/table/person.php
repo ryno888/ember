@@ -59,7 +59,7 @@ class person extends \Kwerqy\Ember\com\db\intf\table {
 	);
 
 	//--------------------------------------------------------------------------------
-    public function on_insert($obj) {
+    public function on_insert(&$obj) {
 
         if(!isset($obj->__dont_encrypt_password))
             $obj->per_password = \Kwerqy\Ember\com\str\str::encrypt_password($obj->per_password);

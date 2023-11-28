@@ -19,11 +19,18 @@ class feature_color extends \Kwerqy\Ember\com\solid_classes\intf\dbrow {
 	}
 	//--------------------------------------------------------------------------------
 	public function get_key(): string {
-		return "gs1.product:FEATURE";
+		return "gs1.product:FEATURE:COLOR";
 	}
 	//--------------------------------------------------------------------------------
 	public function get_data_arr(): array {
-		return \Kwerqy\Ember\com\ui\ui::$bootstrap_color_arr;
+
+		$return_arr = [];
+
+		array_walk(\Kwerqy\Ember\com\ui\ui::$bootstrap_color_arr, function($color)use(&$return_arr){
+			$return_arr[$color] = \Kwerqy\Ember\com\str\str::propercase($color);
+		});
+
+		return $return_arr;
 	}
 	//--------------------------------------------------------------------------------
 	public function get_data_type() {

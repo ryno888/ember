@@ -210,6 +210,7 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 		$options = array_merge([
 		    "id" => $id,
 		    "value" => $value,
+		    "label" => false,
 		    "!change" => false,
 			"min" => 0,
 			"max" => null,
@@ -796,6 +797,45 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 
 	}
 	//--------------------------------------------------------------------------------
+
+    /**
+     * @param $key
+     * @param bool $value
+     * @param array $options
+     * @return string
+     */
+	public function iproperty($dbentry, $key, $options = []) {
+
+	    $options = array_merge([
+			"dbentry" => $dbentry,
+			"key" => $key,
+			"value" => false,
+			"label" => false,
+			"required" => false,
+		], $options);
+
+		return \Kwerqy\Ember\com\ui\set\bootstrap\iproperty::make()->build($options);
+	}
+	//--------------------------------------------------------------------------------
+
+    /**
+     * @param $key
+     * @param bool $value
+     * @param array $options
+     * @return string
+     */
+	public function isetting($key, $options = []) {
+
+	    $options = array_merge([
+			"key" => $key,
+			"value" => false,
+			"label" => false,
+			"required" => false,
+		], $options);
+
+		return \app\ui\set\bootstrap\isetting::make()->build($options);
+	}
+	//--------------------------------------------------------------------------------
     public function iswitch($id, $value = false, $label = false, $options = []) {
 
 	    $options = array_merge([
@@ -954,6 +994,20 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	    ], $options);
 
 	    return $this->section->get_ui()->get("js_popup")->build($options);
+	}
+	//--------------------------------------------------------------------------------
+	public function fieldset($header, $fn, $options = []) {
+
+	    $options = array_merge([
+	        "dropdown" => false
+	    ], $options);
+
+	    $fieldset = $this->section->get_ui()->get("fieldset");
+	    $fieldset->header($header);
+	    $fieldset->body($fn);
+	    $fieldset->set_dropdown($options["dropdown"]);
+
+		return $fieldset->build($options);
 	}
 	//--------------------------------------------------------------------------------
 }

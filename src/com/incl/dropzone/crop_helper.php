@@ -513,7 +513,7 @@ class crop_helper extends \Kwerqy\Ember\com\intf\standard {
 
         switch ($options_arr["type"]){
             case "square": $compressor->square($options_arr["width"]); break;
-            case "resizeToWidth": $compressor->resizeToWidth($options_arr["width"], $options_arr["height"]); break;
+            case "resizeToWidth": $compressor->resizeToWidth($options_arr["width"]); break;
             case "cropToHeight": $compressor->cropToHeight($options_arr["width"], $options_arr["height"]); break;
             case "cropToWidth": $compressor->cropToWidth($options_arr["width"], $options_arr["height"]); break;
             case "resize": $compressor->resize($options_arr["width"], $options_arr["height"]); break;

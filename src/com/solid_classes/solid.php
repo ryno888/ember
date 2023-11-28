@@ -79,7 +79,7 @@ class solid extends \Kwerqy\Ember\com\intf\standard {
 
     /**
      * @param $key
-     * @return mixed|\app\solid\property_set\solid_classes\settings\intf\standard
+     * @return mixed|\Kwerqy\Ember\com\solid_classes\settings\intf\standard
      */
     public static function get_setting_instance_from_id($key) {
         return \app\solid::get_setting_instance(constant(strtoupper($key)));

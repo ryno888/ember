@@ -33,6 +33,10 @@ abstract class standard extends  \Kwerqy\Ember\com\intf\standard {
 	 */
 	abstract public function get_code(): string;
 	//--------------------------------------------------------------------------------
+	public function get_key(){
+		return $this->get_code();
+	}
+	//--------------------------------------------------------------------------------
 
 	/**
 	 * The GS1 key of the property
@@ -56,14 +60,48 @@ abstract class standard extends  \Kwerqy\Ember\com\intf\standard {
 		return \Kwerqy\Ember\com\data\data::parse("", $this->get_data_type());
 	}
 	//--------------------------------------------------------------------------------
+    /**
+     * @return string
+     */
+	public function get_form_id(): string {
+		return strtolower($this->get_code());
+	}
+	//--------------------------------------------------------------------------------
 
+    /**
+     * Parses the value to the appropriate data type
+     * @param $mixed
+     * @param array $options
+     * @return mixed|string
+     */
+	public function parse($mixed, $options = []){
+
+		$options = array_merge([
+		    "default" => $this->get_default()
+		], $options);
+
+		switch ($this->get_data_type()){
+			case TYPE_ENUM: return isset($this->get_data_arr()[$mixed]) ? $this->get_data_arr()[$mixed] : $options["default"];
+			default: return \Kwerqy\Ember\com\data\data::parse($mixed, $this->get_data_type(), $options);
+		}
+		
+	}
+	//--------------------------------------------------------------------------------
 	/**
-	 * Parses the value to the appropriate data type
 	 * @param $mixed
-	 * @return mixed|string
+	 * @return mixed
 	 */
-	public function parse($mixed) {
-		return \Kwerqy\Ember\com\data\data::parse($mixed, $this->get_data_type());
+	public function format($mixed, $options = []){
+		$options = array_merge([
+		    "default" => $this->get_default()
+		], $options);
+
+		switch ($this->get_data_type()){
+			case TYPE_BOOL: return $mixed ? "Yes" : "No";
+			case TYPE_CURRENCY: return \Kwerqy\Ember\com\num\num::currency($this->parse($mixed));
+			case TYPE_ENUM: return isset($this->get_data_arr()[$mixed]) ? $this->get_data_arr()[$mixed] : $options["default"];
+			default: return $this->parse($mixed);
+		}
 	}
 	//--------------------------------------------------------------------------------
 }

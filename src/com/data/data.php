@@ -53,6 +53,9 @@ class data{
             case TYPE_DATETIME:
                 return \Kwerqy\Ember\com\data\type\type_datetime::make();
 
+            case TYPE_HTML:
+                return \Kwerqy\Ember\com\data\type\type_html::make();
+
             case TYPE_TEXT:
             case TYPE_LONGBLOB:
             case TYPE_FILE:

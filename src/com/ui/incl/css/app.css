@@ -319,6 +319,24 @@ input[type=number] {
 .text-hover-dark:hover {
   color: #212529 !important; }
 
+.ui-fieldset {
+  margin: 15px 0px;
+  padding: 10px 20px;
+  border: 1px solid #ced4da;
+  border-radius: 5px; }
+  .ui-fieldset .fieldset-header {
+    font-weight: 500;
+    font-size: 1.2rem;
+    padding-bottom: 5px; }
+    .ui-fieldset .fieldset-header:not(.no-border) {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #ced4da; }
+
+.form-group, .form-row {
+  margin-bottom: 15px; }
+  .form-group label, .form-row label {
+    font-weight: 500; }
+
 .fs-1 {
   font-size: calc(1.35rem + 1.2vw) !important; }
 

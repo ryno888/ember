@@ -304,14 +304,14 @@ abstract class table {
 	}
 
 	//--------------------------------------------------------------------------------
-    public function on_insert($obj) {}
-    public function on_insert_complete($obj) {}
-    public function on_update($obj, $obj_current) {}
-    public function on_update_complete($obj, $obj_current) {}
-    public function on_save($obj) {}
-    public function on_save_complete($obj) {}
-    public function on_delete($obj) {}
-    public function on_delete_complete($obj) {}
+    public function on_insert(&$obj) {}
+    public function on_insert_complete(&$obj) {}
+    public function on_update(&$obj, &$obj_current) {}
+    public function on_update_complete(&$obj, &$obj_current) {}
+    public function on_save(&$obj) {}
+    public function on_save_complete(&$obj) {}
+    public function on_delete(&$obj) {}
+    public function on_delete_complete(&$obj) {}
     public function install_defaults($options = []) {}
 	//--------------------------------------------------------------------------------
     public function save($obj, $options = []) {
