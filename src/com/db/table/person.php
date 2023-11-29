@@ -8,6 +8,12 @@ namespace Kwerqy\Ember\com\db\table;
  */
 class person extends \Kwerqy\Ember\com\db\intf\table {
 
+	use \Kwerqy\Ember\com\db\tra\property_table;
+
+	//--------------------------------------------------------------------------------
+	// properties
+	//--------------------------------------------------------------------------------
+	
 	public string $name = "person";
 	public string $key = "per_id";
 	public string $display = "per_name";
@@ -15,6 +21,8 @@ class person extends \Kwerqy\Ember\com\db\intf\table {
 	public string $display_name = "person";
 	public string $string = "per_email";
 	public string $slug = "per_slug";
+	
+	public string $property_table = "person_property";
 
 	public array $field_arr = array(
 	 	// identification

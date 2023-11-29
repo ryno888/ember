@@ -4,7 +4,7 @@ namespace Kwerqy\Ember\com\solid_classes\settings;
 /**
  * @package app\property_set\product_property
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 
 class bs_danger extends \Kwerqy\Ember\com\solid_classes\settings\intf\standard {

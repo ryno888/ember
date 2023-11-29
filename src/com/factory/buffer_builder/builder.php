@@ -8,7 +8,7 @@ namespace Kwerqy\Ember\com\factory\buffer_builder;
  * @package scorpion3
  * @subpackage model
  * @author Liquid Edge Solutions
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  *///--------------------------------------------------------------------------------
 class builder extends \Kwerqy\Ember\com\intf\standard {
 

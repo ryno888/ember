@@ -5,7 +5,7 @@ namespace Kwerqy\Ember\com\ui\set\bootstrap;
 /**
  * @package Kwerqy\Ember\com\ui\set\bootstrap
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class fieldset extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------

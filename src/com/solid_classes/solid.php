@@ -5,7 +5,7 @@ namespace Kwerqy\Ember\com\solid_classes;
 /**
  * @package app
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 
 class solid extends \Kwerqy\Ember\com\intf\standard {

@@ -5,7 +5,7 @@ namespace Kwerqy\Ember\com\factory\page_meta;
 /**
  * @package app\ui
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 
 class page_meta extends \Kwerqy\Ember\com\intf\standard {

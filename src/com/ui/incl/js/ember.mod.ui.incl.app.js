@@ -2,7 +2,7 @@
  * Class components
  * @package
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 
 var modal_panel;

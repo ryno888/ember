@@ -82,6 +82,7 @@ abstract class standard extends  \Kwerqy\Ember\com\intf\standard {
 
 		switch ($this->get_data_type()){
 			case TYPE_ENUM: return isset($this->get_data_arr()[$mixed]) ? $this->get_data_arr()[$mixed] : $options["default"];
+			case TYPE_HTML: return \Kwerqy\Ember\com\data\data::parse($mixed, $this->get_data_type(), array_merge(["allow_tag_arr" => ["a", "iframe"]], $options));
 			default: return \Kwerqy\Ember\com\data\data::parse($mixed, $this->get_data_type(), $options);
 		}
 		

@@ -9,7 +9,7 @@ namespace Kwerqy\Ember\com\ui\set\bootstrap;
  * Class scrolltotop
  * @package app\ui\set\bootstrap
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 
 class idaterange extends \Kwerqy\Ember\com\ui\intf\component {

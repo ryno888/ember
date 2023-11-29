@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\db\table;
  * Database Class.
  *
  * @author Liquid Edge Solutions
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class person_role extends \Kwerqy\Ember\com\db\intf\table {
 	//--------------------------------------------------------------------------------

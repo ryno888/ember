@@ -5,7 +5,7 @@ namespace Kwerqy\Ember\com\ui\set\bootstrap;
 /**
  * @package app\ui\set\bootstrap
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class carousel extends \Kwerqy\Ember\com\intf\standard {
 

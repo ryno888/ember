@@ -4,7 +4,7 @@ namespace Kwerqy\Ember\com\db\table;
 
 /**
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class category extends \Kwerqy\Ember\com\db\intf\table {
 

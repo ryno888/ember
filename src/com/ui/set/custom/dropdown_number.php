@@ -5,7 +5,7 @@ namespace Kwerqy\Ember\com\ui\set\custom;
 /**
  * @package app\ui\set\custom
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class dropdown_number extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------

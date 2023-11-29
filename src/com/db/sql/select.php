@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\db\sql;
  * Class.
  *
  * @author Liquid Edge Solutions
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class select extends \Kwerqy\Ember\com\db\intf\sql {
 
@@ -28,6 +28,8 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 
 	private $select_arr = [];
 	private $from_arr = [];
+	private $from_subquery_arr = [];
+	private $str_join_arr = [];
 	private $where_arr = [];
 	private $groupby_arr = [];
 	private $orderby;
@@ -55,15 +57,30 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 	 */
 	public function from($table) {
 
-	    if(!$this->init_table) $this->init_table = $table;
-	    else {
-            $this->from_arr[] = [
-                "type" => "FROM",
-                "sql" => $table,
-            ];
-        }
+		if(substr($table, 0, 9) === "LEFT JOIN" || substr($table, 0, 4) === "JOIN"){
+			$this->str_join($table);
+		}else{
+			if(!$this->init_table) $this->init_table = $table;
+			else {
+				$this->from_arr[] = [
+					"type" => "FROM",
+					"sql" => $table,
+				];
+			}
+		}
+
 
 		return $this;
+	}
+	//--------------------------------------------------------------------------------
+	/**
+	 * @return \CodeIgniter\Database\BaseBuilder
+	 */
+	public function get_builder() {
+
+		$this->create_builder();
+
+		return $this->builder;
 	}
 	//--------------------------------------------------------------------------------
     public function clear_select() {
@@ -191,16 +208,24 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 	//--------------------------------------------------------------------------------
 
 	/**
-	 * @param $subquery
-	 * @param $alias
+	 * @param $fn
 	 * @return $this
 	 */
-	public function from_subquery($subquery, $alias) {
+	public function fn_join($fn) {
 
-		
-		$this->builder->newQuery()->fromSubquery($subquery, 't');
-		
-//		$this->fromSubquery($subquery, $alias);
+		$this->str_join_arr[] = $fn();
+
+		return $this;
+	}
+	//--------------------------------------------------------------------------------
+
+	/**
+	 * @param $sql
+	 * @return $this
+	 */
+	public function str_join($sql) {
+
+		$this->str_join_arr[] = $sql;
 
 		return $this;
 	}
@@ -455,9 +480,31 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 		return $result_arr;
 	}
 	//--------------------------------------------------------------------------------
-	public function build() {
 
-	    $this->builder = $this->connection->table($this->init_table);
+	/**
+	 * @param $subquery
+	 * @param $alias
+	 * @return $this
+	 */
+	public function from_subquery($subquery, $alias) {
+
+		if(is_callable($subquery) && !$subquery instanceof \CodeIgniter\Database\BaseBuilder){
+			$subquery = $subquery();
+		}
+
+		$this->from_subquery_arr[] = [
+	        "subquery" => $subquery,
+	        "alias" => $alias,
+        ];
+
+		return $this;
+	}
+	//--------------------------------------------------------------------------------
+	private function create_builder() {
+
+		$this->builder = new \Kwerqy\Ember\com\db\base_builder($this->init_table, $this->connection);
+
+//		$this->builder = $this->connection->table($this->init_table);
 
 	    //distinct
         if($this->distinct)
@@ -482,6 +529,14 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
                 case "JOIN": $this->builder->join($from_data["sql"], $from_data["on"], !$from_data["left_join"]?:'left'); break;
             }
         }
+
+        foreach ($this->from_subquery_arr as $subquery){
+        	$this->builder->fromSubquery($subquery["subquery"], $subquery["alias"]);
+		}
+
+        foreach ($this->str_join_arr as $sql){
+        	$this->builder->str_join($sql);
+		}
 
         //where
         foreach ($this->where_arr as $where_data){
@@ -508,6 +563,11 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 		//limit
         if($this->limit)
             $this->builder->limit($this->limit, $this->offset);
+	}
+	//--------------------------------------------------------------------------------
+	public function build() {
+
+	    $this->create_builder();
 
 		return $this->builder->getCompiledSelect(false);
 
@@ -546,7 +606,7 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 		$sql = self::make();
         $sql->select("*");
         $sql->from("{$property_dbt->name} AS a");
-        $sql->from_subquery(function() use($solid, $parent_dbt, $property_dbt, $property_prefix, $ref_field, $key_field, $options){
+        $sql->fn_join(function() use($solid, $parent_dbt, $property_dbt, $property_prefix, $ref_field, $key_field, $options){
         	$sql = self::make();
 			if($options["use_custom_field"]) $sql->select("MAX({$property_prefix}_is_custom) AS max_custom");
 			$sql->select("{$key_field} AS inner_key");
@@ -554,7 +614,8 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 			$sql->from($property_dbt->name);
 			$sql->and_where("{$key_field} = '{$solid->get_key()}'");
 			if($options["inner_where"]) $sql->and_where($options["inner_where"]);
-			$sql->groupby("{$ref_field}, {$key_field}");
+			$sql->groupby($ref_field);
+			$sql->groupby($key_field);
 
 			$join_arr = [];
 			$join_arr[] = "a.{$key_field} = b.inner_key";
@@ -562,11 +623,9 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 			$join_arr[] = "inner_key = '{$solid->get_key()}'";
 			if($options["use_custom_field"]) $join_arr[] = "a.{$property_prefix}_is_custom = b.max_custom";
 
-        	return $sql->build();
-//        	return "JOIN ({$sql->build()}) AS b ON (".implode(" AND ", $join_arr).") ";
-		}, "b");
-        $this->from_subquery("LEFT JOIN ( {$sql->build()} ) AS {$alias} ON ({$parent_dbt->name}.{$parent_dbt->key} = {$alias}.{$ref_field})");
-//        $this->left_join("LEFT JOIN ( {$sql->build()} ) AS {$alias} ON ({$parent_dbt->name}.{$parent_dbt->key} = {$alias}.{$ref_field})");
+        	return "JOIN ({$sql->build()}) AS b ON (".implode(" AND ", $join_arr).") ";
+		});
+        $this->str_join("LEFT JOIN ( {$sql->build()} ) AS {$alias} ON ({$parent_dbt->name}.{$parent_dbt->key} = {$alias}.{$ref_field})");
 	}
     //--------------------------------------------------------------------------------
 	public function extract_options($options = []) {

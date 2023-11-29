@@ -5,7 +5,7 @@ namespace Kwerqy\Ember\com\release\intf;
 /**
  * @package Kwerqy\Ember\com\release
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 abstract class release extends \Kwerqy\Ember\com\intf\standard {
     //--------------------------------------------------------------------------------

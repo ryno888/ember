@@ -5,7 +5,7 @@ namespace Kwerqy\Ember\com\incl\dropzone;
 /**
  * @package app\inc\dropzone
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class compressor extends \Kwerqy\Ember\com\intf\standard {
 

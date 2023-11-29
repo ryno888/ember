@@ -4,7 +4,7 @@ namespace Kwerqy\Ember\com\solid_classes\intf;
 /**
  * @package Kwerqy\Ember\com\solid_classes\product_property
  * @author Ryno Van Zyl
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 
 abstract class dbrow extends standard {

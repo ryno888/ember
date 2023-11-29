@@ -39,7 +39,7 @@ class iswitch extends \Kwerqy\Ember\com\ui\intf\component {
 
 		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
 
-		$options["/wrapper"][".form-check form-switch form-row"] = true;
+		$options["/wrapper"][".form-check form-switch"] = true;
         $buffer->div_($options["/wrapper"]);
 
             $options["@id"] = $id;

@@ -2,7 +2,7 @@
  * Class.
  *
  * @author Liquid Edge Solutions
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 
 class popup {

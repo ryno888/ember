@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\ui\set\bootstrap;
  * Class.
  *
  * @author Liquid Edge Solutions
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class iproperty extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------

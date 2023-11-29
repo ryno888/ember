@@ -6,7 +6,7 @@ namespace Kwerqy\Ember\com\arr;
  * Library of functions related to using arrays.
  *
  * @author Liquid Edge Solutions
- * @copyright Copyright Liquid Edge Solutions. All rights reserved.
+ * @copyright Copyright Kwerqy. All rights reserved.
  */
 class arr {
 	//--------------------------------------------------------------------------------
