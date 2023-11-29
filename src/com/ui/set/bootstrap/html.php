@@ -205,6 +205,16 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 
 	}
 	//--------------------------------------------------------------------------------
+	public function dbinput($dbentry, $field, $options = []) {
+
+		$this->apply_options($options);
+
+		$this->buffer->xform_input($field, function($buffer) use($dbentry, $field, $options){
+			$buffer->xdbinput($dbentry, $field, $options);
+		}, $options);
+
+	}
+	//--------------------------------------------------------------------------------
 	public function icurrency($label, $id, $value = false, $options = []) {
 
 		$this->apply_options($options);

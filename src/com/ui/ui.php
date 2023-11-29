@@ -534,6 +534,22 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	//--------------------------------------------------------------------------------
 
 	/**
+	 * @param $dbentry
+	 * @param $field
+	 * @param array $options
+	 * @return mixed
+	 */
+	public function dbinput($dbentry, $field, $options = []) {
+
+		$options["dbentry"] = $dbentry;
+		$options["field"] = $field;
+
+		return $this->section->get_ui()->get("dbinput")->build($options);
+
+	}
+	//--------------------------------------------------------------------------------
+
+	/**
 	 * @param $href
 	 * @param false $label
 	 * @param array $options
@@ -565,6 +581,18 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 		], $options);
 
 		return $this->section->get_ui()->get("image")->build($options);
+
+	}
+	//--------------------------------------------------------------------------------
+
+	public function form_label($label, $for = false, $options = []) {
+
+		$options = array_merge([
+		    "id" => $for,
+		    "label" => $label,
+		], $options);
+
+		return $this->section->get_ui()->get("form_label")->build($options);
 
 	}
 	//--------------------------------------------------------------------------------

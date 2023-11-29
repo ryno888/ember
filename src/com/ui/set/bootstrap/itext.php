@@ -35,6 +35,8 @@ class itext extends \Kwerqy\Ember\com\ui\intf\component {
 			"invalid_feedback" => "This field is required",
 
 			"!enter" => false,
+
+			"/label" => [],
 		], $options);
 
 		$id = $options["id"];
@@ -67,8 +69,11 @@ class itext extends \Kwerqy\Ember\com\ui\intf\component {
 
 
 		$buffer->div_([".form-group" => true]);
-
-			if($label) $buffer->label(["@for" => $id, "*" => $label]);
+			
+			//label
+			$options["/label"]["required"] = $options["required"];
+			if($label) $buffer->xform_label($label, $id, $options["/label"]);
+			
 			$buffer->div_([".input-group mb-2" => $options["prepend"] || $options["append"]]);
 
 				if($options["prepend"]){

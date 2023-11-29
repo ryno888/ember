@@ -155,6 +155,37 @@ abstract class table {
         return $this->get_fromdb("{$this->string} = ".\Kwerqy\Ember\dbvalue($value));
     }
 	//--------------------------------------------------------------------------------
+    /**
+     * @param array $options
+     * @return array|false|table|table[]|\Kwerqy\Ember\com\db\row|\Kwerqy\Ember\com\db\row[]|\Kwerqy\Ember\com\intf\standard
+     */
+    public function get_fromrequest($options = []) {
+
+    	$options = array_merge([
+    	    "overwrite" => false
+    	], $options);
+
+    	$obj = $this->get_fromdefault();
+
+    	foreach ($this->field_arr as $field => $field_data){
+    		$value = \Kwerqy\Ember\Ember::$request->get($field, $field_data[2], $options);
+    		if(!\Kwerqy\Ember\isempty($value)) $obj->{$field} = $value;
+		}
+
+    	if($obj->is_empty($this->key)){
+    		$id = \Kwerqy\Ember\Ember::$request->get("id");
+    		if(!\Kwerqy\Ember\isempty($id)) $obj->{$this->key} = $id;
+		}
+
+    	if(!$options["overwrite"]){
+			foreach ($this->field_arr as $field => $field_data){
+				if($obj->is_empty($field)) unset($obj->{$field});
+			}
+		}
+
+        return $obj;
+    }
+	//--------------------------------------------------------------------------------
     public function format_name($obj, $options = []) : string {
         $options = array_merge([
             "field_arr" => ["name"],
@@ -315,7 +346,7 @@ abstract class table {
     public function install_defaults($options = []) {}
 	//--------------------------------------------------------------------------------
     public function save($obj, $options = []) {
-        if(\Kwerqy\Ember\isempty($obj->{$this->key})){
+        if(!isset($obj->{$this->key}) || \Kwerqy\Ember\isempty($obj->{$this->key})){
             return $this->insert($obj, $options);
         }else{
             return $this->update($obj, $options);
@@ -489,7 +520,7 @@ abstract class table {
         $slug_parts = [];
         $slug_parts[] = $this->get_prefix();
         $slug_parts[] = $this->get_last_inserted_id();
-        $slug_parts[] = $this->obj_current->{$this->name};
+        $slug_parts[] = $this->obj_current->{$this->display};
 
         return implode("-", $slug_parts);
 
@@ -766,5 +797,6 @@ abstract class table {
         return \core::db()->selectsingle($sql->build());
 
     }
+
 	//--------------------------------------------------------------------------------
 }

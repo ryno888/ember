@@ -30,6 +30,8 @@ class iselect extends \Kwerqy\Ember\com\ui\intf\component {
 
 			"valid_feedback" => "",
 			"invalid_feedback" => "This field is required",
+			
+			"/label" => [],
 		], $options);
 
 		$id = $options["id"];
@@ -49,7 +51,9 @@ class iselect extends \Kwerqy\Ember\com\ui\intf\component {
 		//form group
 		$buffer->div_([".form-group" => true]);
 
-			$buffer->label(["@for" => $id, "*" => $label]);
+			//label
+			$options["/label"]["required"] = $options["required"];
+			if($label) $buffer->xform_label($label, $id, $options["/label"]);
 
 			$this->_build_input($buffer, $id, $value, $options);
 
@@ -57,7 +61,7 @@ class iselect extends \Kwerqy\Ember\com\ui\intf\component {
 			$buffer->div([".invalid-feedback" => true, "*" => $options["invalid_feedback"]]);
 
 			if($options["help"]) $buffer->small(["*" => $options["help"], "@id" => "{$id}Help", ".form-text text-muted" => true]);
-
+			if($options["required"]) $buffer->xihidden("__required_field_arr[{$options["id"]}]", $label);
 
 		$buffer->_div();
 

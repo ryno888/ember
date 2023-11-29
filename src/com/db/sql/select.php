@@ -32,7 +32,7 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 	private $str_join_arr = [];
 	private $where_arr = [];
 	private $groupby_arr = [];
-	private $orderby;
+	private $orderby_arr = [];
 
 	private $limit = 0;
 	private $offset = 0;
@@ -427,12 +427,24 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
      * @param $sort
      * @return $this
      */
-	public function orderby($field, $sort) {
+	public function orderby($field, $sort = false) {
 
-	    $this->orderby = [
-	        "field" => $field,
-	        "sort" => $sort,
-        ];
+		
+		if($sort){
+			$this->orderby_arr[] = [
+				"field" => $field,
+				"sort" => $sort,
+			];
+		}else{
+			$orderby_arr = explode(",", $field);
+			foreach ($orderby_arr as $orderby){
+				$orderby_parts = explode(" ", trim($orderby));
+				$this->orderby_arr[] = [
+					"field" => $orderby_parts[0],
+					"sort" => $orderby_parts[1],
+				];
+			}
+		}
 
 	    return $this;
 
@@ -557,8 +569,9 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 		    $this->builder->groupBy($this->groupby_arr);
 
         //order by
-		if($this->orderby)
-		    $this->builder->orderBy($this->orderby["field"], $this->orderby["sort"]);
+		foreach ($this->orderby_arr as $orderby){
+		    $this->builder->orderBy($orderby["field"], $orderby["sort"]);
+		}
 
 		//limit
         if($this->limit)
@@ -632,7 +645,7 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
 
 	    $fn_extract = function($key, $fn)use($options){
 	        if(isset($options[$key]) && $options[$key]){
-                $options[$key] = \com\arr::splat($options[$key]);
+                $options[$key] = \Kwerqy\Ember\com\arr\arr::splat($options[$key]);
                 foreach ($options[$key] as $from)
                     if($from) $this->{$fn}($from);
             }

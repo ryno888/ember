@@ -6,30 +6,39 @@ namespace Kwerqy\Ember\com\ui\set\bootstrap;
  * @package mod\ui\set\system
  * @author Ryno Van Zyl
  */
-class input extends \Kwerqy\Ember\com\ui\intf\component {
+class form_label extends \Kwerqy\Ember\com\ui\intf\component {
 	//--------------------------------------------------------------------------------
 	// magic
 	//--------------------------------------------------------------------------------
 	protected function __construct($options = []) {
 		// init
-		$this->name = "Input";
+		$this->name = "Form Label";
 	}
 	//--------------------------------------------------------------------------------
 	public function build($options = []) {
 
 		$options = array_merge([
-			"@id" => false,
-			"@name" => false,
-			"@value" => false,
-			"@type" => false,
+			"id" => false,
+			"label" => false,
+
 			"required" => false,
 		], $options);
 
-		if(!$options["@name"]) $options["@name"] = $options["@id"];
+		if(!$options["label"]) return "";
+		
+		$options["@for"] = $options["id"];
+		
+		$buffer = \Kwerqy\Ember\com\ui\ui::make()->buffer();
+		$buffer->label_($options);
+			$buffer->span(["*" => $options["label"]]);
 
-		$html = \Kwerqy\Ember\com\ui\ui::make()->tag($options)->input($options);
+			if($options["required"]){
+				$buffer->xicon("fa-exclamation-circle", ["@title" => "Required", ".ms-1 fs-8 text-danger" => true]);
+				$buffer->xihidden("__required_field_arr[{$options["id"]}]", $options["label"]);
+			}
 
-		return $html;
+		$buffer->_label($options);
+		return $buffer->build();
 
 	}
 	//--------------------------------------------------------------------------------
