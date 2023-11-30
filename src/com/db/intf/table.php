@@ -389,6 +389,30 @@ abstract class table {
 
 	}
 	//--------------------------------------------------------------------------------
+    public function delete($obj, $force = false) {
+    	// audit
+		$obj = $this->splat($obj);
+
+		// no primary key
+		if (!isset($obj->id)) return false;
+
+		// call events and break when bool(false) is returned
+		$result = $this->on_delete($obj);
+		if ($result === false) return false;
+
+		// validate delete
+		if (!is_object($obj)) \com\error::create("Not an object");
+
+		if ($obj) {
+
+			$builder = $this->connection->table($this->name);
+			$success = $builder->delete("$this->key = '$obj->id'");
+
+			return $success;
+		}
+		return false;
+    }
+	//--------------------------------------------------------------------------------
     public function get_prefix() : string {
         return substr($this->key, 0, 3);
     }

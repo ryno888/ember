@@ -293,10 +293,15 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
      */
 	public function where_in($field, $in_arr = [], $not = false) {
 
+		$in_arr = is_callable($in_arr) ? $in_arr() : \Kwerqy\Ember\com\arr\arr::splat($in_arr);
+		foreach ($in_arr as $index => $value){
+			$in_arr[$index] = \Kwerqy\Ember\dbvalue($value);
+		}
+
 	    $this->where_arr[] = [
             "type" => "IN_WHERE",
             "field" => $field,
-            "values" => is_callable($in_arr) ? $in_arr() : \Kwerqy\Ember\arr::splat($in_arr),
+            "values" => $in_arr,
             "not" => $not ? " NOT " : "",
         ];
 
@@ -310,12 +315,17 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
      * @param false $not
      * @return $this
      */
-	public function or_where_in($field, $search_arr = [], $not = false) {
+	public function or_where_in($field, $in_arr = [], $not = false) {
+
+		$in_arr = is_callable($in_arr) ? $in_arr() : \Kwerqy\Ember\com\arr\arr::splat($in_arr);
+		foreach ($in_arr as $index => $value){
+			$in_arr[$index] = \Kwerqy\Ember\dbvalue($value);
+		}
 
 	    $this->where_arr[] = [
             "type" => "OR_IN_WHERE",
             "field" => $field,
-            "operator" => is_callable($search_arr) ? $search_arr() : \Kwerqy\Ember\arr::splat($search_arr),
+            "operator" => $in_arr,
             "not" => $not ? " NOT " : "",
         ];
 
@@ -555,7 +565,7 @@ class select extends \Kwerqy\Ember\com\db\intf\sql {
             switch ($where_data["type"]){
                 case "AND_WHERE": $this->builder->where($where_data["sql"]); break;
                 case "OR_WHERE": $this->builder->orWhere("{$where_data["field"]} {$where_data["operator"]}", $where_data["value"]); break;
-                case "IN_WHERE": $this->builder->whereIn("{$where_data["not"]}{$where_data["field"]}", $where_data["values"]); break;
+                case "IN_WHERE": $this->builder->whereIn("{$where_data["field"]}{$where_data["not"]}", $where_data["values"], false); break;
                 case "OR_IN_WHERE": $this->builder->orWhereIn("{$where_data["not"]}{$where_data["field"]}", $where_data["values"]); break;
                 case "LIKE": $this->builder->like("{$where_data["not"]}{$where_data["field"]}", $where_data["match"]); break;
                 case "OR_LIKE": $this->builder->orLike("{$where_data["not"]}{$where_data["field"]}", $where_data["match"]); break;

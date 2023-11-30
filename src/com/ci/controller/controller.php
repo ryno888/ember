@@ -162,18 +162,5 @@ class controller{
 
     }
     //--------------------------------------------------------------------------------
-	public static function evaluate_required_fields($options = []) {
-		$error_arr = [];
-
-		$required_field_arr = \Kwerqy\Ember\Ember::$request->get("__required_field_arr", TYPE_STRING, ["default" => []]);
-
-		foreach ($required_field_arr as $required_field => $required_label){
-			$value = \Kwerqy\Ember\Ember::$request->get($required_field);
-			if (\Kwerqy\Ember\isempty($value)) $error_arr[$required_field] = $required_label." is required";
-		}
-
-		return $error_arr;
-	}
-    //--------------------------------------------------------------------------------
 
 }

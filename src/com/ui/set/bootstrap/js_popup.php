@@ -31,6 +31,7 @@ class js_popup extends \Kwerqy\Ember\com\ui\intf\component {
             "panel" => \Kwerqy\Ember\Ember::$panel,
 
             "*class" => null,
+            "*class_modal_body" => false,
             "*height_class" => false,
             "*width" => "modal-lg",
             "*title" => "Alert",
@@ -55,6 +56,7 @@ class js_popup extends \Kwerqy\Ember\com\ui\intf\component {
         if(!$options["*height_class"]){
             $options["*height_class"] = "min-h-40vh";
         }
+		$options["*class_modal_body"] .= $options["*height_class"];
 
         $js_options = \Kwerqy\Ember\com\js\js::create_options($options);
 

@@ -68,6 +68,7 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 		}
 
 		$this->buffer->add(form_open($this->form_action, $attr_arr));
+		$this->buffer->xihidden("form_id", $this->form_id);
 
 		$honeypot = getenv("honeypot.name");
 		if($honeypot){
@@ -86,6 +87,8 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
                 });
 		    });
 		";
+		
+		\Kwerqy\Ember\com\ui\helper::$current_form = &$this;
 
 	}
 	//--------------------------------------------------------------------------------
@@ -171,6 +174,7 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 	public function __destruct() {
 		if($this->form_action){
 			$this->buffer->_form();
+			\Kwerqy\Ember\com\ui\helper::$current_form = false;
 		}
 	}
 	//--------------------------------------------------------------------------------
@@ -179,7 +183,6 @@ class html extends \Kwerqy\Ember\com\ui\intf\component {
 		$options = array_merge([
 		    "required" => false
 		], $options);
-
 	}
 	//--------------------------------------------------------------------------------
 	public function submit_button($options = []) {

@@ -675,12 +675,24 @@ var app = {
 
 
 $(document).keydown(function(e) {
-
-
-
     if ((e.ctrlKey || e.metaKey) && e.altKey && e.which == 76) {
        window.open('/index.php/system/login', '_blank')
     }
+
+	if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
+		let focussed_el = $(':focus');
+		let sType = focussed_el.getInputType();
+		let input_type_arr = [
+			"text",
+			"number",
+			"textarea",
+		];
+
+		if (jQuery.inArray(sType, input_type_arr) !== -1) {
+			//find form
+			focussed_el.closest("form").find(".ui-form-submit").click();
+		}
+	}
 });
 
 
@@ -727,13 +739,27 @@ $(function(){
 });
 
 
-$.fn.enterKey = function (fnc) {
-    return this.each(function () {
-        $(this).keypress(function (ev) {
-            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
-            if (keycode == '13') {
-                fnc.call(this, ev);
-            }
-        })
-    })
-}
+(function ($) {
+    "use strict";
+
+    $.fn.enterKey = function (fnc) {
+		return this.each(function () {
+			$(this).keypress(function (ev) {
+				var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+				if (keycode == '13') {
+					fnc.call(this, ev);
+				}
+			})
+		})
+	};
+
+    $.fn.getInputType = function () {
+
+        return this[0].tagName.toString().toLowerCase() === "input" ?
+              $(this[0]).prop("type").toLowerCase() :
+              this[0].tagName.toLowerCase();
+
+    }; // getInputType
+
+}(jQuery));
+

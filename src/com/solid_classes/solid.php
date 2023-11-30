@@ -65,15 +65,26 @@ class solid extends \Kwerqy\Ember\com\intf\standard {
         return \Kwerqy\Ember\Ember::$request->get($solid->get_form_id(), $options["datatype"], $options);
     }
     //--------------------------------------------------------------------------------
-    public static function request_setting($key, $options = []){
+    public static function request_text_to_arr($key, $options = []){
 
         $solid = self::get_instance($key);
 
         $options = array_merge([
-            "default" => $solid->get_default()
+            "default" => $solid->get_default(),
+            "datatype" => TYPE_TEXT,
+            "separator" => "|",
         ], $options);
 
-        return \Kwerqy\Ember\Ember::$request->get($solid->get_form_id(), $solid->get_data_type(), $options);
+        $value = \Kwerqy\Ember\Ember::$request->get($solid->get_form_id()."_variant", $options["datatype"], $options);
+
+        $return_arr = [];
+        $value_arr = explode($options["separator"], $value);
+
+        array_walk($value_arr, function($value)use(&$return_arr){
+        	$value = trim($value);
+        	if($value) $return_arr[$value] = $value;
+		});
+        return $return_arr;
     }
     //--------------------------------------------------------------------------------
 

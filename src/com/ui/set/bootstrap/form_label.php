@@ -34,7 +34,11 @@ class form_label extends \Kwerqy\Ember\com\ui\intf\component {
 
 			if($options["required"]){
 				$buffer->xicon("fa-exclamation-circle", ["@title" => "Required", ".ms-1 fs-8 text-danger" => true]);
-				$buffer->xihidden("__required_field_arr[{$options["id"]}]", $options["label"]);
+
+				$current_form = \Kwerqy\Ember\com\ui\helper::$current_form;
+				if($current_form){
+					$buffer->xihidden("__required_field_arr[{$current_form->form_id}][{$options["id"]}]", $options["label"]);
+				}
 			}
 
 		$buffer->_label($options);

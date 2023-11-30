@@ -108,6 +108,39 @@ trait property_table {
 
     }
     //--------------------------------------------------------------------------------
+	public function save_property_str_to_arr($obj, $key, $value_arr = [], $options = []) {
+
+    	$options = array_merge([
+    	    "delete" => true
+    	], $options);
+
+    	$property_table = $this->get_property_table($obj);
+    	$property_table_dbt = \Kwerqy\Ember\Ember::dbt($property_table);
+    	$property_prefix = $property_table_dbt->get_prefix();
+    	$reference_field = "{$property_prefix}_ref_{$this->name}";
+
+		foreach ($value_arr as $value){
+			$property = \Kwerqy\Ember\Ember::dbt($property_table)->find([
+				".{$reference_field}" => $obj->id,
+				".{$property_prefix}_key" => $key,
+				".{$property_prefix}_value" => $value,
+				"create" => true,
+			]);
+			if($property->source != "database") $property->save();
+		}
+
+		if($options["delete"]){
+			$sql = \Kwerqy\Ember\com\db\sql\select::make();
+			$sql->select("{$property_table}.*");
+			$sql->from($property_table);
+			$sql->and_where("{$reference_field} = ".dbvalue($obj->id));
+			$sql->and_where("{$property_prefix}_key = ".dbvalue($key));
+			if($value_arr) $sql->where_in("{$property_prefix}_value", $value_arr, true);
+			$delete_property_arr = \Kwerqy\Ember\Ember::dbt($property_table)->get_fromsql($sql, ["multiple" => true]);
+			foreach ($delete_property_arr as $delete_property) $delete_property->delete();
+		}
+	}
+    //--------------------------------------------------------------------------------
 	/**
 	 * @param $obj
 	 * @return \app\solid\property_set\intf\standard|mixed
