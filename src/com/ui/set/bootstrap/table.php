@@ -364,7 +364,7 @@ class table extends \Kwerqy\Ember\com\intf\standard {
 		//get total entries
 		$clone = clone $this->sql;
 		$clone->clear_select();
-		$clone->select_count($this->key);
+		$clone->select("COUNT(*)");
 		$this->total_items = \Kwerqy\Ember\Ember::db()->selectsingle($clone->build());
 		$this->total_pages = ceil($this->total_items/$this->limit);
 

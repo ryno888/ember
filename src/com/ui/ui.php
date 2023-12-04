@@ -707,11 +707,9 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
      */
 	public function itext($id, $value = false, $label = false, $options = []) {
 
-		$options = array_merge([
-		    "id" => $id,
-			"value" => $value,
-			"label" => $label,
-		], $options);
+		$options["id"] = $id;
+		$options["value"] = $value;
+		$options["label"] = $label;
 
 		return $this->section->get_ui()->get("itext")->build($options);
 
@@ -938,12 +936,12 @@ class ui extends \Kwerqy\Ember\com\intf\standard {
 	 */
 	public function iselect($id, $value_options_arr, $value = false, $label = false, $options = []) {
 
-		$options = array_merge([
-		    "id" => $id,
-			"label" => $label,
-			"value_options_arr" => $value_options_arr,
-			"value" => $value,
-		], $options);
+		// options
+  		$options["id"] = $id;
+  		$options["value"] = $value;
+  		$options["label"] = $label;
+  		$options["value_options_arr"] = $value_options_arr;
+
 
 		return $this->section->get_ui()->get("iselect")->build($options);
 

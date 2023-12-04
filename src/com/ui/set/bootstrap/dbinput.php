@@ -46,7 +46,7 @@ class dbinput extends \Kwerqy\Ember\com\ui\intf\component {
 
 		// config
         $field = $options["field"];
-        $value = $options["value"] === false ? $this->dbentry->{$field} : $options["value"];
+        $value = \Kwerqy\Ember\isempty($options["value"]) ? $this->dbentry->{$field} : $options["value"];
 
 		// label
 		if ($options["label"] === false) $options["label"] = $this->dbentry->db->field_arr[$field][0];
@@ -80,7 +80,8 @@ class dbinput extends \Kwerqy\Ember\com\ui\intf\component {
 				return \Kwerqy\Ember\com\ui\ui::make()->itext($field, $value, $label, array_merge(["limit" => "fraction", "@placeholder" => "0"], $options));
 
   			case TYPE_STRING 	:
-  			case TYPE_VARCHAR 	: return \Kwerqy\Ember\com\ui\ui::make()->itext($field, $value, $label, $options);
+  			case TYPE_VARCHAR 	:
+  				return \Kwerqy\Ember\com\ui\ui::make()->itext($field, $value, $label, $options);
 
 			case TYPE_EMAIL		: return \Kwerqy\Ember\com\ui\ui::make()->itext($field, $value, $label, array_merge(["limit" => "email"], $options));
   			case TYPE_TELNR 	: return \Kwerqy\Ember\com\ui\ui::make()->itext($field, ($value == "  " ? false : $value), $label, array_merge([".ui-itel" => true], $options));

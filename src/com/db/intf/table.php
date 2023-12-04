@@ -155,6 +155,20 @@ abstract class table {
         return $this->get_fromdb("{$this->string} = ".\Kwerqy\Ember\dbvalue($value));
     }
 	//--------------------------------------------------------------------------------
+	/**
+	 * @param $key
+	 * @param array $options
+	 * @return array|false|table|table[]|\Kwerqy\Ember\com\db\row|\Kwerqy\Ember\com\db\row[]|\Kwerqy\Ember\com\intf\standard
+	 */
+	public function requestdb($key, $options = []) {
+
+    	$value = \Kwerqy\Ember\Ember::$request->get($key, TYPE_KEY);
+
+    	if(!$value) return false;
+
+		return $this->get_fromdb($value);
+	}
+	//--------------------------------------------------------------------------------
     /**
      * @param array $options
      * @return array|false|table|table[]|\Kwerqy\Ember\com\db\row|\Kwerqy\Ember\com\db\row[]|\Kwerqy\Ember\com\intf\standard
@@ -175,6 +189,7 @@ abstract class table {
     	if($obj->is_empty($this->key)){
     		$id = \Kwerqy\Ember\Ember::$request->get("id");
     		if(!\Kwerqy\Ember\isempty($id)) $obj->{$this->key} = $id;
+    		$obj->id = $obj->{$this->key};
 		}
 
     	if(!$options["overwrite"]){
@@ -512,8 +527,12 @@ abstract class table {
 
 	}
 	//--------------------------------------------------------------------------------
+	public function get_field_data($field) {
+	    return isset($this->field_arr[$field]) ? $this->field_arr[$field] : [];
+	}
+	//--------------------------------------------------------------------------------
 	public function get_field_datatype($field) {
-	    return $this->field_arr[$field][2];
+	    return $this->get_field_data($field)[2];
 	}
 	//--------------------------------------------------------------------------------
 	public function get_reference_arr() {

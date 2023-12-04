@@ -34,6 +34,15 @@ class row {
 		if($name == "db") return $this->instance;
 		if($name == "id") return $this->{$this->instance->key};
 
+		//check reference tables
+		$reference_field = "{$this->instance->get_prefix()}_ref_{$name}";
+		$field_data = $this->instance->get_field_data($reference_field);
+		if($field_data && !property_exists($this, $name)){
+			if(\Kwerqy\Ember\isempty($this->{$reference_field})) return false;
+			if(property_exists($this, $name)) return $this->{$name};
+			 $this->{$name} = \Kwerqy\Ember\Ember::dbt($name)->get_fromdb(\Kwerqy\Ember\com\data\data::parse($this->{$reference_field}, TYPE_INT));
+		}
+
 		if(property_exists($this, $name)){
 			return $this->{$name};
 		}else{

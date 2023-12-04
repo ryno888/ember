@@ -68,7 +68,18 @@ class button extends \Kwerqy\Ember\com\ui\intf\component {
 		    ".btn btn-primary" => true,
 			".btn-icon-split" => (bool) $options["icon"],
 		    "/icon" => [],
+
+		    "has_notification" => true,
+		    "notification_text" => false,
+		    "notification_title" => "New Alerts",
+		    "notification_color" => "danger",
+		    "/notification" => [],
+
 		], $options);
+
+		if($options["has_notification"]){
+			$options[".position-relative"] = true;
+		}
 
 		if($options["!click"] instanceof offcanvas){
 		    $offcanvas = $options["!click"];
@@ -87,6 +98,21 @@ class button extends \Kwerqy\Ember\com\ui\intf\component {
 				$buffer->_span();
 			}
 			$buffer->span(["*" => $options["label"], ".text" => true]);
+
+			if($options["has_notification"]){
+
+				$options["/notification"][".position-absolute top-0 start-100 translate-middle"] = true;
+				$options["/notification"][$options["notification_text"] ? ".px-2" : ".p-2"] = true;
+				$options["/notification"][".bg-{$options["notification_color"]}"] = true;
+				$options["/notification"][".border border-white"] = true;
+				$options["/notification"][($options["notification_text"] ? ".rounded-pill fs-8 text-white" : ".rounded-circle")] = true;
+
+				$buffer->span_($options["/notification"]);
+					if($options["notification_text"]) $buffer->add($options["notification_text"]);
+					$buffer->span(["*" => $options["notification_text"], ".visually-hidden" => true]);
+				$buffer->_span();
+			}
+
 		$buffer->_button();
 	}
 	//--------------------------------------------------------------------------------
